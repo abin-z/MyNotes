@@ -1,0 +1,353 @@
+项目管理注意点:
+1.紧跟用户的需求,不能私自定项目周期(一般要预留一定的时间)
+2.项目经理需要跟进成员的项目开展进度
+3.项目成员开发过程中遇到问题也要向上级及时反馈
+4.注意礼貌,注意职业穿着打扮,职业素养
+5.加强各部门,各成员之间的沟通
+6.一个比较大的项目应该需要进行拆分 (超过三天的工作时就应做进一步拆分)
+7.各小组应当主动定时向上级汇报项目进度
+8.遇到问题应该做相应的风险评估(一般,严重),可控性分析(风险是否可控)
+9.用户的需求改变,需要与用户做好沟通,是否需要申请延长开发周期           
+
+
+
+
+
+jiajiale
+
+数据库统一编码 utf-8
+默认引擎 innodb
+
+登录表 login
+	用户名		pk
+	密码			32位MD5加密
+	身份			1普通用户 3经销商 4经销商子账户 9运营中心管理员
+	注册时间		timestamp 类型 默认 CURRENT_TIMESTAMP
+	用户ID		外键 用户id
+	账户状态		1正常 2异常需验证 3禁用 默认1
+
+
+用户表 user
+	用户id		int自增 唯一主键
+	用户名		varchar(20)
+	手机号		char(11)  只支持11位手机号
+	电话			
+	邮箱			varchar(64)	最大64位邮箱地址
+	累计积分		int 默认0 累计总积分 用于会员等级制
+	可用积分		int 默认 0
+	默认收件地址	varchar(254)
+	邮编
+	
+经销商:
+	编号id,pk
+	经销商名称,
+	上级经销商编号,
+
+
+商品表: 
+	id,pk
+	商品编号gno,
+	商品名称,
+	商品类别,
+	商品生产日期,
+	商品保质期,
+	生产厂家,
+	推荐价格,
+	
+
+网店表:
+	网店编号,pk
+	经销商编号,fk
+	网点负责人ID,fk
+	平台类别,
+	网店名称,
+	网点URL,
+	状态,
+	修改时间,
+	修改人
+
+网店商品表:
+	网店编号ID,fk
+	商品ID,fk
+	商品价格,
+	是否支持退换,
+	可获得积分,
+	优惠价格,
+
+
+订单表:
+	订单编号,pk
+	快递单号,fk
+	购买用户ID, fk
+	网店编号ID, fk
+	支付类型,
+	支付交易单号,
+	支付时间,
+	订单日期,
+	订单状态,
+	订单金额,
+	优惠金额,
+	实付金额,
+	运费,
+	买家留言,
+	卖家备注,
+	发货审核员ID,
+	安装时间,
+	发票编号,
+	发票备注,
+	开票时间
+
+	
+
+订单详情表:
+	订单编号,pk,fk
+	订单日期,
+	商品数量,
+	商品编号,fk
+	商品单价,
+	单品折扣金额,
+	实付金额
+
+
+退货商品表:
+	退货id:  pk
+	订单编号, fk
+	退货商品ID, fk
+	退货数量,
+	退货理由,
+	退货方式,
+	退款金额,
+	退回仓库编号,
+	退回仓库地址,
+	退货快递单号,
+	退货审核状态,
+	退货审核员ID,
+	退货审核日期,
+	退货状态.
+	驳回留言:
+	
+
+物流表:
+	快递单号id,pk
+	快递公司、
+	发货日期,
+	状态、
+	收货地址、
+	收货人、
+	收货人手机号、
+	发货人,
+	发货人手机号,
+	发货仓编码、
+	发货仓名称、
+	发货仓地址,
+
+物流详情表:
+	快递单号ID:fk
+	位置,
+	时间,
+
+
+
+
+
+
+sales_system_db
+
+数据库统一编码 utf-8
+默认引擎 innodb
+
+登录表 login
+	用户名/username /varchar(32)			pk
+	密码	/pwd /char(32) 				32位MD5加密
+	身份/role /bit(3)				1普通用户 3经销商 4经销商子账户 7运营中心管理员
+	注册时间/create_time /timestamp		timestamp 类型 默认 CURRENT_TIMESTAMP
+	用户ID/uid /int				外键 用户id
+	账户状态/status /bit(2) 1			1正常 2异常需验证 3禁用 默认1
+
+drop table if exists t_login;
+create table t_login
+(
+	username varchar(32),
+	pwd char(32) not null,
+	role bit(3) not null default 1,
+	create_time timestamp not null default CURRENT_TIMESTAMP,
+	uid int,
+	status bit(2) default 1,
+	primary key(username),
+	constraint t_login_uid_fk foreign key(uid) references t_user(uid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+用户表 user
+	用户id/uid		int自增 唯一主键
+	用户名			varchar(20)
+	手机号			char(11)  只支持11位手机号
+	电话			
+	邮箱			varchar(64)	最大64位邮箱地址
+	累计积分		int 默认0 累计总积分 用于会员等级制
+	可用积分		int 默认 0
+	默认收件地址	varchar(254)
+	邮编
+	
+drop table if exists t_user;
+create table t_user
+(
+	uid int(8) auto_increment,
+	uname varchar(32) not null,
+	telphone char(11),
+	phone char(16),
+	email varchar(64),
+	sum_points int(8) default 0,
+	points int(8) default 0,
+	address varchar(254),
+	post_code char(6),
+	primary key(uid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+经销商:
+	编号id,pk
+	经销商名称,
+	上级经销商编号,
+
+	CREATE TABLE `t_dealer` (
+  `dealer_id` int NOT NULL AUTO_INCREMENT COMMENT '经销商id',
+  `dealer_name` varchar(32) NOT NULL COMMENT '经销商名称',
+  `super_dealer` int DEFAULT NULL COMMENT '上级经销商编号',
+  PRIMARY KEY (`dealer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+商品表: 
+	id,pk
+	商品编号gno,
+	商品名称,
+	商品类别,
+	商品生产日期,
+	商品保质期,
+	生产厂家,
+	推荐价格,
+
+	CREATE TABLE `t_goods` (
+  `gid` int NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `gno` int NOT NULL COMMENT '商品编号',
+  `gname` varchar(64) NOT NULL COMMENT '商品名称',
+  `date_manufacture` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '商品生产日期',
+  `time_quality` datetime NOT NULL COMMENT '商品保质期',
+  `manufacture` varchar(32) NOT NULL COMMENT '生产厂家',
+  `recommend_price` decimal(10,2) DEFAULT NULL COMMENT '推荐价格',
+  PRIMARY KEY (`gid`),
+  UNIQUE KEY `t_goods_unique` (`gno`) COMMENT '商品编号唯一性'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+	
+
+网店表:		t_online_shop
+	网店编号,pk		shop_id
+	经销商编号,fk 	dealer_id
+	网点负责人ID,fk  uid
+	平台类别,		type
+	网店名称,		shop_name
+	网点URL,			shop_url	
+	状态,			shop_status
+	修改时间,		modify_time
+	修改人			modify_user
+CREATE TABLE `t_online_shop` (
+  `shop_id` int NOT NULL AUTO_INCREMENT COMMENT '网店编号',
+  `dealer_id` int NOT NULL COMMENT '经销商编号',
+  `uid` int NOT NULL COMMENT '网店负责人ID(来自用户表)',
+  `type` varchar(32) NOT NULL COMMENT '平台类别',
+  `shop_name` varchar(64) NOT NULL COMMENT '网店名称',
+  `shop_url` varchar(255) DEFAULT NULL COMMENT '网店URL',
+  `shop_status` bit(2) DEFAULT b'1' COMMENT '网店状态',
+  `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `modify_user` varchar(32) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`shop_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+	
+
+网店商品表:  	t_shop_goods_rel
+	网店编号ID,fk 	shop_id
+	商品ID,fk 		gid
+	商品价格,		gprice
+	是否支持退换,		support_return
+	可获得积分,		available_point
+	优惠价格,		discount_price
+
+
+订单表:
+	订单编号,pk
+	购买用户ID, fk
+	网店编号ID, fk
+	支付类型,
+	支付交易单号,
+	支付时间,
+	订单日期,
+	订单状态,
+	订单金额,
+	优惠金额,
+	实付金额,
+	运费,
+	买家留言,
+	卖家备注,
+	发货审核员ID,
+	安装时间,
+	发票编号,
+	发票备注,
+	开票时间
+
+	
+
+订单详情表:
+	订单编号,pk,fk
+	订单日期,
+	商品数量,
+	商品编号,fk
+	商品单价,
+	单品折扣金额,
+	实付金额
+
+
+退货商品表:
+	退货id:  pk
+	订单编号, fk
+	退货商品ID, fk
+	退货数量,
+	退货理由,
+	退货方式,
+	退款金额,
+	退回仓库编号,
+	退回仓库地址,
+	退货快递单号,
+	退货审核状态,
+	退货审核员ID,
+	退货审核日期,
+	退货状态.
+	驳回留言:
+	
+
+物流表:
+	快递单号id,pk
+	订单编号,fk
+	快递公司、
+	发货日期,
+	状态、
+	收货地址、
+	收货人、
+	收货人手机号、
+	发货人,
+	发货人手机号,
+	发货仓编码、
+	发货仓名称、
+	发货仓地址,
+
+物流详情表:
+	快递单号ID:fk
+	位置,
+	时间,
+
+
+
