@@ -84,7 +84,7 @@ Git 自带一个 `git config` 的工具来帮助设置控制 Git 外观和行为
 
 ### 用户信息
 
-当安装完 Git 应该做的第一件事就是设置用户名称与邮件地址。这样做很重要，因为每一个 Git 的提交都会使用这些信息，并且它会写入到每一次提交中，不可更改：
+当安装完 Git 应该做的第一件事就是设置用户名称与邮件地址。这样做很重要，因为每一个 Git 的提交都会使用这些信息，并且它会写入到每一次提交中，不可更改：(这个可以是不存在的邮箱，但是就是必须要有)
 
 ```shell
 $ git config --global user.name "abin"
@@ -157,9 +157,36 @@ Shell
 
 
 
+### 为常用指令设置别名（可选项）
 
+有些常用的指令参数非常多，每次都要输入好多参数，我们可以使用别名。
+1. 打开用户目录，创建 .bashrc 文件
+部分windows系统不允许用户创建点号开头的文件，可以打开gitbash,执行 touch ~/.bashrc   在文件中添加一下信息:
 
+```sh
+#用于输出git提交日志
+alias git-log='git log --pretty=online --all --graph --abbrev-commit'
 
+#用于输出当前目录所有文件的基本信息
+alias ll='ls -al'
+```
+
+### 解决gitbash中文乱码的问题
+
+1. 打开gitbash执行以下的命令:
+
+   ```sh
+   git config --global core.quotepath false
+   ```
+
+2. ${git_home}/etc/bash.bashrc 文件最后添加如下内容:
+
+   ```sh
+   export LANG="zh_CN.UTF-8"
+   export LC_ALL="zh_CN.UTF-8"
+   ```
+
+   
 
 # Git 工作流程图
 
@@ -238,6 +265,26 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git pull`   | 下载远程代码并合并 |
 | `git push`   | 上传远程代码并合并 |
 
+### 版本回退
+
+- 作用: 不同提交版本之间的切换
+
+```sh
+git reset --hard [commitID]
+```
+
+- commitID 可以使用 `git log` 或者是`git-log` 查看
+
+- 如何查看已经所有已提交的记录?
+
+  ```sh
+  git reflog			#这个指令可以看到已经删除的提交记录
+  ```
+
+  
+
+
+
 
 
 ### git基础操作指令
@@ -265,11 +312,15 @@ Git工作目录下对于文件的修改(增加、删除、更新)会存在几个
 git branch
 ```
 
+![image-20211201232544299](https://gitee.com/abin_z/pic_bed/raw/master/img/202112012325369.png)
+
 **创建分支命令：**
 
 ```
 git branch (branchname)
 ```
+
+![image-20211201232639903](https://gitee.com/abin_z/pic_bed/raw/master/img/202112012326946.png)
 
 **切换分支命令:**
 
@@ -279,11 +330,15 @@ git checkout (branchname)
 
 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。
 
+![image-20211201232807264](https://gitee.com/abin_z/pic_bed/raw/master/img/202112012328324.png)
+
 **合并分支命令:**
 
 ```
-git merge 
+git merge [branchname]			# 将branchname的分支合并到当前分支
 ```
+
+
 
 **删除分支命令：**
 

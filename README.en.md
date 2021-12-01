@@ -1,7 +1,7 @@
-# MyNotes
+# My Notes
 
 #### Description
-我的学习笔记
+this my notes
 
 #### Software Architecture
 Software architecture description
