@@ -653,3 +653,177 @@ git push origin [分支名称] --force		#强制推送到分支
 
 
 
+# Git远程仓库
+
+## 常见的代码托管服务
+
+**GitHub**（ 地址：https://github.com/ ）是一个面向开源及私有软件项目的托管平台，因为只支持Git 作为唯一
+的版本库格式进行托管，故名GitHub
+**Gitee**（地址： https://gitee.com/ ）是国内的一个代码托管平台，由于服务器在国内，所以相比于GitHub，码云
+速度会更快
+**GitLab** （地址： https://about.gitlab.com/ ）是一个用于仓库管理系统的开源项目，使用Git作为代码管理工
+具，并在此基础上搭建起来的web服务，一般用于在企业、学校等内部网络搭建git私服。
+
+
+
+企业中开发一般使用的是GitLab, 可以使用自己的机房来搭建,自己的代码自己来托管
+
+github一般是很多的开源项目的服务托管平台(国内一般使用的是Gitee)
+
+
+
+## Git远程仓库的SSH配置
+
+##### 1.创建远程仓库![image-20211205220452846](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052204953.png)
+
+##### 2.配置SSH公钥
+
+- 生成SSH公钥
+
+  ```sh
+  ssh-keygen -t rsa			#使用rsa方式生成非对称秘钥
+  ```
+
+  ![image-20211205221247500](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052212598.png)
+
+注意: 如果公钥已经存在,则自动覆盖
+
+在用户目录下的 .ssh 目录下会生成相应的公钥`id_rsa.pub`
+
+![image-20211205221733108](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052217194.png)
+
+将生成的公钥`id_rsa.pub`内容复制到代码托管平台上
+
+![image-20211205222230854](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052222965.png)
+
+
+
+点击确定后输入密码后就配置号了公钥,  可以在gitbash中测试是否配置成功
+
+```sh
+ssh -T git@gitee.com			#需要输入 yes
+```
+
+![image-20211205222636401](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052226470.png)
+
+
+
+## 操作远程仓库
+
+#### 1.添加远程仓库
+
+![image-20211205224018132](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052240185.png)
+
+```sh
+git remote add [远端仓库名] [ssh远程仓库地址]		#一般远端仓库名都为 origin
+```
+
+```sh
+git remote add origin git@gitee.com:abin_z/git-demo.git
+```
+
+![image-20211205224848724](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052248800.png)
+
+#### 2.查看远程仓库
+
+```sh
+git remote 				#查看远程仓库
+```
+
+#### 3.推送到远程仓库
+
+```sh
+git push [-f] [--set-upstream] [远端分支名 [本地分支名]:[远端分支名]]	
+```
+
+-    -f    表示强制推送
+
+- 如果远程分支名和本地分支名一致,则可以只写本地分支名
+
+  - ```sh
+    git push origin master
+    ```
+
+- --set-upstream 表示在推送到远端的同时并==建立起本地分支和远端分支==的联系
+
+  - ```sh
+    git push --set-upstream origin master
+    ```
+
+- **如果当前分支已经和远端分支关联,则可以省略分支名和远端名**
+
+  - ```sh
+    git push		#将master分支推送到远端的master分支
+    ```
+
+```sh
+git push --set-upstream origin master
+```
+
+![image-20211205230106636](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052301705.png)
+
+![image-20211205230241823](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052302919.png)
+
+#### 4.关联远程分支
+
+```sh
+git branch -vv 				#用于查看本地分支与远端分支的绑定情况
+git push --set-upstream origin master:master
+```
+
+![image-20211205230835220](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052308298.png)
+
+#### 5.从远程仓库克隆
+
+```sh
+git clone [远端地址]
+```
+
+![image-20211205231402105](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052314159.png)
+
+克隆成功! 克隆后的目录和远端是一样的(一般克隆操作只需要使用一次就可以)
+
+![image-20211205231438643](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052314708.png)
+
+#### 6.从远程仓库抓取和拉取
+
+- ==**fetch抓取**, 将仓库里的更新都抓取到本地,**但是不进行合并**==
+  - 如果不指定远端名称和分支, 则抓取所有分支修改
+
+```sh
+git fetch [remote name] [branch name]
+```
+
+- ==**pull拉取**, 将远程仓库的修改拉取到本地并**自动进行合并**,类似于: **pull = fetch + merge**==
+  - 如果不指定远端名称和分支, 则抓取所有分支修改并自动合并
+
+```sh
+git pull 				#抓取并自动合并
+```
+
+![image-20211205233037566](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052330736.png)
+
+![image-20211205233320577](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052333667.png)
+
+#### 7.解决合并冲突
+
+发送冲突的情况:
+
+​		在一段时间，A、B用户修改了同一个文件，且修改了同一行位置的代码，此时会发生合并冲突。A用户在本地修改代码后优先推送到远程仓库，此时B用户在本地修订代码，提交到本地仓库后，==也需要推送到远程仓库，此时B用户晚于A用户，**故需要先拉取远程仓库的提交，经过合并后才能推送到远端分支**==,如下图所示。
+
+![image-20211205233613742](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052336876.png)
+
+在B用户拉取代码时，因为A、B用户同一段时间修改了同一个文件的相同位置代码，故会发生合并冲突。
+**远程分支也是分支，所以合并时冲突的解决方式也和解决本地分支冲突相同相同**
+
+![image-20211205234559783](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052345871.png)
+
+此时需要先pull然后在push
+
+![image-20211205234655331](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052346395.png)
+
+![image-20211205234817228](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052348286.png)
+
+![image-20211205235018313](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052350400.png)
+
+----
