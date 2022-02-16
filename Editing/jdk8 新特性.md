@@ -705,7 +705,7 @@ interface III {
     System.out.println("接口中的默认default方法");
   }
     
-  //接口中的静态方法,添加关键字static
+  //接口中的静态方法,添加关键字static,不能被实现类重写
   public static void staticFunc(){			
     System.out.println("接口中的静态方法, 不能被实现类重写, 只能通过接口名.静态方法名调用");
   }
@@ -738,7 +738,7 @@ class AAA implements III {
 
 ## 1.函数式接口的由来
 
-使用Lambda表达式的前提是接口是函数式接口, 而Lambda表达式使用时不关心接口名,  抽象方法名. **只关心抽象方法的参数列表和返回值类型**。因此为了让我们使用Lambda表达式更加的方法，在IDK中提供了大量常用的函数式接口
+使用Lambda表达式的前提是接口是函数式接口, 而Lambda表达式使用时不关心接口名,  抽象方法名. **只关心抽象方法的参数列表和返回值类型**。因此为了让我们使用Lambda表达式更加的方法，在JDK中提供了大量常用的函数式接口
 
 ```Java
 public class FuncInterface {
@@ -1747,7 +1747,7 @@ distinct方法的作用是去掉重复数据, 但是需要注意的是什么情�
         .forEach(System.out::println);
   }
 
-输出结果:
+输出结果:   去重效果不理想
 Person{name='张三', age=19, height=null}
 Person{name='李四', age=19, height=null}
 Person{name='张三', age=19, height=null}
@@ -1850,7 +1850,7 @@ match = true
 
 ### 4.10 find
 
-查找流中的元素可以使用find 的相应方法,  findAny()方法返回Stream中的任何元素的Optional，而findFirst()方法返回Stream中的第一个元素的Optional
+查找流中的元素可以使用find 的相应方法,  findAny()方法返回Stream中的任何元素的Optional，而findFirst()方法返回Stream中的第一个元素的Optional 【终结操作】
 
 https://blog.csdn.net/weixin_39132705/article/details/107338638
 
@@ -1877,7 +1877,7 @@ any.get() = 10
 
 ###  4.11 max和min
 
-max 和 min 返回流中元素最大值和最小值的Optional
+max 和 min 返回流中元素最大值和最小值的Optional 【终结操作】
 
 ```Java
     Optional<T> max(Comparator<? super T> comparator);		//获取最大值
@@ -1905,11 +1905,11 @@ min.get() = 2
 
 ### 4.12  *reduce   
 
-归约，也称缩减，顾名思义，**是把一个流缩减成一个值**，能实现对集合求和、求乘积和求最值操作。
+归约，也称缩减，顾名思义，**是把一个流缩减成一个值**，能实现对集合求和、求乘积和求最值操作。【终结操作】
 
 将流中的所有数据进行归纳得到一个数据, 可以使用reduce方法
 
-*reduce*操作可以实现从一组元素中生成一个值，`sum()`、`max()`、`min()`、`count()`等都是*reduce*操作，将他们单独设为函数只是因为常用。
+*reduce*操作可以实现从一组元素中生成一个值，`sum()`、`max()`、`min()`、`count()`等都是*reduce*操作，将他们单独设为函数只是因为常用。2
 
 ```Java
     <U> U reduce(U identity,
@@ -2005,7 +2005,7 @@ count = 3
 
 ### 4.14 mapToInt ...
 
-mapToInt的作用: 可以先将流中的Integer数据转换为int数据
+mapToInt的作用: 可以先将流中的Integer数据转换为int数据 (中间操作)
 
 Integer占用的内存比int多很多, 在Stream流操作中会频繁的自动拆箱和装箱, 很浪费空间
 
@@ -2050,7 +2050,7 @@ DoubleStream mapToDouble(ToDoubleFunction<? super T> mapper);//转换为基本�
 
 ### 4.15 concat
 
-concat可以将两个流合并成为一个流, 可以使用Stream类的静态方法concat
+concat可以将两个流合并成为一个流, 可以使用Stream类的静态方法concat (中间操作)
 
 ```Java
     public static <T> Stream<T> concat(Stream<? extends T> a, Stream<? extends T> b) {
@@ -2092,9 +2092,60 @@ concat可以将两个流合并成为一个流, 可以使用Stream类的静态方
 60
 ```
 
-### 4.16 collect
+## 5.Stream数据收集collect
 
-Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.com/CarpenterLee/p/6550212.html
+### 5.1将结果收集到数组中
+
+Stream中提供了toArray方法将Stream流中的数据放到数组中, 返回类型是Object[]数组, 如果需要自定义返回数组类型需要传入相应类型的构造器参数
+
+```Java
+//1.使用无参,收集到数组,返回值为 Object[](Object类型将不好操作)
+Object[] toArray();
+//2.使用有参,可以指定将数据收集到指定类型数组,方便后续对数组的操作
+<A> A[] toArray(IntFunction<A[]> generator);
+```
+
+```Java
+  public static void main(String[] args) {
+    ArrayList<Person> people = new ArrayList<>();
+    people.add(new Person("张三丰", 21));
+    people.add(new Person("李四", 20));
+    people.add(new Person("王五", 17));
+    people.add(new Person("麦克", 16));
+
+    //将stream流转化为数组, toArray()没有指定类型直接转为Object
+    Object[] objects = people.stream().toArray();
+    for (Object o : objects) {
+      if (o instanceof Person) {
+        Person person = (Person) o;
+        System.out.println("person.getName() = " + person.getName());
+      }
+    }
+
+    //将stream流转化为指定类型的数组,
+    Person[] people1 = people.stream().toArray(Person[]::new);
+    for (Person person : people1) {
+      System.out.println(person);
+    }
+  }
+```
+
+输出: 
+
+```txt
+person.getName() = 张三丰
+person.getName() = 李四
+person.getName() = 王五
+person.getName() = 麦克
+Person{name='张三丰', age=21, height=null}
+Person{name='李四', age=20, height=null}
+Person{name='王五', age=17, height=null}
+Person{name='麦克', age=16, height=null}
+```
+
+### 5.2将结果收集到集合中
+
+Stream的终极武器:  **将Stream转换成容器或Map** (终结操作)  https://www.cnblogs.com/CarpenterLee/p/6550212.htm
 
 ```Java
 <R, A> R collect(Collector<? super T, A, R> collector);
@@ -2106,9 +2157,9 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
 
 收集器（*Collector*）是为`Stream.collect()`方法量身打造的工具接口（类）。考虑一下将一个*Stream*转换成一个Collection集合（或者*Map*）需要做哪些工作？我们至少需要三样东西：
 
-1. 目标容器是什么？是*ArrayList*还是*HashSet*，或者是个*TreeMap*。
-2. 新元素如何添加到容器中？是`List.add()`还是`Map.put()`。
-3. 如果并行的进行规约，还需要告诉*collect()* 多个部分结果如何合并成一个。
+1. **目标容器是什么？是*ArrayList*还是*HashSet*，或者是个*TreeMap*。**
+2. **新元素如何添加到容器中？是`List.add()`还是`Map.put()`。**
+3. **如果并行的进行规约，还需要告诉*collect()* 多个部分结果如何合并成一个。**
 
 
 
@@ -2134,7 +2185,7 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
   //　将Stream规约成List	
   Stream<String> stream = Stream.of("I", "love", "you", "too");
   List<String> list = stream.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);// 方式１
-  //List<String> list = stream.collect(Collectors.toList());// 方式2
+  //List<String> list = stream.collect(Collectors.toList());// 方式 2
   System.out.println(list);
   ```
 
@@ -2142,15 +2193,16 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
 
 
 
-#### **使用collect()生成Collection**
+#### **5.2.1 使用collect()生成Collection**
 
 将*Stream*转换成*List*或*Set*是比较常见的操作，所以*Collectors*工具已经为我们提供了对应的收集器，通过如下代码即可完成：
 
 ```Java
   public static void main(String[] args) {
-    Stream<String> stream = Stream.of("I", "love", "you", "too");
-    List<String> list = stream.collect(Collectors.toList());    //将stream流转化为list集合
-    Set<String> set = stream.collect(Collectors.toSet());     //将stream流转化为set集合
+    Stream<String> stream1 = Stream.of("I", "love", "you", "too");
+    List<String> list = stream1.collect(Collectors.toList());    //将stream流转化为list集合
+    Stream<String> stream2 = Stream.of("I", "love", "you", "too");
+    Set<String> set = stream2.collect(Collectors.toSet());     //将stream流转化为set集合
   }
 ```
 
@@ -2158,11 +2210,11 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
 
 ```Java
   public static void main(String[] args) {
-    Stream<String> stream = Stream.of("I", "love", "you", "too");
-
+    Stream<String> stream1 = Stream.of("I", "love", "you", "too");
     // 通过Collectors.toCollection(Supplier<C> collectionFactory)转化为集合
-    ArrayList<String> arrayList = stream.collect(Collectors.toCollection(ArrayList::new));  //转化为ArrayList
-    HashSet<String> hashSet = stream.collect(Collectors.toCollection(HashSet::new));   //转化为HashSet
+    ArrayList<String> arrayList = stream1.collect(Collectors.toCollection(ArrayList::new));  //转化为ArrayList
+    Stream<String> stream2 = Stream.of("I", "love", "you", "too");
+    HashSet<String> hashSet = stream2.collect(Collectors.toCollection(HashSet::new));   //转化为HashSet
   }
 ```
 
@@ -2170,7 +2222,7 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
 
 ```Java
   public static void main(String[] args) {
-    Stream<String> stream = Stream.of("I", "love", "you", "too");
+    Stream<String> stream = Stream.of("I", "love", "you", "too");		///注意Stream只能用一次, 下面代码编译不通过, 只是方便记笔记
     List<String> list = stream.collect(Collectors.toList());    //将stream流转化为list集合
     ArrayList<Object> arrayList1 = stream.collect(ArrayList::new, ArrayList::add, ArrayList::addAll); //方式2
 
@@ -2183,9 +2235,9 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
   }
 ```
 
+ 除了 collect() 方法将数据收集到集合/数组中。对 Stream流 的收集还有其他的方法。比如说：聚合计算，分组，多级分组，分区，拼接等。
 
-
-#### **使用collect()生成Map**
+#### **5.2.2 使用collect()生成Map**
 
 *Stream*背后依赖于某种数据源，数据源可以是数组、容器等，但不能是*Map*。反过来从*Stream*生成*Map*是可以的，但我们要想清楚*Map*的*key*和*value*分别代表什么，根本原因是我们要想清楚要干什么。通常在三种情况下`collect()`的结果会是*Map*：
 
@@ -2193,7 +2245,7 @@ Stream的终极武器:  **将Stream转换成容器或Map**  https://www.cnblogs.
 2. 使用`Collectors.partitioningBy()`生成的收集器，对元素进行二分区操作时用到。
 3. 使用`Collectors.groupingBy()`生成的收集器，对元素做*group*操作时用到。
 
-- 第一种情况:Collectors.toMap()
+- 第一种情况:Collectors.toMap()  需要指定如何生成*Map*的*key*和value
 
 ```Java
   public static void main(String[] args) {
@@ -2267,11 +2319,1057 @@ Map<Department, List<Employee>> byDept = employees.stream()
             .collect(Collectors.groupingBy(Employee::getDepartment));
 ```
 
+
+
+#### **5.2.3 Collectors的聚合计算**
+
+当我们使用stream流处理数据后, 可以像数据库的聚合函数一样对某个字段进行操作, 比如获取最大值,最小值, 平均值, 求和, 统计计数等操作
+
+```Java
+public class StreamTest23polymerize {
+
+  public static void main(String[] args) {
+    HashSet<Student> students = new HashSet<>();
+    students.add(new Student("zhangsan", 18, 82));
+    students.add(new Student("lisi", 16, 92));
+    students.add(new Student("jack", 20, 62));
+    students.add(new Student("marry", 28, 59));
+    students.add(new Student("tom", 26, 80));
+
+    Optional<Student> maxAgePerson = students.stream()
+        .map((student) -> {
+          student.setScore(student.getScore() + 1); //每人的成绩加1
+          return student;
+        })
+        .collect(Collectors.maxBy((x, y) -> x.getAge() - y.getAge()));
+    System.out.println("年龄最大的Person = " + maxAgePerson.get());
+
+    Optional<Student> minAgePerson = students.stream()
+        .map((student) -> {
+          student.setScore(student.getScore() + 1); //每人的成绩加一
+          return student;
+        })
+        .collect(Collectors.minBy((x, y) -> x.getAge() - y.getAge()));
+    System.out.println("年龄最小的Person = " + minAgePerson.get());
+
+    Integer ageSum = students.stream()
+        .collect(Collectors.summingInt(s -> s.getAge()));
+    System.out.println("年龄之和为: " + ageSum);
+
+    Double average = students.stream()
+        .collect(Collectors.averagingInt(Student::getScore));
+    System.out.println("平均成绩: " + average);
+
+    Long count = students.stream()
+        .collect(Collectors.counting());
+    System.out.println("Person人数: " + count);
+  }
+}
+```
+
+输出:
+
+```txt
+年龄最大的Person = Student(name=marry, age=28, score=60)
+年龄最小的Person = Student(name=lisi, age=16, score=94)
+年龄之和为: 108
+平均成绩: 77.0
+Person人数: 5
+```
+
+#### **5.2.4 Collectors的分组操作**
+
+当我们使用stream流处理数据后, 可以像数据库的聚合函数一样对某个字段进行分组, 可以根据一个字段分组也可以根据多个字段分组
+
+- 根据一个属性分组
+
+```Java
+public class StreamTest24group {
+
+  public static void main(String[] args) {
+    HashSet<Student> students = new HashSet<>();
+    students.add(new Student("zhangsan", 18, 48));
+    students.add(new Student("lisi", 16, 92));
+    students.add(new Student("jack", 21, 62));
+    students.add(new Student("marry", 17, 59));
+    students.add(new Student("tom", 26, 82));
+
+    Map<String, List<Student>> map = students.stream()
+        .collect(Collectors.groupingBy(s -> s.getAge() >= 18 ? "成年" : "未成年"));
+    map.forEach((k, v) -> System.out.println("K=" + k + " v=" + v));
+
+    Map<String, List<Student>> map1 = students.stream()
+        .collect(Collectors.groupingBy(student -> student.getScore() >= 60 ? "成绩合格" : "成绩不合格"));
+    map1.forEach((k, v) -> System.out.println("K=" + k + " v=" + v));
+  }
+}
+```
+
+输出:
+
+```txt
+K=未成年 v=[Student(name=marry, age=17, score=59), Student(name=lisi, age=16, score=92)]
+K=成年 v=[Student(name=tom, age=26, score=82), Student(name=jack, age=21, score=62), Student(name=zhangsan, age=18, score=48)]
+============
+K=成绩合格 v=[Student(name=tom, age=26, score=82), Student(name=jack, age=21, score=62), Student(name=lisi, age=16, score=92)]
+K=成绩不合格 v=[Student(name=marry, age=17, score=59), Student(name=zhangsan, age=18, score=48)]
+```
+
+也可以实现多级分组:
+
+```Java
+ System.out.println("==========多级分组==========");
+    Map<Integer, Map<String, List<Student>>> mapMap = students.stream()
+        .collect(Collectors.groupingBy(
+            Student::getAge,
+            Collectors.groupingBy(s -> s.getScore() >= 60 ? "及格" : "不及格")));
+    mapMap.forEach(
+        (k1, v1) -> {
+          System.out.println(k1);
+          v1.forEach(
+              (k2, v2) -> System.out.println(k2 + ": v2 = " + v2)
+          );
+        }
+    );
+```
+
+输出:
+
+```txt
+==========多级分组==========
+16
+及格: v2 = [Student(name=tom, age=16, score=82), Student(name=lisi, age=16, score=92), Student(name=jack, age=16, score=62)]
+20
+不及格: v2 = [Student(name=zhangsan, age=20, score=48), Student(name=marry, age=20, score=59)]
+```
+
+
+
+#### **5.2.5 Collectors的分区操作**
+
+Collectors. partitioningBy会根据值是否为true把集合中的数据分割为两个列表,一个true列表,一个fase列表
+
+![image-20220214172140666](https://gitee.com/abin_z/pic_bed/raw/master/image-20220214172140666.png)
+
+```Java
+  public static void main(String[] args) {
+    ArrayList<Student> students = new ArrayList<>();
+    students.add(new Student("zhangsan", 20, 48));
+    students.add(new Student("lisi", 16, 92));
+    students.add(new Student("jack", 16, 62));
+    students.add(new Student("marry", 20, 59));
+    students.add(new Student("xiaoming", 16, 82));
+
+    Map<Boolean, List<Student>> map = students.stream()
+        .collect(Collectors.partitioningBy(student -> student.getAge() >= 18));
+    map.forEach((k, v) -> System.out.println("k = " + k + "  v = " + v));
+  }
+```
+
+输出:
+
+```Java
+k = false  v = [Student(name=lisi, age=16, score=92), Student(name=jack, age=16, score=62), Student(name=xiaoming, age=16, score=82)]
+k = true  v = [Student(name=zhangsan, age=20, score=48), Student(name=marry, age=20, score=59)]
+```
+
+#### **5.2.6 Collectors的拼接操作**
+
+Collectors.joining会根据指定的连接符,将所有的元素连接成一个字符串
+
+```Java
+  public static void main(String[] args) {
+    ArrayList<Student> students = new ArrayList<>();
+    students.add(new Student("zhangsan", 20, 48));
+    students.add(new Student("lisi", 16, 92));
+    students.add(new Student("jack", 16, 62));
+    students.add(new Student("marry", 20, 59));
+    students.add(new Student("xiaoming", 16, 82));
+
+    String all = students.stream()
+        .map(Student::getName)
+        .collect(Collectors.joining());   //直接拼接
+    System.out.println(all);
+
+    String all2 = students.stream()
+        .map(Student::getName)
+        .collect(Collectors.joining("_"));  //使用 _ 作为分隔符拼接
+    System.out.println(all2);
+
+    String all3 = students.stream()
+        .map(Student::getName)
+        .collect(Collectors.joining("_", "***", "&&&")); //分隔符, 前缀, 后缀
+    System.out.println(all3);
+
+  }
+```
+
+输出: 
+
+```txt
+zhangsanlisijackmarryxiaoming
+zhangsan_lisi_jack_marry_xiaoming
+***zhangsan_lisi_jack_marry_xiaoming&&&
+```
+
 更多collect()方法详情:  https://www.cnblogs.com/CarpenterLee/p/6550212.html
 
 
 
-**Java8 之 lambda 表达式、方法引用、函数式接口、默认方式、静态方法**: https://zhuanlan.zhihu.com/p/68347633
+## 6.并行流
+
+parallelStream其实就是一个并行执行的流.它通过默认的ForkJoinPool,可能提高你的多线程任务的速度.
+
+并行流就是将一个流的内容分成多个数据块，并用不同的线程分别处理每个不同数据块的流
+
+https://blog.csdn.net/u011001723/article/details/52794455?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3.pc_relevant_paycolumn_v3&utm_relevant_index=4
+
+```Java
+  public static void main(String[] args) {
+    System.out.println("串行的stream流");
+    Stream.of(10, 20, 3, 40, 5, 6)
+        .forEach(item -> {
+          System.out.println("Thread id = " + Thread.currentThread().getName() + " v = " + item);
+        });
+
+    System.out.println("================");
+    System.out.println("并行的stream流");
+    Stream.of(10, 20, 3, 40, 5, 6)
+        .parallel()   //转化为并行流
+        .forEach(item -> {
+          System.out.println("Thread id = " + Thread.currentThread().getName() + " v = " + item);
+        });
+  }
+```
+
+输出: 
+
+```txt
+串行的stream流
+Thread id = main v = 10
+Thread id = main v = 20
+Thread id = main v = 3
+Thread id = main v = 40
+Thread id = main v = 5
+Thread id = main v = 6
+================
+并行的stream流
+Thread id = main v = 40
+Thread id = main v = 6
+Thread id = ForkJoinPool.commonPool-worker-2 v = 10
+Thread id = main v = 5
+Thread id = ForkJoinPool.commonPool-worker-2 v = 3
+Thread id = ForkJoinPool.commonPool-worker-1 v = 20
+```
+
+### 6.1获取并行流的方式
+
+我们可以通过两种方式来获取并行流
+
+1. 通过Collection接口中的 .parallelStream()方法获取并行流
+2. 将已有的串行流转化为并行流.parallel()方法
+
+```Java
+  public static void main(String[] args) {
+    List<Integer> arrayList = new ArrayList<>();
+    //通过Collection接口中的 .parallelStream()方法获取并行流
+    Stream<Integer> parallelStream = arrayList.parallelStream();
+
+    //将已有的串行流转化为并行流.parallel()方法
+    Stream<Integer> parallel = Stream.of(1, 2, 3, 4, 5).parallel();
+  }
+```
+
+
+
+### 6.2串行流和并行流的区别
+
+串行流是单线程的, 顺序执行, 线程是安全的
+
+并行流式多线程的, 随机执行, 线程是不安全的, 但是可以通过一些手段解决线程安全问题
+
+```Java
+  public static void main(String[] args) {
+    List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    numbers.parallelStream()
+        .forEach(System.out::println);			//随机输出
+    System.out.println("+++++++++++++++");
+    numbers.parallelStream()
+        .forEachOrdered(System.out::println);
+  }
+```
+
+输出:
+
+```txt
+6				//输出是无序随机的
+5
+8
+9
+3
+4
+2
+1
+7
++++++++++++++++
+1				//输出是经过排序的
+2
+3
+4
+5
+6
+7
+8
+9
+```
+
+注意: 如果forEachOrdered()中间有其他如filter()的中介操作，会试着平行化处理，然后最终forEachOrdered()会以原数据顺序处理，因此，使用forEachOrdered()这类的有序处理,可能会（或完全失去）失去平行化的一些优势，实际上中介操作亦有可能如此，例如sorted()方法。
+
+
+
+### 6.3并行流的线程安全问题
+
+在多线程的处理下, 肯定会出现数据安全的问题.
+
+```Java
+  public static void main(String[] args) {
+    ArrayList<Integer> list = new ArrayList<>();
+    for (int i = 0; i < 1000; i++) {
+      list.add(i);
+    }
+    System.out.println(list.size());
+
+    //将list中的数据转移到另一个list中,
+    ArrayList<Integer> newList = new ArrayList<>();
+    list.parallelStream()     //这种情况下使用并行流, 会出现线程安全问题
+        .forEach(newList::add);
+    System.out.println(newList.size());
+  }
+```
+
+输出:  已经出现线程安全问题, 编译器并没有报错
+
+```java 
+1000
+932				//数量没有1000，已经出现线程安全问题
+```
+
+#### **线程安全问题的解决方案**
+
+1. ##### 使用同步代码块:
+
+   ```Java
+     public static void main(String[] args) {
+       ArrayList<Integer> list = new ArrayList<>();
+       for (int i = 0; i < 1000; i++) {
+         list.add(i);
+       }
+       System.out.println(list.size());
+   
+       //将list中的数据转移到另一个list中,
+       ArrayList<Integer> newList = new ArrayList<>();
+       Object obj = new Object();
+       list.parallelStream()     //添加同步代码块
+           .forEach(item -> {
+             synchronized (obj) {    //添加同步代码块实现线程安全
+               newList.add(item);
+             }
+           });
+       System.out.println(newList.size());
+     }
+   ```
+
+   输出: 使用同步代码块后就不会再出现数据安全问题
+
+   ```Java
+   1000
+   1000
+   ```
+
+2. ##### 使用线程安全的容器
+
+   ```Java
+   
+     public static void main(String[] args) {
+       Vector<Integer> newList = new Vector<>();  //Vector是线程安全的容器
+       IntStream.rangeClosed(1, 1000).parallel()
+   //        .forEach(newList::add);
+           .forEach(item -> {
+             newList.add(item);
+           });
+       System.out.println(newList.size());
+     }
+   ```
+
+   输出: 
+
+   ```Java
+   1000
+   ```
+
+3. ##### 将线程不安全的容器转化为线程安全的容器
+
+   ```Java
+     public static void main(String[] args) {
+       ArrayList<Integer> list = new ArrayList<>(); //arrayList是线程不安全的容器
+       //将线程不安全的arrayList转化为线程安全的
+       List<Integer> synchronizedList = Collections.synchronizedList(list);
+       IntStream.rangeClosed(1, 1000).parallel()
+           .forEach(synchronizedList::add);
+       System.out.println(synchronizedList.size());
+     }
+   ```
+
+   输出: 
+
+   ```Java
+   1000
+   ```
+
+4. ##### 使用的stream的Collectors工具类提供的方法: 里面的方法满足线程安全问题
+
+   ```Java
+     public static void main(String[] args) {
+       ArrayList<Integer> list = new ArrayList<>(); //arrayList是线程不安全的容器
+       List<Integer> collect = IntStream.rangeClosed(1, 1000).parallel()
+           .boxed()
+           .collect(Collectors.toList());
+       System.out.println(collect.size());
+       // 注意: IntStream是存的是int类型的stream,而Steam是一个存了Integer的stream。
+       // boxed的作用就是将int类型的stream转成了Integer类型的Stream。
+     }
+   ```
+
+   输出: 
+
+   ```Java
+   1000
+   ```
+
+
+
+### 6.4并行流原理:ForkJoin框架
+
+ForkJoin框架的目的是以递归的方式将可以并行的任务拆分成更小的任务,然后将每个子任务的结果合并起来生成整体结果.
+
+它是 ExecutorService 接口的一个实现,他把子任务分配给线程池(ForkJoinPool)中的线程.
+
+![image-20220215164410082](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215164410082.png)
+
+如果你了解著名的分治算法,会发现这不过是分支算法的并行版本而已
+
+Fork/Join框架主要包含三个模块:
+
+1. 线程池: ForkJoinPool
+2. 任务对象: ForkJoinTask
+3. 执行任务的线程: ForkJoinWorkerThread
+
+#### **6.4.1 Fork/Join原理-分治法**
+
+ForkJoin框架是从jdk7中新特性,它同ThreadPoolExecutor一样，也实现了Executor和ExecutorService接口。它使用了一个无限队列来保存需要执行的任务，而线程的数量则是通过构造函数传入，如果没有向构造函数中传入希望的线程数量，那么当前计算机可用的CPU数量会被设置为线程数量作为默认值。
+
+ForkJoinPool主要用来使用分治法(Divide-and-Conquer Algorithm)来解决问题。典型的应用比如快速排序算法。这里的要点在于，ForkJoinPool需要使用相对少的线程来处理大量的任务。比如要对1000万个数据进行排序，那么会将这个任务分割成两个500万的排序任务和一个针对这两组500万数据的合并任务。以此类推，对于500万的数据也会做出同样的分割处理，到最后会设置一个阈值来规定当数据规模到多少时，停止这样的分割处理。比如，当元素的数量小于10时，会停止分割，转而使用插入排序对它们进行排序。那么到最后，所有的任务加起来会有大概2000000+个。问题的关键在于，对于一个任务而言，只有当它所有的子任务完成之后，它才能够被执行。
+
+所以当使用ThreadPoolExecutor时，使用分治法会存在问题，因为ThreadPoolExecutor中的线程无法像任务队列中再添加一个任务并且在等待该任务完成之后再继续执行。而使用ForkJoinPool时，就能够让其中的线程创建新的任务，并挂起当前的任务，此时线程就能够从队列中选择子任务执行。
+
+![image-20220215164535651](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215164535651.png)
+
+
+
+#### **6.4.2 Fork/Join原理-工作窃取算法**
+
+​		forkjoin最核心的地方就是利用了现代硬件设备多核,在一个操作时候会有空闲的cpu,那么如何利用好这个空闲的cpu就成了提高性能的关键,而这里我们要提到的工作窃取（work-stealing）算法就是整个forkjion框架的核心理念,工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执行。
+
+![image-20220215175238907](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215175238907.png)
+
+**那么为什么需要使用工作窃取算法呢？**
+		假如我们需要做一个比较大的任务，我们可以把这个任务分割为若干互不依赖的子任务，为了减少线程间的竞争，于是把这些子任务分别放到不同的队列里，并为每个队列创建一个单独的线程来执行队列里的任务，线程和队列一一对应，比如A线程负责处理A队列里的任务。  但是有的线程会先把自己队列里的任务干完，而其他线程对应的队列里还有任务等待处理。干完活的线程与其等着，不如去帮其他线程干活，于是它就去其他线程的队列里窃取一个任务来执行。而在这时它们会访问同一个队列，所以为了减少窃取任务线程和被窃取任务线程之间的竞争，通常会使用双端队列，**被窃取任务线程永远从双端队列的头部拿任务执行，而窃取任务的线程永远从双端队列的尾部拿任务执行。**
+
+```txt
+工作窃取算法的优点是充分利用线程进行并行计算，并减少了线程间的竞争，其缺点是在某些情况下还是存在竞争，比如双端队列里只有一个任务时。并且消耗了更多的系统资源，比如创建多个线程和多个双端队列。
+```
+
+
+
+#### 6.4.3 Fork/Join 模拟案例
+
+使用 Fork/Join计算1-10000的和,当一个任务的计算数量大于3000的时候拆分任务。数量小于3000的时候就计算
+
+![image-20220215230750456](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215230750456.png)
+
+案例实现
+
+```Java
+public class ParallelStream09ForkJoin {
+
+  /**
+   * 使用 Fork/Join计算1-10000的和, 当一个任务的计算数量大于3000的时候拆分任务。数 量小于3000的时候就计算
+   *
+   * @param args
+   */
+  public static void main(String[] args) {
+    long startTime = System.currentTimeMillis();
+    ForkJoinPool forkJoinPool = new ForkJoinPool();
+    SumTask sumTask = new SumTask(1, 10000L);
+    Long result = forkJoinPool.invoke(sumTask);
+    System.out.println("result = " + result);
+    long endTime = System.currentTimeMillis();
+    System.out.println("总共耗时:" + (endTime - startTime));
+  }
+}
+
+class SumTask extends RecursiveTask<Long> {
+  //定义一个拆分的临界值
+  private static final long THRESHOLD = 3000L;
+  //起始坐标
+  private final long start;
+  //尾部坐标
+  private final long end;
+
+  public SumTask(long start, long end) {
+    this.start = start;
+    this.end = end;
+  }
+
+  @Override
+  protected Long compute() {
+    long length = end - start;
+    if (length <= THRESHOLD) {
+      //长度小于临界值， 不需要再做拆分，直接进行计算
+      long sum = 0;
+      for (long i = start; i <= end; i++) {
+        sum += i;
+      }
+      System.out.println("计算： " + start + "--" + end + " 的结果为" + sum);
+      return sum;
+    } else {
+      //长度大于临界值， 还需要再做拆分
+      long middle = (start + end) / 2;
+      System.out.println("拆分: 左边" + start + "-->" + middle + ", 右边: " + (middle + 1) + "-->" + end);
+      SumTask left = new SumTask(start, middle);
+      left.fork();      //拆分
+      SumTask right = new SumTask(middle + 1, end);
+      right.fork();     //拆分
+      return left.join() + right.join(); // 合并
+    }
+  }
+}
+```
+
+输出: 
+
+```txt
+拆分: 左边1-->5000, 右边: 5001-->10000
+拆分: 左边1-->2500, 右边: 2501-->5000
+拆分: 左边5001-->7500, 右边: 7501-->10000
+计算： 5001--7500 的结果为15626250
+计算： 7501--10000 的结果为21876250
+计算： 1--2500 的结果为3126250
+计算： 2501--5000 的结果为9376250
+result = 50005000
+总共耗时:3
+```
+
+
+
+
+
+- **高效使用并行流**
+
+1. 在考虑选择顺序流还是并行流时，第一个也是最重要的建议就是用适当的基准来检查其性能。
+2. 留意装箱。自动装箱和拆箱操作会大大降低性能。Java 8中有原始类型流（IntStream、LongStream、DoubleStream）来避免这种操作，但凡有可能都应该用这些流。
+3. 有些操作本身在并行流上的性能就比顺序流差。特别是limit和findFirst等依赖于元素顺序的操作，它们在并行流上执行的代价非常大。例如，findAny会比findFirst性能好，因为它不一定要按顺序来执行。你总是可以调用unordered方法来把有序流变成无序流。那么，如果你需要流中的n个元素而不是专门要前n个的话，对无序并行流调用limit可能会比单个有序流（比如数据源是一个List）更高效。
+4. 还要考虑流的操作流水线的总计算成本。设N是要处理的元素的总数，Q是一个元素通过流水线的大致处理成本，则N*Q就是这个对成本的一个粗略的定性估计。Q值较高就意味着使用并行流时性能好的可能性比较大。
+5. 对于较小的数据量，选择并行流几乎从来都不是一个好的决定。并行处理少数几个元素的好处还抵不上并行化造成的额外开销。
+6. 要考虑流背后的数据结构是否易于分解。例如，ArrayList的拆分效率比LinkedList高得多，因为前者用不着遍历就可以平均拆分，而后者则必须遍历。另外，用range工厂方法创建的原始类型流也可以快速分解。
+7. 流自身的特点，以及流水线中的中间操作修改流的方式，都可能会改变分解过程的性能。例如，一个SIZED流可以分成大小相等的两部分，这样每个部分都可以比较高效地并行处理，但筛选操作可能丢弃的元素个数却无法预测，导致流本身的大小未知。
+8. 还要考虑终端操作中合并步骤的代价是大是小（例如Collector中的combiner方法）。如果这一步代价很大，那么组合每个子流产生的部分结果所付出的代价就可能会超出通过并行流得到的性能提升。
+
+
+
+# 六. Optional工具类
+
+每个Java卡法人员都遇到过:  **调用一个方法得到了返回值却不能直接将返回值作为参数去调用别的方法。我们首先要判断这个返回值是否为null，只有在非空的前提下才能将其作为其他方法的参数。否则就会出现NPE异常，就是传说中的空指针异常**。
+
+**Optional 类主要解决的问题是臭名昭著的空指针异常（NullPointerException） —— 每个 Java 程序员都非常了解的异常。**
+
+
+
+## 1.JDK8以前对 null 值得处理
+
+```Java
+  public static void main(String[] args) {
+    //下面的代码编译不会报错, 但是在运行的时候会抛出空指针异常
+    String str = null;
+    int length = str.length();
+    System.out.println("字符串的长度 = " + length);
+  }
+```
+
+```txt
+Exception in thread "main" java.lang.NullPointerException				//空指针异常
+	at com.abin.optional.Optional01Test.main(Optional01Test.java:12)
+```
+
+JDK7 以前对上诉代码的解决方法:
+
+```Java
+  public static void main(String[] args) {
+    //jdk7以前对null的原始操作
+    String str = null;
+    int length;
+    if (str != null) {			//手动去判断
+      length = str.length();
+    } else {
+      length = -1;    //-1表示字符串为null
+    }
+    System.out.println("字符串的长度 = " + length);
+  }
+```
+
+使用Optional类: 
+
+```Java
+System.out.println(Optional.ofNullable(str).map(String::length).orElse(0));
+```
+
+在以下示例中，如果我们需要确保不触发异常，就得在访问每一个值之前对其进行明确地检查：
+
+```java
+if (user != null) {
+    Address address = user.getAddress();
+    if (address != null) {
+        Country country = address.getCountry();
+        if (country != null) {
+            String isocode = country.getIsocode();
+            if (isocode != null) {
+                isocode = isocode.toUpperCase();
+            }
+        }
+    }
+```
+
+可以看到上诉代码很容易就变得冗长，难以维护. 为了简化这个过程，于是诞生了Optional类
+
+## 2.Optional类的基本使用
+
+### **2.1 Optional基本概念**
+
+Optional 类是一个可以为null的容器对象。如果值存在则isPresent()方法会返回true，调用get()方法会返回该对象。
+
+Optional 是个容器：它可以保存类型T的值，或者仅仅保存null。Optional提供很多有用的方法，这样我们就不用显式进行空值检测。
+
+Optional 类的引入很好的解决空指针异常。
+
+![image-20220216123524434](https://gitee.com/abin_z/pic_bed/raw/master/image-20220216123524434.png)
+
+本质上，这是一个包含有可选值的包装类，这意味着 Optional 类既可以含有对象也可以为空。
+
+```Java
+public final class Optional<T> {			//final class 没有子类
+    /**
+     * Common instance for {@code empty()}.
+     */
+    private static final Optional<?> EMPTY = new Optional<>();
+
+    /**
+     * If non-null, the value; if null, indicates no value is present
+     */
+    private final T value;
+
+    /**
+     * Constructs an empty instance.
+     *
+     * @implNote Generally only one empty instance, {@link Optional#EMPTY},
+     * should exist per VM.
+     */
+    private Optional() {
+        this.value = null;
+    }
+	........
+```
+
+
+
+### **2.2 Optional对象的创建方式:** 
+
+1. 第一种方式: of() 方法,  of方法不支持 null, 否则将抛出NullPointerException
+2. 第二种方式: ofNullable() 方法, ofNullable支持null
+3. 第三种方式: empty() 方法, empty直接创建一个空的Optional对象
+
+```Java
+  public static void main(String[] args) {
+    Person person = new Person();
+    Person p1 = null;
+
+    // 第一种方法: of()方法,  of方法不支持 null, 否则将抛出NullPointerException
+    Optional<Person> op1 = Optional.of(person);
+    System.out.println("op1 = " + op1.get());
+    //Optional<Person> op = Optional.of(p1);	抛出NullPointerException
+
+    //第二种方式: ofNullable方法, 支持null
+    Optional<Person> op2 = Optional.ofNullable(person);
+    Optional<Object> op3 = Optional.ofNullable(null);
+
+    //第三种方式: 使用 empty() 方法, 直接创建一个空的Optional对象
+    Optional<Object> empty = Optional.empty();
+  }
+```
+
+你可以使用 *of()* 和 ofNullable() 方法创建包含值的 *Optional*。**两个方法的不同之处在于如果你把 *null* 值作为参数传递进去，*of()* 方法会抛出 *NullPointerException***：
+
+### **2.3 Optional的常用方法**
+
+| 方法名                                                       | 作用                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **static <T> Optional<T> empty()**                           | 返回空的 Optional 实例。                                     |
+| **static <T> Optional<T> of(T value)**                       | 返回一个指定**非null值**的Optional。                         |
+| **static <T> Optional<T> ofNullable(T value) **              | 如果为非空，返回 Optional 描述的指定值，否则返回空的 Optional。 |
+| **T get()**                                                  | 如果在这个Optional中包含这个值，返回值，==否则抛出异常：NoSuchElementException== |
+| **boolean isPresent()**                                      | 如果值存在则方法会返回true，否则返回 false。                 |
+| **void ifPresent(Consumer<? super T> consumer)**             | 如果值存在则使用该值调用 consumer , ==否则不做任何事情==。没有返回值 |
+| **T orElse(T other)**                                        | 如果Optional中包含值，返回值， 否则返回 other 默认值。       |
+| **T orElseGet(Supplier<? extends T> other)**                 | 如果Optional中包含值，返回值， 否则触发 other，并返回 other 调用的结果。 |
+| **<U>Optional<U> map(Function<? super T,? extends U> mapper)** | **如果有值，则对其执行调用映射函数得到返回值。如果返回值不为 null，则创建包含映射返回值的Optional作为map方法返回值，否则返回空Optional。** |
+| <X extends Throwable>  T orElseThrow(Supplier<? extends X> exceptionSupplier) | 如果Optional中包含值，返回包含的值，否则抛出由 Supplier 继承的异常 |
+
+
+
+- get() 方法 
+
+  get()方法: 如果Optional对象中有值, 则返回该值, 如果没有值则抛出NoSuchElementException异常
+
+  ```Java
+      public T get() {		//JDK源码
+          if (value == null) {
+              throw new NoSuchElementException("No value present");
+          }
+          return value;
+      }
+  ```
+
+  测试: 
+
+  ```Java
+    public static void main(String[] args) {
+      Person person = new Person();
+      Person p1 = null;
+      Optional<Person> op1 = Optional.of(person);
+      Optional<Object> empty = Optional.empty();
+  
+      System.out.println("op1.get() = " + op1.get());     //获取person的值
+      System.out.println("empty.get() = " + empty.get()); //抛异常
+    }
+  ```
+
+  输出: 
+
+  ```Java
+  op1.get() = Person(name=null, age=null)
+  Exception in thread "main" java.util.NoSuchElementException: No value present
+  	at java.util.Optional.get(Optional.java:135)
+  	at com.abin.optional.Optional03Test.main(Optional03Test.java:20)
+  ```
+
+- isPresent() 方法
+
+  isPresent()方法: 判断Optional对象中是否有值, 有值返回true, 为null返回false
+
+  ```Java
+  public boolean isPresent() {			//JDK源码
+          return value != null;
+      }
+  ```
+
+  测试: 
+
+  ```Java
+    public static void main(String[] args) {
+      Person person1 = new Person();
+      Person person2 = null;
+  
+      Optional<Person> op1 = Optional.of(person1);
+      Optional<Person> op2 = Optional.empty();
+  
+      if (op1.isPresent()) {
+        System.out.println("op1.get() = " + op1.get());
+      } else {
+        System.out.println("op1 是一个空Optional对象");
+      }
+  
+      if (op2.isPresent()) {
+        System.out.println("op2.get() = " + op2.get());
+      } else {
+        System.out.println("op2 是一个空Optional对象");
+      }
+    }
+  ```
+
+  输出: 
+
+  ```Java
+  op1.get() = Person(name=null, age=null)
+  op2 是一个空Optional对象
+  ```
+
+- orElse(T t)方法
+
+  orElse(T t) 方法表示: 如果Optional对象有值则直接返回值, 若为null 则返回orElse的参数 t  默认值;
+
+  ```Java
+  public T orElse(T other) {			//JDK源码
+          return value != null ? value : other;
+      }
+  ```
+
+  测试:
+
+  ```Java
+    public static void main(String[] args) {
+      Person person = new Person();
+  
+      Optional<Person> op1 = Optional.of(person);
+      Optional<Person> op2 = Optional.empty();
+  
+      Person person1 = op1.orElse(new Person("张三", 18));
+      Person person2 = op2.orElse(new Person("李四", 20));
+  
+      System.out.println("person1 = " + person1);
+      System.out.println("person2 = " + person2);
+    }
+  ```
+
+  输出:
+
+  ```java 
+  person1 = Person(name=null, age=null)
+  person2 = Person(name=李四, age=20)
+  ```
+
+- orElseGet(Supplier s) 方法
+
+  orElseGet(Supplier s) 方法 表示: 如果Optional对象有值则直接返回值, 若为null 则返回Supplier s 的返回值;
+
+  ```Java
+   public T orElseGet(Supplier<? extends T> other) {   		//JDK源码
+          return value != null ? value : other.get();
+      }
+  ```
+
+  测试:
+
+  ```Java
+    public static void main(String[] args) {
+      Person person = new Person();
+  
+      Optional<Person> op1 = Optional.of(person);
+      Optional<Person> op2 = Optional.empty();
+  
+      Person person1 = op1.orElseGet(() -> {
+        System.out.println("默认操作pppp1");
+        return new Person("test", 20);
+      });
+  
+      Person person2 = op2.orElseGet(() -> {
+        System.out.println("默认操作pppp2");
+        return new Person("test", 10);
+      });
+  
+      System.out.println("person1 = " + person1);
+      System.out.println("person2 = " + person2);
+    }
+  ```
+
+  输出:
+
+  ```Java
+  默认操作pppp2
+  person1 = Person(name=null, age=null)
+  person2 = Person(name=test, age=10)
+  ```
+
+  - *orElse()* **和** *orElseGet()* **的不同之处**
+
+   乍一看，这两种方法似乎起着同样的作用。然而事实并非如此。我们创建一些示例来突出二者行为上的异同。
+
+  ```Java
+  public class Optional09Test {
+  
+    public static void main(String[] args) {
+      //演示orElse和orElseGet 的区别
+      Person person = new Person("ZhangSan", 18);
+      Person nullPerson = null;
+  
+      // 空Optional
+      System.out.println("都传入空的Optional对象-----");
+      System.out.println("orElse方法");
+      Person res01 = Optional.ofNullable(nullPerson).orElse(createPerson());
+      System.out.println("获得的值: " + res01);
+      System.out.println("orElseGet方法");
+      Person res02 = Optional.ofNullable(nullPerson).orElseGet(() -> createPerson());
+      System.out.println("获得的值: " + res02);
+  
+      System.out.println("++++++++++++++++++++++++++++++++");
+      // 不为空的Optional
+      System.out.println("都传入有值的Optional对象-----");
+      System.out.println("orElse方法");
+      Person res03 = Optional.of(person).orElse(createPerson());
+      System.out.println("获得的值: " + res03);
+      System.out.println("orElseGet方法");
+      Person res04 = Optional.ofNullable(person).orElseGet(() -> createPerson());
+      System.out.println("获得的值: " + res04);
+    }
+  
+    public static Person createPerson() {
+      System.out.println("$$创建默认的人员$$");
+      return new Person("default", 18);
+    }
+  }
+  ```
+
+  输出: 
+
+  ```Java
+  都传入空的Optional对象-----
+  orElse方法
+  $$创建默认的人员$$
+  获得的值: Person{name='default', age=18, height=null}
+  orElseGet方法
+  $$创建默认的人员$$
+  获得的值: Person{name='default', age=18, height=null}
+  ++++++++++++++++++++++++++++++++
+  都传入有值的Optional对象-----
+  orElse方法
+  $$创建默认的人员$$					// 这里传入的是有值的Optional对象, orElse方法仍然执行了createPerson()方法, 虽然返回值是正确的
+  获得的值: Person{name='ZhangSan', age=18, height=null}
+  orElseGet方法
+  获得的值: Person{name='ZhangSan', age=18, height=null}
+  ```
+
+  结论:	 这个示例中，两个 *Optional*  对象都包含非空值，两个方法都会返回对应的非空值。看似没有任何问题
+
+  ​			 不过，*orElse()* 方法仍然创建了 *Person* 对象。**与之相反，orElseGet() 方法不创建 Person对象。**
+
+  ​			 在执行较密集的调用时，比如调用 Web 服务或数据查询，**这个差异会对性能产生重大影响**。
+
+  
+
+- ifPresent()方法
+
+  ifPresent(Consumer c) 表示: Optional对象如果存在值, 就执行 Consumer 里面的代码, 如果不存在就不执行 Consumer 里面的代码
+
+  ```Java
+      public void ifPresent(Consumer<? super T> consumer) {		//JDK源码
+          if (value != null)
+              consumer.accept(value);
+      }
+  ```
+
+  测试: 
+
+  ```Java
+    public static void main(String[] args) {
+  
+      Optional<String> s = Optional.of("张三");
+      Optional<Object> empty = Optional.empty();
+  
+      s.ifPresent(i -> {
+        System.out.println("存在执行的操作1111 " + i);
+      });
+  
+      empty.ifPresent(i -> {
+        System.out.println("存在执行的操作2222 " + i);
+      });
+    }
+  ```
+
+  输出: 
+
+  ```Java
+  存在执行的操作1111 张三				//只有一个存在值得才会执行ifPresent里面的Consumer
+  ```
+
+- map()方法
+
+  map( Function f )方法表示对数据进行一些特定的操作:  如果存在值，则就对其执行传入的 Lambda 表达式，如果结果为非空，则返回一个描述结果的非空Optional对象。否则返回一个空的Optional对象。
+
+  *map()* **对值应用(调用)作为参数的函数，然后将返回的值包装在Optional中**, 这就使对返回值进行链试调用的操作成为可能 
+
+  ```Java
+  //If a value is present, apply the provided mapping function to it, and if the result is non-null, return an Optional describing the result. Otherwise return an empty Optional.
+  
+  	public<U> Optional<U> map(Function<? super T, ? extends U> mapper) {
+          Objects.requireNonNull(mapper);
+          if (!isPresent())
+              return empty();
+          else {
+              return Optional.ofNullable(mapper.apply(value));
+          }
+      }
+  ```
+
+  测试: 
+
+  ```Java
+  public class Optional08TestMap {
+  
+    public static void main(String[] args) {
+      Person person = new Person(null, 18);
+      String upperName = getUpperName(person);
+      System.out.println(upperName);
+    }
+  
+    public static String getUpperName(Person p) {
+      Optional<Person> person = Optional.ofNullable(p);   //先将参数存放在Optional容器中
+      if (person.isPresent()) {
+        return person.map(s -> s.getName())
+            .map(s -> s.toUpperCase())
+            .orElse("警告: p.name为null");
+      } else {
+        //如果Optional对象person 为null执行以下的操作
+        return null;
+      }
+    }
+  }
+  
+  输出: 
+  警告: p.name为null
+  ```
+
+  ```Java
+  public class Optional08TestMap {
+  
+    public static void main(String[] args) {
+      Person person = new Person("ZhangSan", 18);
+      String upperName = getUpperName(person);
+      System.out.println(upperName);
+    }
+  
+    public static String getUpperName(Person p) {
+      Optional<Person> person = Optional.ofNullable(p);   //先将参数存放在Optional容器中
+      if (person.isPresent()) {
+        //如果Optional对象person 存在值执行以下的操作
+        return person.map(Person::getName)  	//获取name
+            .map(String::toUpperCase)   		//将name转化为大写
+            .orElse("警告: p.name为null");     //为null就返回参数内容
+      } else {
+        //如果Optional对象person 为null执行以下的操作
+        return null;
+      }
+    }
+  }
+  
+  输出: 
+  ZHANGSAN
+  ```
+
+**Optional 细节**: https://blog.csdn.net/wwe4023/article/details/80760416#:~:text=Optional%20%E7%B1%BB%E4%B8%BB%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98%E6%98%AF%E8%87%AD%E5%90%8D%E6%98%AD%E8%91%97%E7%9A%84%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8%EF%BC%88NullPointerException%EF%BC%89%20%E2%80%94%E2%80%94%20%E6%AF%8F%E4%B8%AA%20Java%20%E7%A8%8B%E5%BA%8F%E5%91%98%E9%83%BD%E9%9D%9E%E5%B8%B8%E4%BA%86%E8%A7%A3%E7%9A%84%E5%BC%82%E5%B8%B8%E3%80%82.%20%E6%9C%AC%E8%B4%A8%E4%B8%8A%EF%BC%8C%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E6%9C%89%E5%8F%AF%E9%80%89%E5%80%BC%E7%9A%84%E5%8C%85%E8%A3%85%E7%B1%BB%EF%BC%8C%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%20Optional,%E7%9A%84%E6%84%8F%E4%B9%89%E6%98%BE%E7%84%B6%E4%B8%8D%E6%AD%A2%E4%BA%8E%E6%AD%A4%E3%80%82.%20%E6%88%91%E4%BB%AC%E4%BB%8E%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%A8%E4%BE%8B%E5%BC%80%E5%A7%8B%E3%80%82.%20%E5%9C%A8%20Java%208%20%E4%B9%8B%E5%89%8D%EF%BC%8C%E4%BB%BB%E4%BD%95%E8%AE%BF%E9%97%AE%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E6%88%96%E5%B1%9E%E6%80%A7%E7%9A%84%E8%B0%83%E7%94%A8%E9%83%BD%E5%8F%AF%E8%83%BD%E5%AF%BC%E8%87%B4%20NullPointerException%20%EF%BC%9A.
+
+
+
+
+
+**Java8 之 lambda 表达式、方法引用、函数式接口、默认方式、静态方法**: https://blog.csdn.net/lzb348110175/article/details/103806112
 
 
 

@@ -2,7 +2,6 @@ package com.abin.stream;
 
 import com.abin.funcref.entity.Person;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
