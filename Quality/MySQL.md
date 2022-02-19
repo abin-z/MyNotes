@@ -323,7 +323,9 @@ select deptno,job,max(sal) as maxsal from emp group by deptno,job order by deptn
 select job,max(sal) as maxsal from emp where job <> 'MANAGER' group by job;
 ```
 
-​	
+**group by子句在数据库底层执行时会先排序，再分组。**
+
+
 
 ### 数据过滤条件 having
 
