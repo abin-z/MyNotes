@@ -81,9 +81,21 @@ TCL  :   事务控制语言： 	commit / rollback
 
 ### **导入数据库脚本：**
 
-进入数据库： use db_name;
+进入数据库： `use db_name;`
 
-导入sql文件： source 文件路径
+导入sql文件：` source 文件路径`
+
+查看当前数据库版本:   `select version() from dual;`     企业再用的mysql数据库版本是5.7
+
+```sql
+mysql> select version() from dual;
++-----------+
+| version() |
++-----------+
+| 8.0.26    |
++-----------+
+1 row in set (0.02 sec)
+```
 
 
 
