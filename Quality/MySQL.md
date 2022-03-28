@@ -680,6 +680,15 @@ select ename,job from emp where job = 'SALESMAN';
 #注意:如果第二个ename改成empno 输出结果为一串数字,没有意义
 ```
 
+**UNION 语句**：用于将不同表中相同列中查询的数据展示出来；（不包括重复数据）
+
+**UNION ALL 语句**：用于将不同表中相同列中查询的数据展示出来；（包括重复数据）
+
+```sql
+SELECT 列名称 FROM 表名称 UNION SELECT 列名称 FROM 表名称 ORDER BY 列名称；
+SELECT 列名称 FROM 表名称 UNION ALL SELECT 列名称 FROM 表名称 ORDER BY 列名称；
+```
+
 
 
 ## 数据表table
