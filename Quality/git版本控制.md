@@ -76,7 +76,7 @@ git安装配置: https://www.yiibai.com/git/git_environment.html
 
 
 
-### git使用前的配置
+### 1. git使用前的配置
 
 Git 自带一个 `git config` 的工具来帮助设置控制 Git 外观和行为的配置变量。 这些变量存储在三个不同的位置：
 
@@ -90,7 +90,7 @@ Git 自带一个 `git config` 的工具来帮助设置控制 Git 外观和行为
 
 在 Windows 系统中，Git 会查找 `$HOME` 目录下(一般情况下是 `C:\Users\$USER`)的 `.gitconfig` 文件。 Git 同样也会寻找 `/etc/gitconfig` 文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。
 
-### 用户信息
+### 2. 用户信息
 
 当安装完 Git 应该做的第一件事就是设置用户名称与邮件地址。这样做很重要，因为每一个 Git 的提交都会使用这些信息，并且它会写入到每一次提交中，不可更改：(这个可以是不存在的邮箱，但是就是必须要有)
 
@@ -109,7 +109,7 @@ $ git config --global user.email abin_z@163.com
 
 
 
-### 检查配置信息
+### 3. 检查配置信息
 
 如果想要检查你的配置，可以使用 `git config --list` 命令来列出所有 Git 当时能找到的配置。
 
@@ -143,7 +143,7 @@ yiibai@ubuntu:~$
 Shell
 ```
 
-### 获取帮助
+### 4. 获取帮助
 
 若在使用 Git 时需要获取帮助，有三种方法可以找到 Git 命令的使用手册：
 
@@ -165,7 +165,7 @@ Shell
 
 
 
-### 为常用指令设置别名（可选项）
+### 5. 为常用指令设置别名（可选项）
 
 有些常用的指令参数非常多，每次都要输入好多参数，我们可以使用别名。
 1. 打开用户目录，创建 .bashrc 文件
@@ -179,7 +179,7 @@ alias git-log='git log --pretty=online --all --graph --abbrev-commit'
 alias ll='ls -al'
 ```
 
-### 解决gitbash中文乱码的问题
+### 6. 解决gitbash中文乱码的问题
 
 1. 打开gitbash执行以下的命令:
 
@@ -231,7 +231,7 @@ $ git add .    		#添加文件到暂存区。
 $ git commit  		#将暂存区内容添加到本地仓库中。
 ```
 
-### 创建仓库命令
+### 1. 创建仓库命令
 
 下表列出了 git 创建仓库的命令：
 
@@ -242,7 +242,7 @@ $ git commit  		#将暂存区内容添加到本地仓库中。
 
 ------
 
-### 提交与修改
+### 2. 提交与修改
 
 Git 的工作就是创建和保存你的项目的快照及与之后的快照进行对比。
 
@@ -258,14 +258,14 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git rm`     | 删除工作区文件。                         |
 | `git mv`     | 移动或重命名工作区文件。                 |
 
-### 提交日志
+### 3. 查看提交日志
 
 | 命令               | 说明                                 |
 | :----------------- | :----------------------------------- |
 | `git log`          | 查看历史提交记录                     |
 | `git blame <file>` | 以列表形式查看指定文件的历史修改记录 |
 
-### 远程操作
+### 4. 远程操作
 
 | 命令         | 说明               |
 | :----------- | :----------------- |
@@ -274,12 +274,12 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git pull`   | 下载远程代码并合并 |
 | `git push`   | 上传远程代码并合并 |
 
-### 版本回退
+### 5. 版本回退
 
 - 作用: 不同提交版本之间的切换
 
 ```sh
-git reset --hard [commitID]
+git reset --hard [commitID]    # --hard 表示强制回退
 ```
 
 - commitID 可以使用 `git log` 或者是`git-log` 查看
@@ -292,14 +292,14 @@ git reset --hard [commitID]
 
   
 
-### git基础操作指令
+### 6. git基础操作指令
 
 Git工作目录下对于文件的修改(增加、删除、更新)会存在几个状态，这些修改的状态会随着我们执行Git的命令而
 发生变化。
 
 ![image-20211130230947835](https://gitee.com/abin_z/pic_bed/raw/master/img/202111302309959.png)
 
-## 基础指令练习
+## 7. 基础指令练习
 
 - 首先准备一个空文件夹
 
@@ -461,7 +461,7 @@ git restore --staged <file> 将指定文件移除跟踪
 
 **Git分支命令git branch、git switch、git checkout的区别**: https://blog.csdn.net/wpw2000/article/details/115895848
 
-#### **列出分支命令：**
+### 1. **列出分支命令：**
 
 ```sh
 git branch		#查看本地分支，当前分支前面会标一个*号。
@@ -480,7 +480,7 @@ git branch -vv				#说明
 
 
 
-#### **创建分支命令：**
+### 2. **创建分支命令：**
 
 ```sh
 git branch [branchname]		#创建分支,但是没有切换过去, 还停留在当前分支
@@ -504,7 +504,7 @@ git branch -m oldName newName		#重命名分支
 
 ![image-20211203221032117](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032210214.png)
 
-#### **切换分支命令:**
+### 3. **切换分支命令:**
 
 就简单的切换分支，推荐使用switch命令，不推荐使用checkout
 
@@ -534,7 +534,7 @@ git checkout -b [branchname]	#直接创建分支并且切换到当前分支,若�
 
 
 
-#### **合并分支命令:**
+### 4. **合并分支命令:**
 
 ```sh
 git merge [branchname]			# 将branchname的分支合并到当前分支
@@ -562,7 +562,7 @@ git merge [branchname]
 
 ![image-20211203224246123](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032242213.png)
 
-#### **删除分支命令：**
+### 5. **删除分支命令：**
 
 - 删除分支的时候是==不能删除当前所在的分支的==
 
@@ -576,7 +576,7 @@ git branch -D [branchname]	#不需要做检查,直接删除
 
 
 
-### 合并分支冲突
+### 6. 合并分支冲突
 
 当两个分支都修改**同一个文件的同一部分**(比如同一行)就会产生冲突,这时候git==需要开发人员决定==要保留哪一部分
 
@@ -622,7 +622,7 @@ git status 	#查看那些文件存在冲突
 
 ![image-20211203233322495](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032333575.png)
 
-### Git合并的快进模式
+### 7. Git合并的快进模式
 
 ![image-20211204003003676](https://gitee.com/abin_z/pic_bed/raw/master/img/202112040030764.png)
 
@@ -644,7 +644,7 @@ git status 	#查看那些文件存在冲突
 
 在开发中，一般有如下分支使用原则与流程：
 
-#### **1. master分支(生产环境)**
+### **1. master分支(生产环境)**
 
 - 线上分支，主分支，中小规模项目作为线上运行的应用对应的分支;
 - 需要确保master分支的稳定性, 一般不会再master分支上直接进行开发.
@@ -652,7 +652,7 @@ git status 	#查看那些文件存在冲突
 
 
 
-#### 2. develop分支(开发环境)
+### 2. develop分支(开发环境)
 
 - 是从master创建的分支，一般作为开发部门的主要开发分支.
 - 开发新功能一般都在develop分支上开发
@@ -661,7 +661,7 @@ git status 	#查看那些文件存在冲突
 
 
 
-#### 3. feature(特征分支)
+### 3. feature(特征分支)
 
 - 从develop创建的分支, 为了完成不同的开发需求
 - 一般是同期并行开发，但不同期上线时创建的分支
@@ -670,20 +670,20 @@ git status 	#查看那些文件存在冲突
 
 
 
-#### 4. hotfix(BUG修复分支)
+### 4. hotfix(BUG修复分支)
 
 - 从master派生的分支，一般作为线上bug修复使用
 - ==修复完成后需要合并到master、test、develop分支==。
 - BUG修复完成并合并完成后可以删除该分支
 
-#### 5. test分支(测试分支)等其他分支
+### 5. test分支(测试分支)等其他分支
 
 - test主要是用于测试
 - 可以删除
 
 
 
-### 分支示意图
+### 6. 分支示意图
 
 ![image-20211204001011707](https://gitee.com/abin_z/pic_bed/raw/master/img/202112040010926.png)
 
@@ -728,9 +728,9 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 ## Git远程仓库的SSH配置
 
-##### 1.创建远程仓库![image-20211205220452846](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052204953.png)
+### 1.创建远程仓库![image-20211205220452846](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052204953.png)
 
-##### 2.配置SSH公钥
+### 2.配置SSH公钥
 
 - 生成SSH公钥
 
@@ -764,7 +764,7 @@ ssh -T git@gitee.com			#需要输入 yes
 
 ## 操作远程仓库
 
-#### 1.添加远程仓库
+### 1.添加远程仓库
 
 ![image-20211205224018132](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052240185.png)
 
@@ -778,13 +778,13 @@ git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端�
 
 ![image-20211205224848724](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052248800.png)
 
-#### 2.查看远程仓库
+### 2.查看远程仓库
 
 ```sh
 git remote 				#查看远程仓库
 ```
 
-#### 3.推送到远程仓库
+### 3.推送到远程仓库
 
 在推送(`push`)操作之前，如想要检查文件代码变化，可使用`git show [commitID]`  命令指定提交ID来查看具体的变化。
 
@@ -820,7 +820,7 @@ git push --set-upstream origin master
 
 ![image-20211205230241823](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052302919.png)
 
-#### 4.关联远程分支
+### 4.关联远程分支
 
 ```sh
 ## 建立当前分支与指定远程分支的追踪关系，但不会拉取代码。参数"-u"和"--set-upstream-to"同样的意思。
@@ -847,7 +847,7 @@ git branch --track <本地分支名> <远程主机名>/<远程分支名>
 
 
 
-#### 5.从远程仓库克隆
+### 5.从远程仓库克隆
 
 ```sh
 git clone [远端地址]
@@ -859,7 +859,7 @@ git clone [远端地址]
 
 ![image-20211205231438643](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052314708.png)
 
-#### 6.从远程仓库抓取和拉取
+### 6.从远程仓库抓取和拉取
 
 - ==**fetch抓取**, 将仓库里的更新都抓取到本地,**但是不进行合并**==
   - 如果不指定远端名称和分支, 则抓取所有分支修改
@@ -879,7 +879,7 @@ git pull 				#抓取并自动合并
 
 ![image-20211205233320577](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052333667.png)
 
-#### 7.解决合并冲突
+### 7.解决合并冲突
 
 发送冲突的情况:
 

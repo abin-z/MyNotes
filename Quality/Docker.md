@@ -4,7 +4,7 @@ docker是基于Go语言开发的,
 
 Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）。几乎没有性能开销,可以很容易地在机器和数据中心中运行。
 
-### Linux操作系统的结构
+## 一. Linux系统的结构
 
 **内核**:  Linux内核直接与计算机硬件进行交互, 比如调用CPU, 调用I/O,操作内存等, 但是这些调用硬件的指令都非常复杂,不方便人们记忆, 于是出现了系统应用.
 
@@ -20,7 +20,7 @@ Linux的发行版都是基于Linux内核的, 只是系统应用的不同, 提供
 
 
 
-### docker原理
+## 二. Docker原理
 
 docker 是将程序需要运行的依赖和第三方库, 以及**将要调用系统(比如centos)的函数库**也一起打包, ==打包后的容器直接与Linux内核进行交互,不经过系统应用==,因此打包后的容器可以直接运行在基于Linux内核的机器上, 而不用考虑系统应用的环境
 
@@ -45,11 +45,9 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 
 
-## docker容器与VM虚拟机区别
+## 三.  Docker与VM
 
-
-
-### 虚拟机技术:
+### 1. 虚拟机技术:
 
 **虚拟机架构:**	通过软件模拟具有完整硬件系统功能的、运行在一个完全隔离环境中的完整计算机系统，能提供物理计算机的功能
 
@@ -57,7 +55,7 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 ![image-20210910111736464](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261542814.png)
 
-### 容器技术:
+### 2. 容器技术:
 
 **容器架构:**	容器可以提供==操作系统级别的进程隔离==，以 Docker 为例，当我们运行 Docker 容器时，此时**容器本身只是操作系统中的一个进程**，只是利用操作系统					提供的各种功能实现了进程间网络、空间、权限等隔离，让多个 Docker 容器进程相互不知道彼此的存在
 
@@ -75,7 +73,7 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 
 
-## Docker中的镜像. 容器. 仓库
+## 四. Docker中的镜像. 容器. 仓库
 
 **镜像（lmage）**：Docker将应用程序及其所需的依赖、函数库、环境、配置等文件打包在一起，称为镜像
 
@@ -85,19 +83,19 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 
 
-#### 镜像(image)
+#### 1. 镜像(image)
 
 ```text
 docker镜像从概念上讲类似于vm里面的iso文件，就是一个只读的模板。一个镜像可以包含一个Linux操作系统，里面安装了一系列的软件。镜像可以拷到任何装了docker的机器上运行。
 ```
 
-#### 仓库(registry)
+#### 2. 仓库(registry)
 
 ```text
 存储docker镜像的地方就是镜像仓库, 全球最大的docker镜像仓库是docker.io, 里面有大量官方和民间的优秀镜像可以直接拿过来使用，如mysql, centos等等。阿里也有自己的docker仓库: docker.alibaba-inc.com
 ```
 
-#### 容器(container)
+#### 3. 容器(container)
 
 ```text
 容器与镜像的关系有点像进程与程序的关系，运行中的镜像就叫容器。 从原理上讲，容器事实上是镜像上面加了一层读写
@@ -109,7 +107,7 @@ docker中镜像类似于Java中的类class,  容器则类似于Java中的一个�
 
 ![image-20210910112829061](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261622767.png)
 
-## Docker 和 DockerHub
+## 五. Docker 和 DockerHub
 
 * **DockerHub:** DockerHub是一个Docker镜像的托管平台, 这样的平台称为Docker Registry
 
@@ -121,7 +119,7 @@ docker中镜像类似于Java中的类class,  容器则类似于Java中的一个�
 
 
 
-## Docker架构
+## 六. Docker架构
 
 docker是一个CS架构的程序, 由两部分组成: 
 
@@ -137,7 +135,7 @@ docker是一个CS架构的程序, 由两部分组成:
 
 
 
-## Docker常用命令
+## 七. Docker常用命令
 
 ```bash
 docker --help    #可以查看所有的docker命令
@@ -253,7 +251,7 @@ docker inspect 容器名称或者ID    #查看容器相关信息，包括容器�
 
 
 
-## Docker数据卷
+## 八. Docker数据卷
 
 如何解决容器与数据耦合的问题：
 
@@ -298,8 +296,8 @@ docker volume prune				#删除当前所有未使用的数据卷
 
 数据卷的作用
 
-- 将容器与数据分离, 解耦合, 方便操作容器内数据, 保证数据的安全性
-- 即使删除了容器,数据卷的内容也会保留在宿主机中,除非手动删除数据卷
+- ==将容器与数据分离, 解耦合, 方便操作容器内数据, 保证数据的安全性==
+- ==即使删除了容器,数据卷的内容也会保留在宿主机中,除非手动删除数据卷==
 
 
 
@@ -369,7 +367,7 @@ docker cp 容器名称或ID:容器中文件的目录 宿主机文件路径		#均
 
 
 
-### 挂载方式对比
+### 5. 挂载方式对比
 
 ![image-20211128114227947](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281142130.png)
 
@@ -393,7 +391,7 @@ docker cp 容器名称或ID:容器中文件的目录 宿主机文件路径		#均
 
 
 
-## 卸载docker
+## 九. 卸载docker
 
 ```bash
 #1.停止docker服务
@@ -447,7 +445,7 @@ load data local infile '/mysql/emp_50w.dat' into table empdb.emp;
 
 
 
-## Dockerfile自定义镜像
+## 十. Dockerfile自定义镜像
 
 **镜像是分层结构**,每一层称为一个Layer
 
@@ -457,7 +455,7 @@ load data local infile '/mysql/emp_50w.dat' into table empdb.emp;
 
 ![image-20211128142551865](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281425123.png)
 
-### 什么是Dockerfile
+### 1.Dockerfile定义
 
 Dockerfile是一个文本文件,其中包含一个个的指令(instruction), 用指令来说明要执行什么操作来构建镜像.
 
@@ -502,7 +500,7 @@ docker build -t REPOSITORY:TAG    #基于dockerfile进行构建项目
 
 
 
-## 根据现有的容器制作镜像
+## 十一. 根据现有的容器制作镜像
 
 **docker commit :**从容器创建一个新的镜像。
 
@@ -529,7 +527,7 @@ docker commit 5836a9f2c051 mytomcat:10
 
 
 
-#### 将制作的镜像打包
+### 1. 将制作的镜像打包
 
 ```bash
 docker save -o 包名.tar 镜像名:版本号
@@ -544,7 +542,7 @@ gzip mytomcat10.tar
 
 
 
-#### 将镜像文件的压缩文件加载到docker镜像中.
+### 2. 将镜像文件的压缩文件加载到docker镜像中.
 
 ```bash
 gunzip mytomcat10.tar.gz			#解压docker镜像包,产生一个mytomcat10.tar
@@ -569,7 +567,7 @@ docker run --name mytomcat --restart always -p 8060:8080 -d mytomcat:10
 
 
 
-## DockerCompose
+## 十二. DockerCompose
 
 什么是DockerCompose?
 

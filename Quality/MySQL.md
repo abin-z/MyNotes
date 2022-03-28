@@ -1,8 +1,8 @@
-# MySQL
+# 一. MySQL数据库概述
 
 CRUD是指 create增加, retrieve检索, update更新, delete删除
 
-### 关系型数据库特点:
+### 1. 关系型数据库特点:
 
 * X_Y轴构建的二维表
 
@@ -23,13 +23,11 @@ CRUD是指 create增加, retrieve检索, update更新, delete删除
 
   
 
-### 数据库的设计
+### 2. 数据库的设计
 
 **需求分析**-------概要分析（E-R数据库模型）三大范式理解------详细设计
 
 ​						但是不盲目追寻范式，需要找到一个平衡点。
-
-
 
 设计合理的数据库需要考虑哪些要素？
 
@@ -45,7 +43,7 @@ CRUD是指 create增加, retrieve检索, update更新, delete删除
 
 
 
-### 数据库管理系统（DBMS）
+### 3. 数据库管理系统（DBMS）
 
 **SQL**语言    结构化查询语言
 
@@ -61,11 +59,17 @@ TCL  :   事务控制语言： 	commit / rollback
 
 
 
-### 数据库三范式:
+### 4. 数据库三范式:
 
 **第一范式(1NF):	必须有主键, 字段不能再分**
 
 ​		要求有主键，数据库中不能出现重复记录，每一个字段是原子性不能再分
+
+
+
+# 二. MySQL基础
+
+
 
 
 
@@ -79,13 +83,13 @@ TCL  :   事务控制语言： 	commit / rollback
 
 
 
-### **导入数据库脚本：**
+### 1. **导入数据库脚本：**
 
 进入数据库： `use db_name;`
 
 导入sql文件：` source 文件路径`
 
-查看当前数据库版本:   `select version() from dual;`     企业再用的mysql数据库版本是5.7
+查看当前数据库版本:   `select version() from dual;`     企业在用的mysql数据库版本一般是5.7
 
 ```sql
 mysql> select version() from dual;
@@ -115,7 +119,7 @@ select * from emp;			#使用*（不建议）：效率比前一个方法要低，
 
 
 
-### MySQL中的常用数据类型
+### 2. MySQL中的常用数据类型
 
 | 类型         | 大小           | 描述                                                         |
 | ------------ | -------------- | ------------------------------------------------------------ |
@@ -155,7 +159,7 @@ date时间格式控制符
 
 
 
-### MySQL中的运算符：
+### 3. MySQL中的运算符：
 
 ```sql
 =			#等于  注意：null字段不能使用 = ， 需要用 is null 或者 is not null
@@ -181,7 +185,7 @@ like		#like为模糊查询，支持%或者下划线_匹配
 
 
 
-### 数据处理函数
+### 4. 数据处理函数
 
 #### 单行处理函数 			
 
@@ -237,10 +241,11 @@ max			#最大值
 min			#最小值
 		select min(sal) as minsalfrom emp;
 count		#记录数
-		count(*)表示多行记录
+		count(*)  	# 表示多行记录, 会包含null的行
+		count(1) 	# 和count(*)几乎没有区别
 		如果写成：
 		select count(comm) from emp where comm is null;
-		#结果为0，因为count()会自动忽略空值
+		#结果为0，因为count(字段)会全表扫描自动忽略 字段 = null 的值
 		
 distinct	#将查询结果中的某一个字段的重复记录去除
 			#distinct A 区处于字段名A相同的记录
@@ -251,9 +256,17 @@ distinct	#将查询结果中的某一个字段的重复记录去除
 		select distinct deptno,job from emp;
 ```
 
+1、COUNT(expr) ，返回SELECT语句检索的行中expr的值不为NULL的数量。结果是一个BIGINT值。
+
+2、如果查询结果没有命中任何记录，则返回0
+
+3、但是，值得注意的是，`COUNT(*)` 的统计结果中，会包含值为NULL的行数。
+
+**所以，** **`COUNT(常量)` 和 `COUNT(*)`表示的是直接查询符合条件的数据库表的行数。而`COUNT(列名)`表示的是查询符合条件的列的值不为NULL的行数**
 
 
-### 起别名 as
+
+### 5. 起别名 as
 
 ```sql
 select ename,sal*12 as yearsal from emp;	#as 起别名
@@ -263,9 +276,11 @@ select ename,sal*12 yearsal from emp;		#不建议省略as
 
 
 
-## 查询select
+# 三. 查询select
 
-### 条件查询 where
+## 1. 简单查询
+
+### 1. 条件查询 where
 
 注意:  ==where 后面不能直接使用分组函数(多行处理函数)==
 
@@ -285,7 +300,7 @@ where
 
 
 
-### 排序：order by
+### 2. 排序：order by
 
 ​			默认是升序： asc
 
@@ -311,7 +326,7 @@ select job,ename,sal fromemp where job=’MANAGER’ order by 3 asc;
 
 
 
-### 分组查询：group by
+### 3. 分组：group by
 
 语句格式：
 
@@ -339,7 +354,7 @@ select job,max(sal) as maxsal from emp where job <> 'MANAGER' group by job;
 
 
 
-### 数据过滤条件 having
+### 4. 数据过滤条件 having
 
 注意： ==having 必须和 group  by搭配使用，分组后再筛选==
 
@@ -362,7 +377,7 @@ order by
 
 
 
-### limit 
+### 5. limit 
 
 作用: 获取一表的前几行和中间某几行的数据（**只在mysql中有用**）
 
@@ -389,7 +404,7 @@ limit #实现分页		数据的下标是从0开始的
 
 
 
-### 基础select 查询语句总结
+### 6. 基础select 查询语句总结
 
 **一个完整的查询select SQL语句如下:** 
 
@@ -422,11 +437,11 @@ limit m,n;	#分页
 
 
 
-## 跨表查询,联表查询
+## 2. 跨表查询,联表查询
 
 查询次数:	跨表查询的查询次数, 如果没有加条件限制为多张表的笛卡尔积(乘积)	建议:**==联表查询最多不能超过三张表==**
 
-#### Mysql多表连接查询的执行细节: https://blog.csdn.net/qq_27529917/article/details/87904179
+**Mysql多表连接查询的执行细节**: https://blog.csdn.net/qq_27529917/article/details/87904179
 
 按照年代分类
 
@@ -451,114 +466,110 @@ limit m,n;	#分页
 
 按照链接方式分类:
 
-### **内连接**:  	
+### **1. 内连接**:  	
 
 ![image-20211007202741920](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202741920.png)
 
-##### 1.等值连接 2.非等值连接 3.自连接
 
-1. ###### 等值连接
 
-   ```sql
-   #查询员工所对应的部门名称
-   select
-   	e.ename, d.dname			#要显示的字段
-   from
-   	emp as e					# as 可以省略
-   inner join						#连接表, inner可以省略
-   	dept as d
-   on
-   	e.deptno = d.deptno;		#等值连接方式
-   ```
+#### ① 等值连接
 
-2. ###### 非等值连接
+```sql
+#查询员工所对应的部门名称
+select
+	e.ename, d.dname			#要显示的字段
+from
+	emp as e					# as 可以省略
+inner join						#连接表, inner可以省略
+	dept as d
+on
+	e.deptno = d.deptno;		#等值连接方式
+```
 
-   ```sql
-   #查询出员工薪水对应的薪水等级
-   select
-   	e.ename, e.sal, s.grade
-   from
-   	emp as e
-   inner join									#inner可以省略
-   	salgrade as s
-   on
-   	e.sal between s.losal and s.hisal		#非等值连接方式
-   order by
-   	s.grade, e.sal;							#先按照等级排序,在按照薪水排序
-   ```
+#### ② 非等值连接
 
-3. ###### 自连接
+```sql
+#查询出员工薪水对应的薪水等级
+select
+	e.ename, e.sal, s.grade
+from
+	emp as e
+inner join									#inner可以省略
+	salgrade as s
+on
+	e.sal between s.losal and s.hisal		#非等值连接方式
+order by
+	s.grade, e.sal;							#先按照等级排序,在按照薪水排序
+```
 
-   ```sql
-   #把一张表看成两张表使用,自己连接自己
-   #查询出员工所对应的领导名称:显示员工的名称和领导名称
-   select
-   	a.ename, b.ename as leadername
-   from	
-   	emp as a
-   inner join							#inner可以省略
-   	emp as b
-   on
-   	a.mgr = b.empno;				#自连接方式,连接的是同一张表的不同临时表
-   ```
+#### ③ 自连接
 
-   
+```sql
+#把一张表看成两张表使用,自己连接自己
+#查询出员工所对应的领导名称:显示员工的名称和领导名称
+select
+	a.ename, b.ename as leadername
+from	
+	emp as a
+inner join							#inner可以省略
+	emp as b
+on
+	a.mgr = b.empno;				#自连接方式,连接的是同一张表的不同临时表
+```
 
-### **外连接**:
 
-#####   1. 左连接 2. 右连接
+
+### **2. 外连接**:
 
 ​			概念: A表和B表能够完全匹配的记录查询出来之外，**将其中一张表的记录无条件的完全查询出来，对方表没有匹配的记录时，会自动模拟出null值与之匹配**
 
 ​			外连接的查询结果条数 >= 内连接查询条数
 
-1. ###### 左外连接/左连接  
+#### ① 左外连接/左连接  
 
-   左外连接: 	包含左边表的全部行(不管右边是否存在与它们匹配的行),以及右边表中全部匹配的行
+左外连接: 	包含左边表的全部行(不管右边是否存在与它们匹配的行),以及右边表中全部匹配的行
 
-   ![image-20211007202823961](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202823961.png)
+![image-20211007202823961](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202823961.png)
 
-   ```sql
-   #员工的领导名称,并且显示所有的员工
-   select
-   	a.ename, b.ename as leadername
-   from
-   	emp as a
-   left outer join				#显示所有的员工, outer可以省略
-   	emp as b
-   on
-   	a.mgr = b.empno;
-   ```
-
-   
-
-2. ###### 右外连接/右连接
-
-   右外连接: 	包含右边表的全部行（不管左边表是否存在与它们匹配的行），以及左边表中全部匹配的行
-
-   ![image-20211007202837996](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202837996.png)
-
-   ```sql
-   #要求显示员工的部门名称,并且显示所有的部门名称
-   select
-   	e.ename, d.dname
-   from
-   	emp as e
-   right outer join				#让右边表的全部行全部显示(显示所有部门)  outer可以省略
-   	dept as d
-   on
-   	e.deptno = d.deptno
-   order by
-   	d.deptno;
-   ```
-
-   左右外连接可以互换的(表的位置互换和left和right互换)
-
-   ==只能通过 right 或者 left 区分内连接和外连接==
+```sql
+#员工的领导名称,并且显示所有的员工
+select
+	a.ename, b.ename as leadername
+from
+	emp as a
+left outer join				#显示所有的员工, outer可以省略
+	emp as b
+on
+	a.mgr = b.empno;
+```
 
 
 
-##### 多表查询(join最好不要超过三个表)
+#### ② 右外连接/右连接
+
+右外连接: 	包含右边表的全部行（不管左边表是否存在与它们匹配的行），以及左边表中全部匹配的行
+
+![image-20211007202837996](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202837996.png)
+
+```sql
+#要求显示员工的部门名称,并且显示所有的部门名称
+select
+	e.ename, d.dname
+from
+	emp as e
+right outer join				#让右边表的全部行全部显示(显示所有部门)  outer可以省略
+	dept as d
+on
+	e.deptno = d.deptno
+order by
+	d.deptno;
+```
+
+左右外连接可以互换的(表的位置互换和left和right互换)
+
+==只能通过 right 或者 left 区分内连接和外连接==
+
+多表查询(join最好不要超过三个表)
 
 ```sql
 #查询员工的部门名称,员工的领导名称和薪水等级
@@ -592,7 +603,7 @@ order by
 
 
 
-## 子查询
+## 3. 子查询
 
 定义: select语句嵌套select语句
 
@@ -606,7 +617,7 @@ where ...(select) ...
 
 
 
-##### where后面的子查询
+### where后面的子查询
 
 ```SQL
 #找出薪水比公司平均薪水高的员工,要求显示员工名和薪水
@@ -619,7 +630,7 @@ select ename, sal from emp where sal > (select avg(sal) as avgsal from emp);
 
 
 
-##### from后面的子查询
+### from后面的子查询
 
 ```sql
 #找出每个部门的平均薪水，并且要求显示部门编号和名称以及平均薪水和薪水等级
@@ -662,7 +673,7 @@ order by
 
 
 
-## union 合并(相加)集合
+## 4. union 合并(相加)集合
 
 注意: ==两个查询子句的字段的个数和类型要一样，ename / job==
 
@@ -691,13 +702,15 @@ SELECT 列名称 FROM 表名称 UNION ALL SELECT 列名称 FROM 表名称 ORDER 
 
 
 
-## 数据表table
+# 四. 数据表table
 
 表的定义 :==数据库基本组成单元，行和列组成，行是记录，列是字段==，字段包括：字段名称，类型，长度，约束。
 
-##### DDL :   数据库定义语言： create / drop / alter
+## DDL语句
 
-**创建表语法: **
+- **DDL :   数据库定义语言**： create / drop / alter
+
+### **1. 创建表语法: **
 
 ```sql
 create table t_表名(
@@ -721,13 +734,13 @@ create table t_student(
 );
 ```
 
-**查看表的建表语句:**
+### **2. 查看表的建表语句:**
 
 ```sql
 show create table t_student;
 ```
 
-**删除表语法:**
+### **3.删除表语法:**
 
 ```SQL
 drop table 表名;
@@ -737,14 +750,14 @@ drop table t_student;			#如果表不存在的时候就会报错
 drop table if exists t_student;	#如果表不存在则不会报错, MySQL特有的
 ```
 
-**快速复制一张表**
+### **4. 快速复制一张表**
 
 ```sql
 create table emp_bak as select * from emp;	#对一张表做备份:emp_bak和emp表没有任何关联
 show create table emp_bak;					#查看表的结构
 ```
 
-**修改表的结构:**
+### **5. 修改表的结构:**
 
 ```sql
 1、新增：ALTER TABLE 表名 ADD 字段名 字段类型(长度);
@@ -761,11 +774,13 @@ alter table 表名 change 原字段名称 新字段名称 字段类型(长度);
 alter table t_student change name username varchar(32);
 ```
 
+## DML语句
 
+**DML语句, 数据库管理语言:** insert / update / delete
 
-##### DML语句: insert / update / delete
+### **1. insert语句**: 
 
-**insert语句**: 向表中添加数据
+向表中添加数据
 
 ```sql
 insert into 表名(字段1，字段2，...，字段N) values (字段1的值，字段2 的值，...，字段N的值);
@@ -792,7 +807,9 @@ select count(*) from emp_bak;		#查看表的数量
 
 
 
-**update语句:**修改表中已经存在的记录
+### **2. update语句:**
+
+修改表中已经存在的记录
 
 ```sql
 update 表名 set 字段名称1 = 字段1值，字段名称2 = 字段2值 where 限制条件;
@@ -801,7 +818,9 @@ update t_student set birth = str_to_date('1951-10-10','%Y-%m-%d'), email = '192@
 ###必须加限制条件！！否则就是全表修改
 ```
 
-**delete语句**: 删除表中的数据
+### **3. delete语句**:
+
+ 删除表中的数据
 
 ```sql
 delete from t_student;  #删除表中的所有数据
@@ -811,9 +830,9 @@ delete from t_student where no = 1001; #添加限制条件
 #注意：这属于物理删除，无法恢复
 ```
 
-
-
 ------
+
+### 4. default
 
 **设置表中字段的默认值: default**
 
@@ -847,15 +866,13 @@ set character_set_results = utf8mb4;
 show variables like '%char%';
 ```
 
-
-
-## 约束constraint
+# 五. 约束constraint
 
 约束的概念: 对表中数据的限制条件
 
 目的：保证表中数据的完整和有效
 
-### 非空约束: not null
+### 1. 非空约束: not null
 
 表明字段必须有具体数据，不能为NULL
 
@@ -869,9 +886,9 @@ create table t_student(
 
 
 
-### 唯一性约束: unique
+### 2. 唯一性约束: unique
 
-表明字段必须不能重复，保持唯一
+表明字段必须不能重复，保持唯一,  但是null 可以重复
 
 **列级写法**: 写在字段后面
 
@@ -935,7 +952,7 @@ select CONSTRAINT_NAME from TABLE_CONSTRAINTS where TABLE_NAME = "t_user";
 
 
 
-### 主键约束: primary key
+### 3. 主键约束: primary key
 
 primary key 简称 PK
 
@@ -992,7 +1009,7 @@ create table t_user(
 
 无论是单一主键还是复合主键，==**一张表中有且只能有一个主键约束**==
 
-##### 主键按照业务性质分类:自然主键和业务主键
+#### 主键按照业务性质分类:自然主键和业务主键
 
 **自然主键**：主键值是一个自然数，与业务没有任何关系(==推荐使用int类型且自增的自然主键==)
 
@@ -1037,9 +1054,9 @@ CREATE TABLE `t_user` (
 
 
 
-### 外键约束: foreign key
+### 4. 外键约束: foreign key
 
-**在关系为一对多的情况下，最好给多的一方添加外键**
+**在关系为一对多的情况下，最好给多的一方添加外键**(在单机模式时使用, 在分布式系统中不建议使用外键)
 
 foreign key简称FK
 
@@ -1152,7 +1169,7 @@ alter table t_student add constraint t_student_classno_fk foreign key(classno) r
 
 
 
-### 索引 index(重点)
+# 六. 索引 index(重点)
 
 相当于一本字典目录，**提高程序的检索/查询效率**，表中的每一个字段都可以添加索引
 
@@ -1168,7 +1185,7 @@ alter table t_student add constraint t_student_classno_fk foreign key(classno) r
 
 **单列索引**，即一个索引只包含单个列，**一个表可以有多个单列索引，但这不是组合索引。**
 
-**组合索引**，即一个索引包含多个列。创建索引时，你需要确**保该索引是应用在 SQL 查询语句的条件**(一般作为 WHERE 子句的条件)。
+**组合索引**，即一个索引包含多个列。创建索引时，你需要确**保该索引是应用在 SQL 查询语句的条件**(一般作为 WHERE 子句的条件)。==最左前缀原则==
 
 
 
@@ -1206,7 +1223,7 @@ select * from emp where ename=’KING’;
 
 
 
-#### 索引的种类:
+### 1. 索引的种类:
 
 **普通索引**(index)：仅加速查询
 
@@ -1216,15 +1233,13 @@ select * from emp where ename=’KING’;
 
 **全文索引**(fulltext)：对文本的内容进行分词，进行搜索,  其中，全文索引存储引擎必须是 MyISAM，line 字段必须为空间数据类型，而且是非空的。
 
-
-
 **ps.**
 
 **索引合并，使用多个单列索引组合搜索(各走各的索引)**
 
 覆盖索引，select的数据列只用从索引中就能够取得，不必读取数据行，换句话说查询列要被所建的索引覆盖
 
-#### 创建index索引:
+### 2. 创建index索引:
 
 ```sql
 create index 索引名 on 表名(字段名);				#创建普通索引
@@ -1261,7 +1276,7 @@ CREATE TABLE table_name (
 
 
 
-### MYSQL中唯一约束和唯一索引的区别
+### 3. MYSQL中唯一约束和唯一索引的区别
 
 1、唯一约束和唯一索引，都可以实现列数据的唯一，列值可以有null。
 2、创建唯一约束，会自动创建一个同名的唯一索引，该索引不能单独删除，删除约束会自动删除索引。==唯一约束是通过唯一索引来实现数据的唯一==。
@@ -1276,7 +1291,9 @@ CREATE TABLE table_name (
 
 
 
-### 视图view
+# 七. 视图view
+
+### 1. 视图原理
 
 视图在数据库管理系统中也是一个对象，以文件形式存在.  视图底也是表
 
@@ -1304,7 +1321,7 @@ show create view myview;		#查看视图的创建语句
 drop view myview;		#删除视图
 ```
 
-#### 视图的作用:
+### 2. 视图的作用
 
 * **隐藏表的实现细节**
 
@@ -1342,9 +1359,7 @@ on
 	e.deptno = d.deptno);
 ```
 
-
-
-## MySQL存储引擎
+# 八. MySQL存储引擎
 
 **存储引擎是MySQL特有**，其他数据库没有
 
@@ -1382,7 +1397,7 @@ show create table emp\G;		#查看建表语句
 
 
 
-### 常用的存储引擎_MyISAM
+### 1. 常用的存储引擎_MyISAM
 
 1、**是MySQL数据库最常用的**,**但不是默认的**
 
@@ -1404,7 +1419,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 
 
-### 常用的存储引擎_InnoDB
+### 2. 常用的存储引擎_InnoDB
 
 1、**是MySQL默认的存储引擎**
 
@@ -1434,7 +1449,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 ![image-20211001213607305](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001213607305.png)
 
-### 常用的存储引擎_MEMORY
+### 3. 常用的存储引擎_MEMORY
 
 1、 ==数据存储在内存中==，且行的长度固定，因此非常快
 
@@ -1454,7 +1469,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 
 
-### 如何选择合适的存储引擎
+### 4. 如何选择合适的存储引擎
 
 1、使用场景是否需要事务支持；
 2、是否需要支持高并发，InnoDB的并发度远高于MyISAM；
@@ -1475,9 +1490,9 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 
 
-## 事务 Transaction
+# 九. 事务 Transaction
 
-### 什么是事务?
+### 1. 什么是事务?
 
 1.    **一个最小的不可再分的工作单元**
 
@@ -1507,7 +1522,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
    
 
-### 事务的四个特征ACID:
+### 2. 事务的四个特征ACID:
 
 * **原子性（atomicity）**，事务是最小单位，==不可再分==
 
@@ -1519,7 +1534,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 
 
-### 事务控制语言(TCL)
+### 3. 事务控制语言(TCL)
 
 开启事务：**start**  transaction
 
@@ -1531,7 +1546,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 
 
-#### MySQL默认是自动提交的
+**MySQL默认是自动提交的**
 
 ```sql
 show variables like '%commit%';
@@ -1539,7 +1554,7 @@ show variables like '%commit%';
 
 ![image-20211001220652660](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001220652660.png)
 
-#### 手动开始事务
+**手动开始事务**
 
 ```sql
 start transaction;
@@ -1549,7 +1564,7 @@ start transaction;
 commit;
 ```
 
-#### 设置不要自动提交：
+**设置不要自动提交：**
 
 ```sql
 set autocommit = OFF;
@@ -1559,7 +1574,7 @@ set autocommit = OFF;
 
 
 
-### 事务的隔离级别概述
+### 4. 事务的隔离级别概述
 
 
 
@@ -1601,14 +1616,14 @@ Oracle数据库管理系统的默认隔离级别为可重复读
 
 
 
-##### 查看当前会话级隔离级别
+**查看当前会话级隔离级别**
 
 ```sql
 select @@tx_isolation;
 select @@session.tx_isolation;
 ```
 
-##### 查看全局隔离级别
+**查看全局隔离级别**
 
 ```sql
 select @@global.tx_isolation;
@@ -1616,7 +1631,7 @@ select @@global.tx_isolation;
 
 
 
-#### 设置服务器缺省隔离级别
+#### 5. 设置服务器缺省隔离级别
 
 第一种方法：修改my.ini配置文件
 
@@ -1632,7 +1647,7 @@ set session transaction isolation level READ COMMITED;	#会话范围
 
 
 
-## 存储过程 procedure
+# 十. 存储过程 procedure
 
 在mysql中，==存储过程是一组为了完成特定功能的SQL语句集合==。一个存储过程是一个可编程的函数，它在数据库中创建并保存，一般由SQL语句和一些特殊的控制结构组成。使用存储过程不仅可以提高数据库的访问效率，同时也可以提高数据库使用的安全性。
 
@@ -1652,9 +1667,9 @@ set session transaction isolation level READ COMMITED;	#会话范围
 
 
 
-### 一、存储过程的创建和调用
+### 1、存储过程的创建和调用
 
-#### **MYSQL 存储过程中的关键语法**
+- **MYSQL 存储过程中的关键语法**
 
 声明语句结束符，可以自定义:
 
@@ -1708,7 +1723,7 @@ call sp_name[(传参)];
 
 
 
-### 二、存储过程的参数
+### 2、存储过程的参数
 
 MySQL存储过程的参数用在存储过程的定义，共有三种参数类型,IN,OUT,INOUT,形式如：
 
@@ -1779,15 +1794,15 @@ delimiter ;
 
 
 
-## 触发器 trigger
+# 十一. 触发器 trigger
 
-#### **一、什么是触发器**
+### **1、什么是触发器**
 
 **监视某种情况，并触发执行某种操作。**触发器是==在表中数据发生更改时自动触发执行的==，它是与表事件相关的特殊的存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，例如当对一个表进行操作（insert，delete， update）时就会激活它执行。也就是说触发器**只执行DML事件**(insert、update和delete)	
 
 触发器只能创建在永久表上, 不能对临时表创建触发器
 
-#### 二、**触发器的作用**
+### 2、**触发器的作用**
 
 **1.**安全性。可以基于数据库的值使用户具有操作数据库的某种权利。
 
@@ -1807,7 +1822,7 @@ delimiter ;
 
 
 
-#### 基本语法:
+### 3. 基本语法:
 
 ```sql
 CREATE TRIGGER <触发器名称>
@@ -1822,11 +1837,11 @@ END;
 
 语法说明如下。
 
-#### 1) 触发器名
+##### 1) 触发器名
 
 触发器的名称，触发器在当前数据库中必须具有唯一的名称。如果要在某个特定数据库中创建，名称前面应该加上数据库的名称。
 
-#### 2) INSERT | UPDATE | DELETE
+##### 2) INSERT | UPDATE | DELETE
 
 触发事件，用于指定激活触发器的语句的种类。
 
@@ -1836,25 +1851,25 @@ END;
 - DELETE： 从表中删除某一行数据时激活触发器，例如 DELETE 和 REPLACE 语句。
 - UPDATE：更改表中某一行数据时激活触发器，例如 UPDATE 语句。
 
-#### 3) BEFORE | AFTER
+##### 3) BEFORE | AFTER
 
 BEFORE 和 AFTER，触发器被触发的时刻，表示触发器是在激活它的语句之前或之后触发。若希望验证新数据是否满足条件，则使用 BEFORE 选项；若希望在激活触发器的语句执行之后完成几个或更多的改变，则通常使用 AFTER 选项。
 
-#### 4) 表名
+##### 4) 表名
 
 与触发器相关联的表名，此表必须是永久性表，不能将触发器与临时表或视图关联起来。在该表上触发事件发生时才会激活触发器。同一个表不能拥有两个具有相同触发时刻和事件的触发器。例如，对于一张数据表，不能同时有两个 BEFORE UPDATE 触发器，但可以有一个 BEFORE UPDATE 触发器和一个 BEFORE INSERT 触发器，或一个 BEFORE UPDATE 触发器和一个 AFTER UPDATE 触发器。
 
-#### 5) 触发器主体
+##### 5) 触发器主体
 
 触发器动作主体，包含触发器激活时将要执行的 MySQL 语句。如果要执行多个语句，可使用 BEGIN…END 复合语句结构。
 
-#### 6) FOR EACH ROW
+##### 6) FOR EACH ROW
 
 一般是指行级触发，对于受触发事件影响的每一行都要激活触发器的动作。例如，使用 INSERT 语句向某个表中插入多行数据时，触发器会对每一行数据的插入都执行相应的触发器动作。
 
 > 注意：每个表都支持 INSERT、UPDATE 和 DELETE 的 BEFORE 与 AFTER，因此每个表最多支持 6 个触发器。每个表的每个事件每次只允许有一个触发器。单一触发器不能与多个事件或多个表关联。
 
-#### **NEW与OLD关键字详解**
+### 4. **NEW与OLD关键字详解**
 
 MySQL 中定义了 NEW 和 OLD，用来表示触发器的所在表中，触发了触发器的那一行数据，来引用触发器中发生变化的记录内容，具体地：
 
@@ -1866,7 +1881,7 @@ MySQL 中定义了 NEW 和 OLD，用来表示触发器的所在表中，触发�
 
 
 
-#### 示例:
+### 5. 示例:
 
 ```sql
 #要求：创建一个触发器trigg_course_teacher_score,当在 course表上删除一门课程后，将score和teach_course表中该门课程相关的信息同步删除。
@@ -1905,9 +1920,9 @@ end //
 
 
 
-## 游标  cursor	(了解即可)
+# 十二. 游标  cursor	(了解即可)
 
-### 概念
+### 1. 概念
 
 游标(Cursor)它使用户可逐行访问由SQL Server返回的结果集。 
 使用游标(cursor)的一个主要的原因就是==把集合操作转换成单个记录处理方式==。
@@ -1916,7 +1931,7 @@ end //
 
 游标机制允许用户在SQL server内逐行地访问这些记录，按照用户自己的意愿来显示和处理这些记录。
 
-### 优点
+### 2. 优点
 
 1、允许程序对由查询语句select返回的行集合中的每一行执行相同或不同的操作，而不是对整个行集合执行同一个操作。
 
@@ -1924,15 +1939,15 @@ end //
 
 3、游标实际上作为面向集合的数据库管理系统（RDBMS）和面向行的程序设计之间的桥梁，使这两种处理方式通过游标沟通起来。
 
-#### 原理
+### 3. 原理
 
 **游标就是把数据按照指定要求提取出相应的数据集，然后逐条进行数据处理。**
 
-#### 使用游标的顺序
+**使用游标的顺序**
 
  声名游标、打开游标、读取数据、关闭游标、删除游标。
 
-### 使用游标(cursor)
+### 4. 使用游标(cursor)
 
 1.声明游标
 DECLARE cursor_name CURSOR FOR select_statement
@@ -1947,7 +1962,7 @@ FETCH cursor_name INTO var_name [, var_name] ...这个语句用指定的打开�
 4. 游标CLOSE语句
 CLOSE cursor_name  这个语句关闭先前打开的游标。
 
-### 特性
+### 5. 特性
 
 1,只读的，不能更新的。
 2,不滚动的
@@ -1994,7 +2009,7 @@ delimiter  ;
 
 
 
-# MySQL拓展
+# 十三. MySQL拓展
 
 ### MySQL的COLLATE是什么?
 
