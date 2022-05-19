@@ -680,7 +680,7 @@ order by
 ```sql
 #查询出工作岗位是manager和salesman的员工
 select ename,job from emp where job = 'MANAGER' or job = 'SALESMAN';
-select ename,job from emp where job in ('MANAGER','SALESMAN');#或的关系
+select ename,job from emp where job in ('MANAGER','SALESMAN'); #或的关系
 #如果是 	not in('MANAGER','SALESMAN') 括号里面是and的关系
 
 #使用union
@@ -732,6 +732,28 @@ create table t_student(
     birth date,
     email varchar(128)
 );
+```
+
+mysql中判断表是否存在，**若不存在就创建，存在就跳过**创建操作的方法：
+
+```sql
+CREATE TABLE IF NOT EXISTS `student` (    #判断这张表是否存在，若存在，则跳过创建表操作，
+ `s_id` varchar(40) NOT NULL, 
+`s_name` varchar(255) default NULL, 
+`s_age` varchar(255) default NULL, 
+`s_msg` varchar(255) default NULL, 
+PRIMARY KEY (`s_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `student` VALUES ('7', '重阳节', '33', '登高赏菊'); # 插入数据
+
+# 仅仅复制表结构, 会判断表是否存在, 若存在，则跳过创建表操作，
+CREATE TABLE IF NOT EXISTS user_basics_deleted LIKE user_basics;
+```
+
+根据现有表快速复制一张表:
+
+```sql
+CREATE TABLE T_NEW SELECT * FROM T_OLD WHERE 1=2  # -----只复制表结构到新表
+create table emp_bak as select * from emp;	#对一张表做备份:emp_bak和emp表没有任何关联
 ```
 
 ### **2. 查看表的建表语句:**
@@ -888,7 +910,9 @@ create table t_student(
 
 ### 2. 唯一性约束: unique
 
-表明字段必须不能重复，保持唯一,  但是null 可以重复
+表明字段必须不能重复，保持唯一,  但是添加数据时null 可以重复   
+
+唯一键约束添加后，实际上建立了一个索引，将该索引删除后，就等于删除了联合唯一约束。
 
 **列级写法**: 写在字段后面
 
@@ -946,7 +970,18 @@ select CONSTRAINT_NAME from TABLE_CONSTRAINTS where TABLE_NAME = "t_user";
 
 ![image-20210928235406912](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210928235406912.png)
 
+给已有的表添加唯一性约束(唯一性索引): ==注意:在原有表上添加唯一性约束要保证原有字段的数据的唯一性, 否则添加约束失败==(添加索引时null也不能重复)
 
+```sql
+ALTER TABLE `库名`.`表名` 
+ADD UNIQUE INDEX `索引名称`(`字段名`) USING BTREE COMMENT '机构代码code 唯一性索引';
+```
+
+查询user表中，user_name字段值重复的数据及重复次数
+
+```sql
+select user_name,count(*) as count from user group by user_name having count>1;
+```
 
 **约束_非空约束(notnull)与唯一性约束(unique)联合使用** 可以达到主键唯一性的效果
 
@@ -1279,7 +1314,7 @@ CREATE TABLE table_name (
 ### 3. MYSQL中唯一约束和唯一索引的区别
 
 1、唯一约束和唯一索引，都可以实现列数据的唯一，列值可以有null。
-2、创建唯一约束，会自动创建一个同名的唯一索引，该索引不能单独删除，删除约束会自动删除索引。==唯一约束是通过唯一索引来实现数据的唯一==。
+2、创建唯一约束，==会自动创建一个同名的唯一索引==，该索引不能单独删除，删除约束会自动删除索引。==唯一约束是通过唯一索引来实现数据的唯一==。
 3、创建一个唯一索引，这个索引就是独立，可以单独删除。
 4、如果一个列上想有约束和索引，且两者可以单独的删除。可以先建唯一索引，再建同名的唯一约束。
 5、如果表的一个字段，要作为另外一个表的外键，这个字段必须有唯一约束（或是主键），如果只是有唯一索引，就会报错。

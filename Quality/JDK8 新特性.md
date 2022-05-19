@@ -365,7 +365,7 @@ javap -c -p filename.class
 
 对LambdaDemo01.class文件进行反汇编
 
-```Java
+```sh
 javap -c -p LambdaDemo01.class
 Compiled from "LambdaDemo01.java"
 public class com.abin.lambda.LambdaDemo01 {
@@ -443,8 +443,6 @@ public class LambdaDemo01 {
 
 ---
 
----
-
 为了更加直观的理解这个内容, 在运行的时候添加`-Djdk.internal.lambda.dumpProxyClasses`参数, 作用是将内部的.class字节码输出到文件中
 
 ```sh
@@ -485,7 +483,7 @@ final class LambdaDemo01$$Lambda$1
 }
 ```
 
-可以看到这个LambdaDemo01$$Lambda$1匿名内部类实现了Runnable接口,重写了run()方法, 然后在run()方法中调用了LambdaDemo01类中的生成的静态方法lambda$functionLambda$0(), 也就是调用了Lambda中的内容
+可以看到这个LambdaDemo01$$Lambda$1匿名内部类实现了Runnable接口,重写了 run() 方法, 然后在run()方法中调用了LambdaDemo01类中的生成的静态方法lambda$functionLambda$0(), 也就是调用了Lambda中的内容
 
 ---
 

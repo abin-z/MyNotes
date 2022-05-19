@@ -67,12 +67,6 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 ![image-20211126154118016](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261546285.png)
 
-
-
-
-
-
-
 ## 四. Docker中的镜像. 容器. 仓库
 
 **镜像（lmage）**：Docker将应用程序及其所需的依赖、函数库、环境、配置等文件打包在一起，称为镜像

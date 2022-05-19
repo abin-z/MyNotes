@@ -1,4 +1,4 @@
-*MySQL进阶**
+# **MySQL进阶**
 
 [**MySQL 5.1中文文档**](https://www.mysqlzh.com/)
 
