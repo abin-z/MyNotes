@@ -468,7 +468,7 @@ limit m,n;	#分页
 
 ### **1. 内连接**:  	
 
-![image-20211007202741920](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202741920.png)
+![image-20211007202741920](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211007202741920.png)
 
 
 
@@ -529,7 +529,7 @@ on
 
 左外连接: 	包含左边表的全部行(不管右边是否存在与它们匹配的行),以及右边表中全部匹配的行
 
-![image-20211007202823961](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202823961.png)
+![image-20211007202823961](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211007202823961.png)
 
 ```sql
 #员工的领导名称,并且显示所有的员工
@@ -549,7 +549,7 @@ on
 
 右外连接: 	包含右边表的全部行（不管左边表是否存在与它们匹配的行），以及左边表中全部匹配的行
 
-![image-20211007202837996](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211007202837996.png)
+![image-20211007202837996](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211007202837996.png)
 
 ```sql
 #要求显示员工的部门名称,并且显示所有的部门名称
@@ -876,7 +876,7 @@ create table t_student(
 show variables like '%char%';
 ```
 
-![image-20210924220157118](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210924220157118.png)
+![image-20210924220157118](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210924220157118.png)
 
 修改相应的变量信息:
 
@@ -968,7 +968,7 @@ use  information_schema;
 select CONSTRAINT_NAME from TABLE_CONSTRAINTS where TABLE_NAME = "t_user";
 ```
 
-![image-20210928235406912](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210928235406912.png)
+![image-20210928235406912](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210928235406912.png)
 
 给已有的表添加唯一性约束(唯一性索引): ==注意:在原有表上添加唯一性约束要保证原有字段的数据的唯一性, 否则添加约束失败==(添加索引时null也不能重复)
 
@@ -1344,7 +1344,7 @@ show tables;			#查看表的时候可以查看到创建的视图myview
 show create view myview;		#查看视图的创建语句
 ```
 
-![image-20210929234457936](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210929234457936.png)
+![image-20210929234457936](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210929234457936.png)
 
 **==创建视图的语句是一个查询语句, 并不是建表语句.==**  **视图和原表的数据是同步的**
 
@@ -1444,13 +1444,13 @@ show create table emp\G;		#查看建表语句
 
 ​	c) ==索引文件.MYI== **存储表的索引**     mytable.MYI
 
-![](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001214450243.png)
+![](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211001214450243.png)
 
 3、**可压缩为只读表**，**只读表用来节省空间**
 
 frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但仅保存记录所在页的指针，索引的结构是B+树结构。下面这张图就是MYI文件保存的机制：
 
-![image-20211001211009697](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001211009697.png)
+![image-20211001211009697](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211001211009697.png)
 
 
 
@@ -1482,7 +1482,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 
 ​	（7）对于InnoDB类型的表，其数据的物理组织形式是聚簇表。所有的数据按照主键来组织。==数据和索引放在一块，都位于B+tree的叶子节点上==；
 
-![image-20211001213607305](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001213607305.png)
+![image-20211001213607305](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211001213607305.png)
 
 ### 3. 常用的存储引擎_MEMORY
 
@@ -1587,7 +1587,7 @@ frm和MYI可以存放在不同的目录下。MYI文件用来存储索引，但�
 show variables like '%commit%';
 ```
 
-![image-20211001220652660](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20211001220652660.png)
+![image-20211001220652660](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211001220652660.png)
 
 **手动开始事务**
 

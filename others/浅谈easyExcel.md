@@ -9,7 +9,7 @@ POI是Apache软件基金会的，POI为“Poor Obfuscation Implementation”的�
 
 POI的依赖：（只需要03和07版本的依赖）
 
-```java
+```xml
 		<!--excel03版本-->
         <dependency>
             <groupId>org.apache.poi</groupId>

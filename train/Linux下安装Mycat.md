@@ -44,7 +44,7 @@ source /etc/profile
 
 **传统的应用程序系统架构**如下图:
 
-![](F:\Images\image-20210909133453341.png)
+![](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909133453341.png)
 
 
 

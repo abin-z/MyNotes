@@ -34,7 +34,7 @@ MySQL 主从复制是指数据可以从一个MySQL数据库服务器主节点复
 
 （3）同时主节点为每个I/O线程启动一个dump线程，用于向其发送二进制事件，并保存至从节点本地的中继日志中，从节点将启动SQL线程从中继日志中读取二进制日志，在本地重放，使得其数据和主节点的保持一致，最后I/OThread和SQLThread将进入睡眠状态，等待下一次被唤醒。
 
-![image-20210930165409110](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210930165409110.png)
+![image-20210930165409110](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210930165409110.png)
 
 #### **总结：**
 
@@ -47,7 +47,7 @@ MySQL 主从复制是指数据可以从一个MySQL数据库服务器主节点复
 
 ## 一主三从技术架构:
 
-![image-20210908161300971](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210908161300971.png)
+![image-20210908161300971](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210908161300971.png)
 
 **配置master主库:配置文件**
 
@@ -137,7 +137,7 @@ mysql> show master status;
 reset master		#注意,每次执行重置主机后,需要重新配置从机的通信方式
 ```
 
-![](https://gitee.com/abin_z/pic_bed/raw/master/img/image-20210908160250909.png)
+![](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210908160250909.png)
 
 
 

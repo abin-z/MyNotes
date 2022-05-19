@@ -20,7 +20,7 @@ docker run --name redistest --restart always -p 8899:6379 -d redis
         </dependency>
 ```
 
-![image-20210922103559629](F:\Images\image-20210922103559629.png)
+![image-20210922103559629](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210922103559629.png)
 
 
 
@@ -37,7 +37,7 @@ spring.redis.host=192.168.1.131
 #=====================================================================
 ```
 
-![image-20210922104231102](F:\Images\image-20210922104231102.png)
+![image-20210922104231102](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210922104231102.png)
 
 
 

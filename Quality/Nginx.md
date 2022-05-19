@@ -132,9 +132,9 @@ Nginx是一款基于C语言开发的[轻量级](https://baike.baidu.com/item/轻
 
 **正向代理（forward proxy）**：是一个位于客户端和目标服务器之间的服务器(代理服务器)，为了从目标服务器取得内容，客户端向代理服务器发送一个请求并指定目标，然后代理服务器向目标服务器转交请求并将获得的内容返回给客户端。
 
-![image-20211201144838346](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011448415.png)
+![image-20211201144838346](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011448415.png)
 
-![image-20211201142943133](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011430053.png)
+![image-20211201142943133](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011430053.png)
 
 我们常说的代理也就是只正向代理，正向代理的过程，它隐藏了真实的请求客户端，服务端不知道真实的客户端是谁，客户端请求的服务都被代理服务器代替来请求，知名的科学上网工具shadowsocks 扮演的就是典型的正向代理角色
 
@@ -156,11 +156,11 @@ Nginx是一款基于C语言开发的[轻量级](https://baike.baidu.com/item/轻
 
 反向代理（reverse proxy）：是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器
 
-![image-20211201145050777](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011450859.png)
+![image-20211201145050777](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011450859.png)
 
 
 
-![image-20211201143006761](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011430950.png)
+![image-20211201143006761](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011430950.png)
 
 通过上述的图解大家就可以看清楚了，多个客户端给服务器发送的请求，Nginx服务器接收到之后，按照一定的规则分发给了后端的业务处理服务器进行处理了。此时~请求的来源也就是客户端是明确的，但是请求具体由哪台服务器处理的并不明确了，Nginx扮演的就是一个反向代理角色。
 
@@ -178,7 +178,7 @@ Nginx是一款基于C语言开发的[轻量级](https://baike.baidu.com/item/轻
 
 正向代理和反向代理实际应用中是非常广泛的: 通常情况下，我们在实际项目操作时，正向代理和反向代理很有可能会存在在一个应用场景中，正向代理代理客户端的请求去访问目标服务器，目标服务器是一个反向单利服务器，反向代理了多台真实的业务处理服务器。具体的拓扑图如下：
 
-![image-20211201142544243](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011425392.png)
+![image-20211201142544243](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011425392.png)
 
 
 
@@ -214,7 +214,7 @@ Nginx是一款基于C语言开发的[轻量级](https://baike.baidu.com/item/轻
 
 负载均衡构建在原有网络结构之上，它提供了一种透明且廉价有效的方法扩展服务器和网络设备的带宽、加强网络数据处理能力、增加吞吐量、提高网络的可用性和灵活性。
 
-![preview](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011459147.jpeg)
+![preview](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011459147.jpeg)
 
 Nginx常见的负载均衡算法: **轮询, 权重, ip_hash, 随机**
 
@@ -222,7 +222,7 @@ Nginx常见的负载均衡算法: **轮询, 权重, ip_hash, 随机**
 
 ## 6. 动静分离	
 
-![image-20211201145428931](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011454047.png)
+![image-20211201145428931](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011454047.png)
 
 
 
@@ -239,7 +239,7 @@ docker pull nginx			#docker 拉取最新版的Nginx
 docker run --name nginx --restart always -p 80:80 -d nginx		#创建并运行Nginx, 默认端口为80
 ```
 
-![image-20210923105652266](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543458.png)
+![image-20210923105652266](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543458.png)
 
 进入docker容器中
 
@@ -278,7 +278,7 @@ cd /usr/local/nginx/sbin
 ps aux|grep nginx	#查看nginx的进程
 ```
 
-![image-20211201151429895](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011514981.png)
+![image-20211201151429895](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011514981.png)
 
 
 
@@ -288,7 +288,7 @@ ps aux|grep nginx	#查看nginx的进程
 
 然后再浏览器中输入Linux机器的ip地址(默认为80端口)
 
-![image-20210923142835476](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543784.png)
+![image-20210923142835476](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543784.png)
 
 
 
@@ -305,13 +305,13 @@ java -jar javaApp-1.0.jar >> javaApp.log & 		#后台运行项目并将日志文�
 
 注意: 需要修改前端的相关的请求ip地址(改为当前服务器的地址)  my.js
 
-![image-20210923152052759](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543391.png)
+![image-20210923152052759](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543391.png)
 
 
 
 在浏览器中访问:
 
-![image-20210923152208625](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543952.png)
+![image-20210923152208625](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543952.png)
 
 //至此项目的 前后端分离, 并且都部署在了Linux服务器上
 
@@ -325,11 +325,11 @@ java -jar javaApp-1.0.jar >> javaApp.log & 		#后台运行项目并将日志文�
 
   * 修改端口号
 
-    ![image-20210923153036384](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543766.png)
+    ![image-20210923153036384](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543766.png)
 
   * 设置web上下文路径
 
-    ![image-20210923152924395](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543202.png)
+    ![image-20210923152924395](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543202.png)
 
 
 
@@ -343,7 +343,7 @@ java -jar javaApp-1.0.jar >> javaApp.log & 		#后台运行项目并将日志文�
 
 1. 下面是Dockerfile的内容(修改为自己相应的配置)
 
-![image-20210923154508245](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543882.png)
+![image-20210923154508245](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543882.png)
 
 
 
@@ -353,7 +353,7 @@ java -jar javaApp-1.0.jar >> javaApp.log & 		#后台运行项目并将日志文�
 docker build -t demo .				#注意后面有一个空格
 ```
 
-![image-20210923155739797](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011543823.png)
+![image-20210923155739797](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011543823.png)
 
 
 
@@ -421,7 +421,7 @@ upstream www.abin.com
 
 ```
 
-![image-20210924103701213](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011542878.png)
+![image-20210924103701213](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011542878.png)
 
 默认情况下模式是: 轮询模式;   除此之外还需要将前端部署在每个Nginx的默认前端路径下
 
@@ -452,19 +452,19 @@ upstream www.abin.com
 }
 ```
 
-![image-20210924104435473](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011542032.png)
+![image-20210924104435473](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011542032.png)
 
 ### **2. ip_hash**
 
 使用选项`  ip_hash`; 后, 每次访问的从机都是和第一次访问的从机一致
 
-![image-20210924105520725](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011542288.png)
+![image-20210924105520725](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011542288.png)
 
 ### **3. backup**
 
 使用选项`backup`后, 正常情况下该台机器不会响应请求, 但是当其他Nginx服务器宕机后,则顶替上来
 
-![image-20210924110529459](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011542514.png)
+![image-20210924110529459](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011542514.png)
 
 
 
@@ -472,7 +472,7 @@ upstream www.abin.com
 
 使用`least_conn`后, 会更加智能的处理响应, 那个服务器闲置越多,给它分发就越多
 
-![image-20210924111254154](https://gitee.com/abin_z/pic_bed/raw/master/img/202112011542545.png)
+![image-20210924111254154](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112011542545.png)
 
 
 

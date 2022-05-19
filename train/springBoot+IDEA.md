@@ -17,7 +17,7 @@
 
 3. **控制层(controller层)**:
 * 前端--------后端						//技术层面
-   
+  
 * 前端--------中台--------后端       //用户的使用角色
 
 
@@ -59,7 +59,7 @@ Spring框架是一个[开放源代码](https://baike.baidu.com/item/开放源代
 
 ## spring MVC 
 
-![image-20210920230956918](F:\Images\image-20210920230956918.png)
+![image-20210920230956918](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920230956918.png)
 
 1. 基于B/S架构的互联网开发应用框架
 
@@ -171,7 +171,7 @@ Spring Boot基于Spring4.0设计，不仅继承了Spring框架原有的优秀特
 
 
 
-![基本结构](F:\Images\4B0E4EEC-3FE8-4613-BF1E-CA985F7879F1.png)
+![基本结构](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/4B0E4EEC-3FE8-4613-BF1E-CA985F7879F1.png)
 
 
 
@@ -183,11 +183,11 @@ Spring Boot基于Spring4.0设计，不仅继承了Spring框架原有的优秀特
 
 1. #### pom.xml 加载MySQL驱动
 
-![image-20210916144227354](F:\Images\image-20210916144227354.png)
+![image-20210916144227354](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916144227354.png)
 
 2. #### 单独使用MyBatis: 添加相应的GAV坐标
 
-![image-20210916144617443](F:\Images\image-20210916144617443.png)
+![image-20210916144617443](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916144617443.png)
 
 提示: 如果使用的是MyBatis-plus依赖, 就不用添加MyBatis和MyBatis-spring, 防止冲突
 
@@ -214,7 +214,7 @@ Spring Boot基于Spring4.0设计，不仅继承了Spring框架原有的优秀特
 
 2. 需要在核心配置文件application.yml或者application.properties中添加映射文件位置
 
-![image-20210916151140822](F:\Images\image-20210916151140822.png)
+![image-20210916151140822](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916151140822.png)
 
 
 

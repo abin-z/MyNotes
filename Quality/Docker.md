@@ -10,21 +10,21 @@ Docker 是一个开源的应用容器引擎，让开发者可以打包他们的�
 
 **系统应用**: 系统应用主要是将硬件指令进行了封装, 方便普通应用的调用, Linux的发行版就行相当于是不同的系统应用 
 
-![](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261427457.png)
+![](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261427457.png)
 
 
 
 Linux的发行版都是基于Linux内核的, 只是系统应用的不同, 提供的函数库有差异
 
-![image-20211126143754964](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261437163.png)
+![image-20211126143754964](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261437163.png)
 
-
+![image-20220519152837079](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220519152837079.png)
 
 ## 二. Docker原理
 
 docker 是将程序需要运行的依赖和第三方库, 以及**将要调用系统(比如centos)的函数库**也一起打包, ==打包后的容器直接与Linux内核进行交互,不经过系统应用==,因此打包后的容器可以直接运行在基于Linux内核的机器上, 而不用考虑系统应用的环境
 
-![image-20211126145424368](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261454536.png)
+![image-20211126145424368](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261454536.png)
 
 
 
@@ -53,19 +53,19 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 ​						虚拟机提供了==物理机硬件级别的操作系统隔离==，这让不同虚拟机之间的==隔离很彻底==，但也需要消耗更多资源.
 
-![image-20210910111736464](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261542814.png)
+![image-20210910111736464](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261542814.png)
 
 ### 2. 容器技术:
 
 **容器架构:**	容器可以提供==操作系统级别的进程隔离==，以 Docker 为例，当我们运行 Docker 容器时，此时**容器本身只是操作系统中的一个进程**，只是利用操作系统					提供的各种功能实现了进程间网络、空间、权限等隔离，让多个 Docker 容器进程相互不知道彼此的存在
 
-![image-20210910111937416](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261542411.png)
+![image-20210910111937416](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261542411.png)
 
 
 
 虚拟机技术与容器技术的最大区别在于：==**多个虚拟机使用多个操作系统内核，而多个容器共享宿主机操作系统内核。**==
 
-![image-20211126154118016](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261546285.png)
+![image-20211126154118016](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261546285.png)
 
 ## 四. Docker中的镜像. 容器. 仓库
 
@@ -73,7 +73,7 @@ docker详解: https://zhuanlan.zhihu.com/p/25179221
 
 **容器（Container）**：镜像中的应用程序运行后形成的进程就是容器，只是Docker会给容器做隔离，对外不可见, 容器与容器之间没有任何接口。
 
-![image-20211126162651482](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261626566.png)
+![image-20211126162651482](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261626566.png)
 
 
 
@@ -99,7 +99,7 @@ docker中镜像类似于Java中的类class,  容器则类似于Java中的一个�
 
 **三者之间的关系:**
 
-![image-20210910112829061](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261622767.png)
+![image-20210910112829061](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261622767.png)
 
 ## 五. Docker 和 DockerHub
 
@@ -109,7 +109,7 @@ docker中镜像类似于Java中的类class,  容器则类似于Java中的一个�
 * 除此之外还可以搭建自己的Docker本地仓库
 * DockerHub官网地址:  https://hub.docker.com/
 
-![image-20211126163238040](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261632160.png)
+![image-20211126163238040](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261632160.png)
 
 
 
@@ -123,7 +123,7 @@ docker是一个CS架构的程序, 由两部分组成:
 
 
 
-![image-20211126163743131](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261637248.png)
+![image-20211126163743131](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261637248.png)
 
 
 
@@ -147,7 +147,7 @@ systemctl daemon-reload   	#重新加载配置文件
 systemctl enable docker		#设置开机自启动
 ```
 
-![image-20210906090329980](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261427569.png)
+![image-20210906090329980](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261427569.png)
 
 Docker应用需要用到各种端口，逐一去修改防火墙设置。非常麻烦，因此建议大家直接关闭防火墙！(在企业开发中不这样使用)
 
@@ -155,17 +155,17 @@ Docker应用需要用到各种端口，逐一去修改防火墙设置。非常�
 docker images				#查看本地的镜像
 ```
 
-![image-20210906092724633](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261438826.png)
+![image-20210906092724633](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261438826.png)
 
 在docker安装好后docker官方的镜像源拉取速度很慢, **最好配置一下拉取镜像的镜像加速(百度)**
 
 **docker==镜像==相关操作:**
 
-![image-20211126170204515](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261702612.png)
+![image-20211126170204515](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261702612.png)
 
 **docker==容器==相关操作:**
 
-![image-20211126172803473](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261728568.png)
+![image-20211126172803473](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261728568.png)
 
 
 
@@ -179,7 +179,7 @@ docker pull mysql:5.7 		#远程拉取MySQL5.7镜像
 docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7			#运行相应的容器, 如果不存在则先创建, -d表示后台运行
 ```
 
-![image-20211126174710271](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261747388.png)
+![image-20211126174710271](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261747388.png)
 
 **查看容器的状态**
 
@@ -187,7 +187,7 @@ docker run --name mysql --restart always -p 3306:3306 -e MYSQL_ROOT_PASSWORD=roo
 docker ps -a		#查看相关信息 status: UP为启动状态
 ```
 
-![image-20210906092954552](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261542072.png)
+![image-20210906092954552](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261542072.png)
 
 ```bash
 docker exec -it mysql bash		#登录到容器中,进入到指定容器打开虚拟终端
@@ -231,11 +231,11 @@ mysql -u root -p -h ip地址		#登录到指定IP的MySQL中
 
 **将一个镜像保存为一个压缩文件**:    `docker save -o ***.tar REPOSITORY:TAG  `	-o表示的是output输出
 
-<img src="https://gitee.com/abin_z/pic_bed/raw/master/img/202111261715975.png" alt="image-20211126171528887">
+<img src="https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261715975.png" alt="image-20211126171528887">
 
 **将一个镜像的压缩包加载到docker中**    `docker load -i ***.tar`
 
-![image-20211126171735906](https://gitee.com/abin_z/pic_bed/raw/master/img/202111261717981.png)
+![image-20211126171735906](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111261717981.png)
 
 **查看容器详细信息(日志)**
 
@@ -259,13 +259,13 @@ docker inspect 容器名称或者ID    #查看容器相关信息，包括容器�
 
 **数据卷（volume）是一个虚拟目录**，指向宿主机文件系统的某个目录
 
-![image-20211128104052496](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281040680.png)
+![image-20211128104052496](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281040680.png)
 
 
 
 操作数据卷基本语法：
 
-![image-20211128105818034](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281058089.png)
+![image-20211128105818034](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281058089.png)
 
 ```bash
 docker volume [command]			#docker数据卷操作是一个二级指令
@@ -284,9 +284,9 @@ docker volume prune				#删除当前所有未使用的数据卷
 - prune				  **删除==当前所有未使用==**的volume
 - inspect			    显示一个或多个volume的**信息**
 
-![image-20211128105412178](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281054225.png)
+![image-20211128105412178](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281054225.png)
 
-![image-20211128105527113](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281055154.png)
+![image-20211128105527113](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281055154.png)
 
 数据卷的作用
 
@@ -303,7 +303,7 @@ docker volume prune				#删除当前所有未使用的数据卷
 -v  [数据卷名称]:[容器内的目录]   #如果数据卷不存在则直接创建数据卷
 ```
 
-![image-20211128110849850](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281108950.png)
+![image-20211128110849850](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281108950.png)
 
 ```bash
 docker run --name nginx --restart always -p 80:80 -v html:/usr/share/nginx/html -d nginx			#创建一个Nginx的容器,并使用html数据卷挂载(如果数据卷不存在则直接创建)
@@ -363,9 +363,9 @@ docker cp 容器名称或ID:容器中文件的目录 宿主机文件路径		#均
 
 ### 5. 挂载方式对比
 
-![image-20211128114227947](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281142130.png)
+![image-20211128114227947](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281142130.png)
 
-![image-20211128114429095](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281144189.png)
+![image-20211128114429095](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281144189.png)
 
 
 
@@ -422,7 +422,7 @@ mysql -u root -p root --local_infile=1
 show global variables like 'local_infile';
 ```
 
-![image-20210906154333577](F:\Images\image-20210906154333577.png)
+![image-20210906154333577](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210906154333577.png)
 
 ```bash
 #如果不为ON,则修改为ON
@@ -435,7 +435,7 @@ source /mysql/empdb.sql
 load data local infile '/mysql/emp_50w.dat' into table empdb.emp;
 ```
 
-![image-20210906160424448](F:\Images\image-20210906160424448.png)
+![image-20210906160424448](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210906160424448.png)
 
 
 
@@ -447,7 +447,7 @@ load data local infile '/mysql/emp_50w.dat' into table empdb.emp;
 - Entrypoint层: 镜像运行的入口, 是镜像启动的命令
 - 其他: 在BaseImage基础上添加依赖\安装程序\完成整个应用的安装和配置
 
-![image-20211128142551865](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281425123.png)
+![image-20211128142551865](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281425123.png)
 
 ### 1.Dockerfile定义
 
@@ -455,11 +455,11 @@ Dockerfile是一个文本文件,其中包含一个个的指令(instruction), 用
 
 每一个指令都会形成一层Layer
 
-![image-20211128143811190](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281438382.png)
+![image-20211128143811190](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281438382.png)
 
 Dockerfile的基本写法:
 
-![image-20211128144150210](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281441328.png)
+![image-20211128144150210](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281441328.png)
 
 
 
@@ -468,21 +468,21 @@ docker build -t REPOSITORY:TAG    #基于dockerfile进行构建项目
 #需要注意相应的jar包和dockerfile需要在同一级目录
 ```
 
-![image-20211128144515537](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281445626.png)
+![image-20211128144515537](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281445626.png)
 
 刚才构建的镜像:
 
-![image-20211128145052424](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281450532.png)
+![image-20211128145052424](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281450532.png)
 
 
 
 可以基于java:8-alpine镜像简化Dockerfile构建过程:
 
-![image-20211128145302681](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281453802.png)
+![image-20211128145302681](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281453802.png)
 
 原理: java:8-alpine镜像将通用的过程给封装好, 不需要我们构建每一层,简化开发
 
-![image-20211128145222859](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281452936.png)
+![image-20211128145222859](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281452936.png)
 
 ### 总结:
 
@@ -517,7 +517,7 @@ docker commit 容器ID  自定义的镜像名:版本号
 docker commit 5836a9f2c051 mytomcat:10
 ```
 
-![image-20210924144108237](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281503502.png)
+![image-20210924144108237](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281503502.png)
 
 
 
@@ -530,7 +530,7 @@ docker save -o mytomcat10.tar mytomcat:10			#打包自己的镜像
 gzip mytomcat10.tar
 ```
 
-![image-20210924144914098](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281503514.png)
+![image-20210924144914098](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281503514.png)
 
 此时就可以将该镜像的压缩文件拷贝走
 
@@ -544,9 +544,9 @@ gunzip mytomcat10.tar.gz			#解压docker镜像包,产生一个mytomcat10.tar
 docker load -i mytomcat10.tar		#将镜像文件包添加到镜像中
 ```
 
-![image-20210924150639116](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281503253.png)
+![image-20210924150639116](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281503253.png)
 
-![image-20210924150710168](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281503935.png)
+![image-20210924150710168](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281503935.png)
 
 已经恢复到本地镜像中了
 
@@ -557,7 +557,7 @@ docker run --name mytomcat --restart always -p 8060:8080 -d mytomcat:10
 
 在8060端口进行验证:
 
-![image-20210924151413212](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281503390.png)
+![image-20210924151413212](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281503390.png)
 
 
 
@@ -570,7 +570,7 @@ docker run --name mytomcat --restart always -p 8060:8080 -d mytomcat:10
 - Compose文件是一个yaml文本文件，**通过指令定义集群中的每个容器如何运行**。
 - 可以协助我们部署微服务集群, 类似于多个容器的run命令,但是格式上有不同之处
 
-![image-20211128155139282](https://gitee.com/abin_z/pic_bed/raw/master/img/202111281551535.png)
+![image-20211128155139282](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111281551535.png)
 
 DockerCompose的详细细节参考官网:    https://docs.docker.com/compose/compose-file/
 

@@ -8,13 +8,13 @@ https://mp.baomidou.com/guide/
 
 1. **pom.xml中添加依赖:**
 
-![image-20210921094557381](F:\Images\image-20210921094557381.png)
+![image-20210921094557381](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921094557381.png)
 
 
 
 2. 在application.properties中添加连接数据库的相关配置
 
-![image-20210921094624049](F:\Images\image-20210921094624049.png)
+![image-20210921094624049](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921094624049.png)
 
 
 

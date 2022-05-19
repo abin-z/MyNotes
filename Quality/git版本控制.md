@@ -28,7 +28,7 @@ git是一个分布式版本控制系统, **版本控制**是一种记录一个�
 
 为了解决这个问题，人们很久以前就开发了许多种本地版本控制系统，大多都是采用某种简单的数据库来记录文件的历次更新差异。
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290025006.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290025006.png)
 
 其中最流行的一种叫做 *RCS*，现今许多计算机系统上都还看得到它的踪影。 甚至在流行的 Mac OS X 系统上安装了开发者工具包之后，也可以使用 `rcs` 命令。 它的工作原理是在硬盘上保存补丁集(补丁是指文件修订前后的变化)；通过应用所有的补丁，可以重新计算出各个版本的文件内容。
 
@@ -42,7 +42,7 @@ git是一个分布式版本控制系统, **版本控制**是一种记录一个�
 
 接下来人们又遇到一个问题，如何让在不同系统上的开发者协同工作？ 于是，集中化的版本控制系统(Centralized Version Control Systems，简称 *CVCS*)应运而生。 这类系统，诸如 *CVS*、*Subversion(SVN)* 以及 *Perforce* 等，都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。多年以来，这已成为版本控制系统的标准做法。
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290026057.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290026057.png)
 
 这种做法带来了许多好处，特别是相较于老式的本地 *VCS* 来说。 现在，每个人都可以在一定程度上看到项目中的其他人正在做些什么。 而管理员也可以轻松掌控每个开发者的权限，并且管理一个 *CVCS* 要远比在各个客户端上维护本地数据库来得轻松容易。
 
@@ -58,7 +58,7 @@ git是一个分布式版本控制系统, **版本控制**是一种记录一个�
 
 于是分布式版本控制系统(Distributed Version Control System，简称 *DVCS*)面世了。 在这类系统中，像 *Git*、*Mercurial*、*Bazaar* 以及 *Darcs* 等，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。 这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。 因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。如下图所示 -
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290026467.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290026467.png)
 
 更进一步，许多这类系统都可以指定和若干不同的远端代码仓库进行交互。藉此，你就可以在同一个项目中，分别和不同工作小组的人相互协作。可以根据需要设定不同的协作流程，比如层次模型式的工作流，而这在以前的集中式系统中是无法实现的。
 
@@ -101,11 +101,11 @@ $ git config --global user.email abin_z@163.com
 
 再次强调，如果使用了 `--global` 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用这些信息。 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行不使用 `--global` 选项的命令来配置。
 
-![image-20211129005231063](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290052111.png)
+![image-20211129005231063](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290052111.png)
 
 修改后可以在文件中查看配置: `C:\Users\Abin\.gitconfig`  (windows下)
 
-![image-20211129005355014](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290053054.png)
+![image-20211129005355014](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290053054.png)
 
 
 
@@ -126,7 +126,7 @@ color.diff=auto
 ...
 ```
 
-![image-20211129005854658](https://gitee.com/abin_z/pic_bed/raw/master/img/202111290058764.png)
+![image-20211129005854658](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111290058764.png)
 
 
 
@@ -205,7 +205,7 @@ alias ll='ls -al'
 - local repository：版本库或本地仓库
 - remote repository：远程仓库
 
-![image-20211130215157473](https://gitee.com/abin_z/pic_bed/raw/master/img/202111302151592.png)
+![image-20211130215157473](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111302151592.png)
 
 ```sh
 clone   	#克隆： 从远程仓库中克隆代码到本地仓库
@@ -297,13 +297,13 @@ git reset --hard [commitID]    # --hard 表示强制回退
 Git工作目录下对于文件的修改(增加、删除、更新)会存在几个状态，这些修改的状态会随着我们执行Git的命令而
 发生变化。
 
-![image-20211130230947835](https://gitee.com/abin_z/pic_bed/raw/master/img/202111302309959.png)
+![image-20211130230947835](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111302309959.png)
 
 ## 7. 基础指令练习
 
 - 首先准备一个空文件夹
 
-![image-20211203204629981](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032046041.png)
+![image-20211203204629981](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032046041.png)
 
 - **初始化本地仓库**
 
@@ -311,7 +311,7 @@ Git工作目录下对于文件的修改(增加、删除、更新)会存在几个
 git init
 ```
 
-![image-20211203204852351](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032048431.png)
+![image-20211203204852351](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032048431.png)
 
 - 创建一个file01.txt文件(这个文件怎么创建都可以,可以在Windows下创建)
 
@@ -319,7 +319,7 @@ git init
 touch file01.txt
 ```
 
-![image-20211203205219873](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032052949.png)
+![image-20211203205219873](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032052949.png)
 
 - **查看当前工作区的文件状态**
 
@@ -327,7 +327,7 @@ touch file01.txt
 git status
 ```
 
-![image-20211203205513508](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032055595.png)
+![image-20211203205513508](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032055595.png)
 
 - **将工作区中的文件添加到暂存区**
 
@@ -335,7 +335,7 @@ git status
 git add .			#注意其中的 . 表示当前文件夹的所有文件   也可以单独指定某个文件
 ```
 
-![image-20211203205745442](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032057525.png)
+![image-20211203205745442](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032057525.png)
 
 - **提交暂存区文件到本地仓库**
 
@@ -343,7 +343,7 @@ git add .			#注意其中的 . 表示当前文件夹的所有文件   也可以�
 git commit -m 'add file01'				#-m 表示提交的说明信息/一般为功能描述
 ```
 
-![image-20211203210129081](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032101165.png)
+![image-20211203210129081](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032101165.png)
 
 - **查看提交的文件的目的地**(所在分支)
 
@@ -351,7 +351,7 @@ git commit -m 'add file01'				#-m 表示提交的说明信息/一般为功能描
 git log			#查看文历史提交日志
 ```
 
-![image-20211203210524203](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032105299.png)
+![image-20211203210524203](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032105299.png)
 
 - 现在修改工作区中的文件
 
@@ -359,7 +359,7 @@ git log			#查看文历史提交日志
 vim file01.txt
 ```
 
-![image-20211203211023883](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032110976.png)
+![image-20211203211023883](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032110976.png)
 
 - **查看此时文件的状态**: 此时的状态为未暂存
 
@@ -367,11 +367,11 @@ vim file01.txt
 git status
 ```
 
-![image-20211203211214866](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032112956.png)
+![image-20211203211214866](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032112956.png)
 
 - **添加文件到暂存区**
 
-![image-20211203211313170](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032113250.png)
+![image-20211203211313170](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032113250.png)
 
 - 提交本次修改
 
@@ -379,7 +379,7 @@ git status
  git commit -m 'update file01'
 ```
 
-![image-20211203211542496](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032115580.png)
+![image-20211203211542496](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032115580.png)
 
 - **查看此时的提交日志**
 
@@ -387,21 +387,21 @@ git status
 git log
 ```
 
-![image-20211203211836792](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032118889.png)
+![image-20211203211836792](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032118889.png)
 
-![image-20211203211917423](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032119482.png)
+![image-20211203211917423](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032119482.png)
 
 - **演示版本回退功能**
 
 再次提交一次修改, 并且添加一个文件 file02.txt 文件
 
-![image-20211203212457649](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032124748.png)
+![image-20211203212457649](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032124748.png)
 
 提交本次版本
 
-![image-20211203212658577](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032126669.png)
+![image-20211203212658577](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032126669.png)
 
-![image-20211203212730426](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032127478.png)
+![image-20211203212730426](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032127478.png)
 
 - 版本回退 可以跳转到任何提交的版本
 
@@ -409,7 +409,7 @@ git log
 git reset --hard [commitID]			#commitID 表示要回退的版本
 ```
 
-![image-20211203213301918](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032133014.png)
+![image-20211203213301918](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032133014.png)
 
 -  查看历史提交版本记录 , 还是可以回到之前的版本的, 可以通过以下命令来查看历史提交版本
 
@@ -417,7 +417,7 @@ git reset --hard [commitID]			#commitID 表示要回退的版本
 git reflog
 ```
 
-![image-20211203213746416](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032137507.png)
+![image-20211203213746416](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032137507.png)
 
 # 四. 添加忽略列表(.gitignore文件) 
 
@@ -428,7 +428,7 @@ touch .gitignore
 vim .gitignore
 ```
 
-![image-20211203215253728](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032152845.png)
+![image-20211203215253728](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032152845.png)
 
 ## 1. 常用忽略规则
 
@@ -470,13 +470,13 @@ git branch -a	#查看本地分支和远程分支，远程分支会用红色表�
 git branch -vv 	#查看本地分支对应的远程分支。		出现ahead表示本地分支领先远端分支
 ```
 
-![image-20211203215918148](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032159218.png)
+![image-20211203215918148](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032159218.png)
 
 ```sh
 git branch -vv				#说明
 ```
 
-![image-20211222174854629](https://gitee.com/abin_z/pic_bed/raw/master/img/202112221748743.png)
+![image-20211222174854629](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112221748743.png)
 
 
 
@@ -498,11 +498,11 @@ git switch -c <name>
 git branch -m oldName newName		#重命名分支
 ```
 
-![image-20211203220451565](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032204670.png)
+![image-20211203220451565](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032204670.png)
 
 现在在master主分支上新建文件master.txt并提交
 
-![image-20211203221032117](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032210214.png)
+![image-20211203221032117](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032210214.png)
 
 ### 3. **切换分支命令:**
 
@@ -522,15 +522,15 @@ git checkout -b [branchname]	#直接创建分支并且切换到当前分支,若�
 
 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。
 
-![image-20211203221335336](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032213433.png)
+![image-20211203221335336](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032213433.png)
 
 现在在develop分支上新建文件develop.txt并提交
 
-![image-20211203222004772](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032220874.png)
+![image-20211203222004772](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032220874.png)
 
 现在切换回master分支上, ==不会出现develop分支上提交的develop.txt文件==
 
-![image-20211203222325558](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032223664.png)
+![image-20211203222325558](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032223664.png)
 
 
 
@@ -544,11 +544,11 @@ git merge [branchname]			# 将branchname的分支合并到当前分支
 
 协同开发就会出现分支, 下图是在develop分支上开发的情况
 
-![image-20211203223453387](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032234475.png)
+![image-20211203223453387](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032234475.png)
 
 下图是在master分支上开发的情况
 
-![image-20211203223736044](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032237133.png)
+![image-20211203223736044](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032237133.png)
 
 **合并分支操作(没有冲突的时候):**
 
@@ -556,11 +556,11 @@ git merge [branchname]			# 将branchname的分支合并到当前分支
 git merge [branchname]
 ```
 
-![image-20211203224609911](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032246014.png)
+![image-20211203224609911](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032246014.png)
 
 填写合并分支的说明信息(一般为实现了什么功能)
 
-![image-20211203224246123](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032242213.png)
+![image-20211203224246123](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032242213.png)
 
 ### 5. **删除分支命令：**
 
@@ -572,7 +572,7 @@ git branch -d [branchname]	#需要做检查,未合并分支的时候会提示
 git branch -D [branchname]	#不需要做检查,直接删除
 ```
 
-![image-20211203225018394](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032250483.png)
+![image-20211203225018394](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032250483.png)
 
 
 
@@ -584,23 +584,23 @@ git branch -D [branchname]	#不需要做检查,直接删除
 
 原始数据如下
 
-![image-20211203230842897](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032308977.png)
+![image-20211203230842897](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032308977.png)
 
 master分支中提交的数据
 
-![image-20211203231039516](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032310593.png)
+![image-20211203231039516](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032310593.png)
 
 dev分支中提交的数据
 
-![image-20211203231245257](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032312329.png)
+![image-20211203231245257](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032312329.png)
 
 目前分支情况:
 
-![image-20211203231515953](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032315019.png)
+![image-20211203231515953](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032315019.png)
 
 **执行合并分支操作**:
 
-![image-20211203231809897](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032318976.png)
+![image-20211203231809897](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032318976.png)
 
 可以通过查看文件详情了解那些文件冲突
 
@@ -610,25 +610,25 @@ git status 	#查看那些文件存在冲突
 
 此时的冲突文件common.txt内容为:
 
-![image-20211203232400116](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032324195.png)
+![image-20211203232400116](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032324195.png)
 
 根据实际情况来修改冲突的文件
 
-![image-20211203232643827](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032326904.png)
+![image-20211203232643827](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032326904.png)
 
 修改完冲突文件后, 后面进行add , commit 指定解决冲突信息
 
-![image-20211203233009675](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032330750.png)
+![image-20211203233009675](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032330750.png)
 
-![image-20211203233322495](https://gitee.com/abin_z/pic_bed/raw/master/img/202112032333575.png)
+![image-20211203233322495](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032333575.png)
 
 ### 7. Git合并的快进模式
 
-![image-20211204003003676](https://gitee.com/abin_z/pic_bed/raw/master/img/202112040030764.png)
+![image-20211204003003676](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112040030764.png)
 
 在master执行合并操作,就会执行快进模式(**效果是一样的**)
 
-![image-20211204003304032](https://gitee.com/abin_z/pic_bed/raw/master/img/202112040033117.png)
+![image-20211204003304032](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112040033117.png)
 
 
 
@@ -685,7 +685,7 @@ git status 	#查看那些文件存在冲突
 
 ### 6. 分支示意图
 
-![image-20211204001011707](https://gitee.com/abin_z/pic_bed/raw/master/img/202112040010926.png)
+![image-20211204001011707](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112040010926.png)
 
 
 
@@ -728,7 +728,7 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 ## Git远程仓库的SSH配置
 
-### 1.创建远程仓库![image-20211205220452846](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052204953.png)
+### 1.创建远程仓库![image-20211205220452846](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052204953.png)
 
 ### 2.配置SSH公钥
 
@@ -738,17 +738,17 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
   ssh-keygen -t rsa			#使用rsa方式生成非对称秘钥
   ```
 
-  ![image-20211205221247500](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052212598.png)
+  ![image-20211205221247500](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052212598.png)
 
 注意: 如果公钥已经存在,则自动覆盖
 
 在用户目录下的 .ssh 目录下会生成相应的公钥`id_rsa.pub`
 
-![image-20211205221733108](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052217194.png)
+![image-20211205221733108](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052217194.png)
 
 将生成的公钥`id_rsa.pub`内容复制到代码托管平台上
 
-![image-20211205222230854](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052222965.png)
+![image-20211205222230854](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052222965.png)
 
 
 
@@ -758,7 +758,7 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 ssh -T git@gitee.com			#需要输入 yes
 ```
 
-![image-20211205222636401](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052226470.png)
+![image-20211205222636401](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052226470.png)
 
 
 
@@ -766,7 +766,7 @@ ssh -T git@gitee.com			#需要输入 yes
 
 ### 1.添加远程仓库
 
-![image-20211205224018132](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052240185.png)
+![image-20211205224018132](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052240185.png)
 
 ```sh
 git remote add [远端仓库名] [ssh远程仓库地址]		#一般远端仓库名都为 origin
@@ -776,7 +776,7 @@ git remote add [远端仓库名] [ssh远程仓库地址]		#一般远端仓库名
 git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端仓库名, 还没有远端分支名
 ```
 
-![image-20211205224848724](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052248800.png)
+![image-20211205224848724](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052248800.png)
 
 ### 2.查看远程仓库
 
@@ -816,9 +816,9 @@ git push [-f] [--set-upstream] [远端分支名 [本地分支名]:[远端分支�
 git push --set-upstream origin master
 ```
 
-![image-20211205230106636](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052301705.png)
+![image-20211205230106636](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052301705.png)
 
-![image-20211205230241823](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052302919.png)
+![image-20211205230241823](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052302919.png)
 
 ### 4.关联远程分支
 
@@ -832,7 +832,7 @@ git branch -vv 				#用于查看本地分支与远端分支的绑定情况
 git push --set-upstream origin master:master	#推送的同时建立追踪关系
 ```
 
-![image-20211205230835220](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052308298.png)
+![image-20211205230835220](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052308298.png)
 
 * #### 创建本地分支来跟踪并拉取远程分支
 
@@ -853,11 +853,11 @@ git branch --track <本地分支名> <远程主机名>/<远程分支名>
 git clone [远端地址]
 ```
 
-![image-20211205231402105](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052314159.png)
+![image-20211205231402105](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052314159.png)
 
 克隆成功! 克隆后的目录和远端是一样的(一般克隆操作只需要使用一次就可以)
 
-![image-20211205231438643](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052314708.png)
+![image-20211205231438643](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052314708.png)
 
 ### 6.从远程仓库抓取和拉取
 
@@ -875,9 +875,9 @@ git fetch [remote name] [branch name]
 git pull 				#抓取并自动合并
 ```
 
-![image-20211205233037566](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052330736.png)
+![image-20211205233037566](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052330736.png)
 
-![image-20211205233320577](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052333667.png)
+![image-20211205233320577](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052333667.png)
 
 ### 7.解决合并冲突
 
@@ -885,20 +885,20 @@ git pull 				#抓取并自动合并
 
 ​		在一段时间，A、B用户修改了同一个文件，且修改了同一行位置的代码，此时会发生合并冲突。A用户在本地修改代码后优先推送到远程仓库，此时B用户在本地修订代码，提交到本地仓库后，==也需要推送到远程仓库，此时B用户晚于A用户，**故需要先拉取远程仓库的提交，经过合并后才能推送到远端分支**==,如下图所示。
 
-![image-20211205233613742](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052336876.png)
+![image-20211205233613742](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052336876.png)
 
 在B用户拉取代码时，因为A、B用户同一段时间修改了同一个文件的相同位置代码，故会发生合并冲突。
 **远程分支也是分支，所以合并时冲突的解决方式也和解决本地分支冲突相同相同**，但是解决冲突时需要在本地解决
 
-![image-20211205234559783](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052345871.png)
+![image-20211205234559783](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052345871.png)
 
 此时需要先pull然后在push
 
-![image-20211205234655331](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052346395.png)
+![image-20211205234655331](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052346395.png)
 
-![image-20211205234817228](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052348286.png)
+![image-20211205234817228](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052348286.png)
 
-![image-20211205235018313](https://gitee.com/abin_z/pic_bed/raw/master/img/202112052350400.png)
+![image-20211205235018313](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052350400.png)
 
 ----
 
@@ -924,7 +924,7 @@ $ git checkout [commit] [file]
 ## 注意：git add然后git commit后，认为暂存区和本地仓库一致。克隆文件下来时，认为暂存区和远程仓库一致
 ```
 
-![image-20211222211955883](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222119018.png)
+![image-20211222211955883](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222119018.png)
 
 ```sh
 git checkout -- [filename]		#将filename文件从暂存区恢复到工作区.会导致工作区修改丢失, 使用时慎重
@@ -932,11 +932,11 @@ git checkout [filename]			#将filename文件从暂存区恢复到工作区.会�
 git checkout .					#将暂存区的所有文件恢复到工作区,会导致工作区修改丢失, 使用时慎重
 ```
 
-![image-20211222212856703](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222128810.png)
+![image-20211222212856703](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222128810.png)
 
-![image-20211222213537134](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222135221.png)
+![image-20211222213537134](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222135221.png)
 
-![image-20211222213715025](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222137094.png)
+![image-20211222213715025](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222137094.png)
 
 
 
@@ -960,7 +960,7 @@ git是无法直接在远程仓库直接新建分支的,
   $ git push origin develop 		#将本地的提交到远程仓库，如果远程没有相依的分支则创建
   ```
 
-![image-20211222223012599](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222230741.png)
+![image-20211222223012599](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222230741.png)
 
 ## 3.删除远程仓库的分支
 
@@ -974,7 +974,7 @@ $ git push origin --delete test
 
 事先已经创建好了远程分支: test,  feature
 
-![image-20211222225403709](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222254823.png)
+![image-20211222225403709](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222254823.png)
 
 ## 4.用本地分支追踪远程仓库分支(建立追踪关系)
 
@@ -991,7 +991,7 @@ $ git branch --set-upstream-to <远程主机名>/<远程分支名>
 $ git push --set-upstream <远程主机名> <远程分支名>   #在push的同时也建立当前分支与的远端分支的追踪关系（会新建远程分支）
 ```
 
-![image-20211222231139016](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222311166.png)
+![image-20211222231139016](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222311166.png)
 
 
 
@@ -1003,7 +1003,7 @@ $ git push --set-upstream <远程主机名> <远程分支名>   #在push的同�
 git branch -dr origin/feature	#并不是删除远程分支, 仅仅是删除git branch -r中的追踪分支
 ```
 
-![image-20211222233617863](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222336014.png)
+![image-20211222233617863](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222336014.png)
 
 ## 6.把远程分支的最新情况拉取到本地
 
@@ -1013,7 +1013,7 @@ git branch -dr origin/feature	#并不是删除远程分支, 仅仅是删除git b
 $ git fetch -p
 ```
 
-![image-20211222234602222](https://gitee.com/abin_z/pic_bed/raw/master/img/202112222346324.png)
+![image-20211222234602222](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112222346324.png)
 
 ## 7.创建本地分支来跟踪并拉取远程分支
 
@@ -1024,8 +1024,9 @@ git checkout -b <本地分支名> <远程主机名>/<远程分支名>
 git branch --track <本地分支名> <远程主机名>/<远程分支名>
 ```
 
-![image-20211223000106431](https://gitee.com/abin_z/pic_bed/raw/master/img/202112230001575.png)
+![image-20211223000106431](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112230001575.png)
 
 
 
 更多更详细教程参考易百教程： https://www.yiibai.com/git
+

@@ -8,7 +8,7 @@
 
 报错: Table 'TESTDB.emp' doesn't exist
 
-![image-20210909210825777](F:\Images\image-20210909210825777.png)
+![image-20210909210825777](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909210825777.png)
 
 
 
@@ -20,11 +20,11 @@
 
 1. **在数据表右键可以查看数据表结构 (功能正常)**
 
-![image-20210909211049098](F:\Images\image-20210909211049098.png)
+![image-20210909211049098](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909211049098.png)
 
 2. **新建查询 单独执行: select * from emp;  能够正常查询出结果(功能正常)** 
 
-![image-20210909212209730](F:\Images\image-20210909212209730.png)
+![image-20210909212209730](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909212209730.png)
 
 根据上面功能正常初步判断 Navicat 是正常连接 Mycat 并可以正常访问, 仅仅是Navicat触发: 数据表双击事件(打开表) 后台执的SQL语句有问题(个人观点);
 
@@ -40,13 +40,13 @@
 select * from TESTDB.emp;		#(出现相同的错误信息)
 ```
 
-![image-20210909215608939](F:\Images\image-20210909215608939.png)
+![image-20210909215608939](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909215608939.png)
 
 ```sql
 select * from empdb.emp;		#(查询成功)
 ```
 
-![image-20210909215455598](F:\Images\image-20210909215455598.png)
+![image-20210909215455598](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909215455598.png)
 
 根据以上测试初步判断: Navicat数据库可视化工具打开表时后台执行的SQL语句可能为:
 
@@ -77,9 +77,9 @@ select * from  TESTDB.emp;		#可能还有其他参数,但是可以确定是 from
 vim /usr/local/mycat/conf/server.xml
 ```
 
-![image-20210909230318871](F:\Images\image-20210909230318871.png)
+![image-20210909230318871](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909230318871.png)
 
-![image-20210909225756543](F:\Images\image-20210909225756543.png)
+![image-20210909225756543](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909225756543.png)
 
 ​			
 
@@ -89,9 +89,9 @@ vim /usr/local/mycat/conf/server.xml
 vim /usr/local/mycat/conf/schema.xml
 ```
 
-![image-20210909231025543](F:\Images\image-20210909231025543.png)
+![image-20210909231025543](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909231025543.png)
 
-![image-20210909230649808](F:\Images\image-20210909230649808.png)
+![image-20210909230649808](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909230649808.png)
 
 
 
@@ -107,7 +107,7 @@ ss -lnt | grep 8066		#查看mycat端口是否在监听状态
 
 第四步: Navicat 可视化工具重新连接 Mycat 即可
 
-![image-20210909231639805](F:\Images\image-20210909231639805.png)
+![image-20210909231639805](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210909231639805.png)
 
 
 

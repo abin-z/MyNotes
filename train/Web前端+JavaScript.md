@@ -351,7 +351,7 @@ console.log($.type(haoxl));//object
 
 使用Object.keys
 
-![image-20211012143403612](F:\Images\image-20211012143403612.png)
+![image-20211012143403612](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211012143403612.png)
 
 Object.keys( ) 会返回一个数组，数组中是这个对象的key值列表
 

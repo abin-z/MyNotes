@@ -128,13 +128,13 @@
 
 # 微服务架构
 
-![image-20211124100326723](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241003905.png)
+![image-20211124100326723](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241003905.png)
 
-![image-20211124100506417](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241005558.png)
+![image-20211124100506417](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241005558.png)
 
 ### 所用的技术栈:
 
-![image-20211124100747664](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241007803.png)
+![image-20211124100747664](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241007803.png)
 
 ## 微服务结构特征:
 
@@ -143,7 +143,7 @@
 * ==自治==: 团队独立. 技术独立. 数据独立. 部署独立
 * ==隔离性强==: 服务调用做好隔离. 容错. 降级. 避免出现级联的问题
 
-![image-20211124105123919](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241051036.png)
+![image-20211124105123919](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241051036.png)
 
 #### 微服务架构的实现
 
@@ -153,17 +153,17 @@
 
 
 
-![image-20211124142710201](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241427386.png)
+![image-20211124142710201](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241427386.png)
 
 **不同企业采用不同的技术组合**
 
-![image-20211124142810317](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241428414.png)
+![image-20211124142810317](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241428414.png)
 
 SpringCloudAlibaba是SpringCloud的一部分.
 
 SpringCloud集成了各种微服务功能组件,并基于SpringBoot实现了这些组件的自动装配, 从而提供了良好的开箱即用体验
 
-![image-20211124144128032](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241441167.png)
+![image-20211124144128032](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241441167.png)
 
 
 
@@ -209,7 +209,7 @@ SpringCloud集成了各种微服务功能组件,并基于SpringBoot实现了这�
 
 注册中心示意图:
 
-![image-20211124152232082](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241522153.png)
+![image-20211124152232082](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241522153.png)
 
 **服务注册和服务发现:**
 
@@ -229,7 +229,7 @@ https://www.bilibili.com/video/BV1LQ4y127n4?p=10&spm_id_from=pageDriver
 
 **Eureka Client**，主要包括服务消费者和服务提供者 
 
-![image-20211124152721270](https://gitee.com/abin_z/pic_bed/raw/master/img/202111241527394.png)
+![image-20211124152721270](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111241527394.png)
 
 **1. 消费者该如何获取服务提供者具体信息**？
 
@@ -400,13 +400,13 @@ Eureka的底层使用的是Ribbon组件来实现负载均衡
 
 **负载均衡流程**:
 
-![image-20211124224717979](https://gitee.com/abin_z/pic_bed/raw/master/img/202111242247133.png)
+![image-20211124224717979](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111242247133.png)
 
 
 
 Ribbon的负载均衡规则是一个叫做**IRule**的接口来定义的,每一个实现类都是一种规则
 
-![image-20211124225038650](https://gitee.com/abin_z/pic_bed/raw/master/img/202111242250754.png)
+![image-20211124225038650](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111242250754.png)
 
 负载均衡有好几种实现策略，常见的有：
 
@@ -503,21 +503,21 @@ Nacos的下载地址: https://github.com/alibaba/nacos    下载压缩包后直�
 
 目录结构:
 
-![image-20211125103712366](https://gitee.com/abin_z/pic_bed/raw/master/img/202111251037422.png)
+![image-20211125103712366](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111251037422.png)
 
 配置文件路径为: nacos/conf/application.properties
 
-![image-20211125103934333](https://gitee.com/abin_z/pic_bed/raw/master/img/202111251039374.png)
+![image-20211125103934333](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111251039374.png)
 
 
 
 启动Nacos服务: `startup.cmd -m standalone`     standalone 表示单机启动, Windows下
 
-![image-20211125104321912](https://gitee.com/abin_z/pic_bed/raw/master/img/202111251043968.png)
+![image-20211125104321912](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111251043968.png)
 
 进入nacos控制台: http://192.168.0.198:8848/nacos/index.html      用户名和密码都是 nacos
 
-![image-20211125104600341](https://gitee.com/abin_z/pic_bed/raw/master/img/202111251046406.png)
+![image-20211125104600341](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111251046406.png)
 
 ##### **基本操作步骤:**
 
@@ -566,7 +566,7 @@ Nacos的下载地址: https://github.com/alibaba/nacos    下载压缩包后直�
 
 ### Nacos服务的分级存储模型
 
-![image-20211125113609157](https://gitee.com/abin_z/pic_bed/raw/master/img/202111251136289.png)
+![image-20211125113609157](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111251136289.png)
 
 
 
@@ -619,13 +619,13 @@ Nacos的下载地址: https://github.com/alibaba/nacos    下载压缩包后直�
 - **资源浪费**, 调用链中每个服务在等待响应过程中,不释放请求资源,在高并发场景下浪费资源.
 - **存在级联失败问题**,  如果服务提供者出现问题,所有调用方都会跟着出问题, 迅速导致整个微服务故障. 
 
-![image-20211130112706396](https://gitee.com/abin_z/pic_bed/raw/master/img/202111301127536.png)
+![image-20211130112706396](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111301127536.png)
 
 ### 异步通讯方案
 
 **异步调用常见的实现是==事件驱动模式==** : 事件来了后由Broker去通知相应的服务执行
 
-![image-20211130113101495](https://gitee.com/abin_z/pic_bed/raw/master/img/202111301131611.png)
+![image-20211130113101495](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111301131611.png)
 
 #### 异步通讯事件驱动优点:
 
@@ -634,7 +634,7 @@ Nacos的下载地址: https://github.com/alibaba/nacos    下载压缩包后直�
 - **故障隔离**: 不用在担心级联失败的问题, 故障隔离, 服务间没有强依赖关系
 - **流量消峰**: Broker可以对高并发进行缓存, 按照服务的处理速率进行分布事件 
 
-![image-20211130113928145](https://gitee.com/abin_z/pic_bed/raw/master/img/202111301139275.png)
+![image-20211130113928145](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111301139275.png)
 
 #### 异步通讯的缺点:
 
@@ -647,7 +647,7 @@ Nacos的下载地址: https://github.com/alibaba/nacos    下载压缩包后直�
 
 MQ(Message Queue), 消息队列, 字面意思就是存放消息的队列, 也就是事件驱动架构中的Broker
 
-![image-20211130170401043](https://gitee.com/abin_z/pic_bed/raw/master/img/202111301704170.png)
+![image-20211130170401043](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111301704170.png)
 
 
 

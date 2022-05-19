@@ -16,13 +16,13 @@
 
 当我们对网站或者App做出操作去访问数据时，其实归根到底是一条SQL语句的执行，那么一条SQL语句到底是怎么执行的呢？
 
-![preview](https://gitee.com/abin_z/pic_bed/raw/master/v2-8a773bde2b5ec56bead25ad57dc76d1f_r.jpg)
+![preview](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-8a773bde2b5ec56bead25ad57dc76d1f_r.jpg)
 
 MySQL官方提供的MySQL架构图，我们可以清楚的看到一个连接是要经过很多个步骤最后才获得结果的。
 
 博客园中找到一张较为清楚的图片:
 
-![v2-df7af3acb9b9e050348bc6f00163a7a5_r](https://gitee.com/abin_z/pic_bed/raw/master/v2-df7af3acb9b9e050348bc6f00163a7a5_r.jpg)
+![v2-df7af3acb9b9e050348bc6f00163a7a5_r](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-df7af3acb9b9e050348bc6f00163a7a5_r.jpg)
 
 
 
@@ -48,7 +48,7 @@ MySQL官方提供的MySQL架构图，我们可以清楚的看到一个连接是�
 
 更加简显易懂的体系结构图: 
 
-![v2-760f1324c080d37a8590b45316827b04_r](https://gitee.com/abin_z/pic_bed/raw/master/v2-760f1324c080d37a8590b45316827b04_r.jpg)
+![v2-760f1324c080d37a8590b45316827b04_r](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-760f1324c080d37a8590b45316827b04_r.jpg)
 
 ## 3.**组件的详细介绍**
 
@@ -106,7 +106,7 @@ MySQL 没有命中缓存，那么就会进入分析器，**分析器主要是用
 
 > 来张图了解整个过程
 
-![v2-38ce979bcec53ad082d2e15cb330b0c3_r](https://gitee.com/abin_z/pic_bed/raw/master/v2-38ce979bcec53ad082d2e15cb330b0c3_r.jpg)
+![v2-38ce979bcec53ad082d2e15cb330b0c3_r](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-38ce979bcec53ad082d2e15cb330b0c3_r.jpg)
 
 ### 4.语句分析
 
@@ -219,7 +219,7 @@ UPDATE` ``test` ``SET` ``c` = `c` + 1 ``WHERE` ``id` = 1;
 
 思路图:
 
-![v2-829f090ec9c882505262d0e0330cc03e_1440w](https://gitee.com/abin_z/pic_bed/raw/master/v2-829f090ec9c882505262d0e0330cc03e_1440w.jpg)
+![v2-829f090ec9c882505262d0e0330cc03e_1440w](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-829f090ec9c882505262d0e0330cc03e_1440w.jpg)
 
 
 
@@ -236,7 +236,7 @@ UPDATE` ``test` ``SET` ``c` = `c` + 1 ``WHERE` ``id` = 1;
 
 ### 5.MySQL执行原理脑图
 
-![v2-1b4b32eb5da73b6aefd81e541feaecbf_r](https://gitee.com/abin_z/pic_bed/raw/master/v2-1b4b32eb5da73b6aefd81e541feaecbf_r.jpg)
+![v2-1b4b32eb5da73b6aefd81e541feaecbf_r](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-1b4b32eb5da73b6aefd81e541feaecbf_r.jpg)
 
 
 
@@ -271,7 +271,7 @@ MySQL 保证数据不会丢的能力主要体现在两方面：
 
 因为crash-safe主要体现在事务执行过程中突然奔溃，重启后能保证事务完整性，所以在讲解具体原理之前，先了解下MySQL事务执行有哪些关键阶段，后面才能依据这几个阶段来进行解析。下面以一条更新语句的执行流程为例，话不多说，直接上图：
 
-![image-20220307235519366](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307235519366.png)
+![image-20220307235519366](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307235519366.png)
 
 从上图可以清晰地看出一条更新语句在MySQL中是怎么执行的，简单进行总结一下：
 
@@ -407,7 +407,7 @@ Hash索引适于key-value查询，通过Hash索引比B-tree索引查询更加迅
 
 Hash索引基于Hash表实现，只有查询条件精确匹配Hash索引中的列时，才能够使用到hash索引。对于Hash索引中的所有列，存储引擎会为每行计算一个hashcode，Hash索引中存储的就是hashcode。值存在数组，用一个hash函数把key转换成一个确定的内存位置，然后把value放在数组的该位置。
 
-![image-20220309101650206](https://gitee.com/abin_z/pic_bed/raw/master/image-20220309101650206.png)
+![image-20220309101650206](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220309101650206.png)
 
 比如我们想查`ID_card_n4`对应username：
 
@@ -455,7 +455,7 @@ BST、AVL、RBT很好的将读写次数从O(n)优化到O(log2(n))；其中，AVL
 
 
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/20190521001020863.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/20190521001020863.png)
 
 上图展示了一种可能的索引方式。左边是数据表，一共有两列七条记录，最左边的是数据记录的物理地址（**注意逻辑上相邻的记录在磁盘上也并不是一定物理相邻的**）。为了加快Col2的查找，可以维护一个右边所示的二叉查找树，每个节点分别包含索引键值和一个指向对应数据记录物理地址的指针，这样就可以运用**二叉查找**在O(logn2)O(log2n)的复杂度内获取到相应数据。
 
@@ -473,13 +473,13 @@ BST、AVL、RBT很好的将读写次数从O(n)优化到O(log2(n))；其中，AVL
 
 
 
-![image-20220308170532018](https://gitee.com/abin_z/pic_bed/raw/master/image-20220308170532018.png)
+![image-20220308170532018](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220308170532018.png)
 
 二叉查找树可以任意地构造, 但是这棵二叉树的查询效率就低了, 因为已经退化成类似于链表了。因此若想二叉树的查询效率尽可能高，需要这棵二叉树是平衡的，从而引出新的定义——平衡二叉树，或称AVL树。
 
 #### 4.3 平衡二叉查找树(AVL-Tree)
 
-![image-20220308170831605](https://gitee.com/abin_z/pic_bed/raw/master/image-20220308170831605.png)
+![image-20220308170831605](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220308170831605.png)
 
 平衡二叉树确实解决了退化成链表的问题, 似乎是一种可行的方案, 可以按着这个思路去进行拓展, 其实在数据量比较大的时候,这颗平衡二叉树的高度是很高的, **树的高度越高表示要进行I/O读写的次数越多**, 因此树的高度需要再继续优化. 此时可以用平衡多路查找树(B-Tree)
 
@@ -511,11 +511,11 @@ B-Tree结构的数据可以让系统高效的找到数据所在的磁盘块。�
 6. 关键字的个数n满足：ceil(m/2)-1 <= n <= m-1 
 7. ki(i=1,…n)为关键字，且关键字升序排序。 
 8. Pi(i=1,…n)为指向子树根节点的指针。P(i-1)指向的子树的所有节点关键字均小于ki，但都大于k(i-1)
-8. ![image-20220308181239349](https://gitee.com/abin_z/pic_bed/raw/master/image-20220308181239349.png)
+8. ![image-20220308181239349](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220308181239349.png)
 
 B-Tree中的每个节点根据实际情况可以包含大量的关键字信息和分支，如下图所示为一个3阶的B-Tree：
 
-![索引](https://gitee.com/abin_z/pic_bed/raw/master/20160202204827368)
+![索引](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/20160202204827368)
 
 
 
@@ -538,7 +538,7 @@ B-Tree中的每个节点根据实际情况可以包含大量的关键字信息�
 
 B+树索引是B+树在数据库中的一种实现，是最常见也是数据库中使用最为频繁的一种索引。B+树中的B代表平衡（balance），而不是二叉（binary），因为B+树是从最早的平衡二叉树演化而来的。在讲B+树之前必须先了解上面的二叉查找树、平衡二叉树（AVLTree）和平衡多路查找树（B-Tree），B+树即由这些树逐步优化而来。
 
-![image-20220308181602049](https://gitee.com/abin_z/pic_bed/raw/master/image-20220308181602049.png)
+![image-20220308181602049](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220308181602049.png)
 
 **B+Tree是在B-Tree基础上的一种优化，使其更适合实现外存储索引结构，InnoDB存储引擎就是用B+Tree实现其索引结构。**
 
@@ -556,7 +556,7 @@ B+树索引是B+树在数据库中的一种实现，是最常见也是数据库�
 
 将上一节中的B-Tree优化，由于B+Tree的非叶子节点只存储键值信息，假设每个磁盘块能存储4个键值及指针信息，则变成B+Tree后其结构如下图所示： 
 
-![索引](https://gitee.com/abin_z/pic_bed/raw/master/20160202205105560)
+![索引](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/20160202205105560)
 
 通常在B+Tree上有两个头指针，一个指向根节点，另一个指向关键字最小的叶子节点，而且**==所有叶子节点（即数据节点）之间是一种链式环结构==**。因此可以对B+Tree进行两种查找运算：**一种是对于主键的==范围查找和分页查找==，另一种是从根节点开始，进行==随机查找==。**
 
@@ -594,7 +594,7 @@ Mysql中B+Tree：在经典B+Tree的基础上进行了优化，**增加了顺序�
 
 结构如下图：
 
-![image-20211001213607305](https://gitee.com/abin_z/pic_bed/raw/master/image-20211001213607305.png)
+![image-20211001213607305](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20211001213607305.png)
 
 
 
@@ -612,11 +612,11 @@ Mysql中B+Tree：在经典B+Tree的基础上进行了优化，**增加了顺序�
 
 **叶子节点data域存储指向数据记录的指针地址。(底层存储结构： frm -表定义、 myi -myisam索引、 myd-myisam数据)**
 
-![image-20220309112928096](https://gitee.com/abin_z/pic_bed/raw/master/image-20220309112928096.png)
+![image-20220309112928096](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220309112928096.png)
 
 MyISAM索引按照B+Tree搜索，如果指定的Key存在，则取出其data域的值，然后以data域值-数据指针地址去读取相应数据记录。辅助索引和主索引在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。MyISAM索引树如下：
 
-![3575048-41ca8d0764b4e34d](https://gitee.com/abin_z/pic_bed/raw/master/3575048-41ca8d0764b4e34d.png)
+![3575048-41ca8d0764b4e34d](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-41ca8d0764b4e34d.png)
 
 ### 5.3 聚簇索引
 
@@ -632,15 +632,15 @@ MyISAM索引按照B+Tree搜索，如果指定的Key存在，则取出其data域�
 
  **采用聚簇索引- InnoDB数据&索引文件为一个idb文件，表数据文件本身就是主索引，相邻的索引临近存储。 叶节点data域保存了完整的数据记录(数据[除主键id外其他列data]+主索引[索引key:表主键id])。 叶子节点直接存储数据记录，以主键id为key,叶子节点中直接存储数据记录。(底层存储结构:** frm -表定义、 ibd: innoDB数据&索引文件) 
 
-![image-20220309113545781](https://gitee.com/abin_z/pic_bed/raw/master/image-20220309113545781.png)
+![image-20220309113545781](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220309113545781.png)
 
  InnoDB索引结构图如下: 
 
-![3575048-e81ac68c4020945e](https://gitee.com/abin_z/pic_bed/raw/master/3575048-e81ac68c4020945e.png)
+![3575048-e81ac68c4020945e](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-e81ac68c4020945e.png)
 
 **非主键索引(辅助索引)的叶子节点存放的是主键索引的索引key值, 当通过辅助索引查找到数据(data)时, 还会去主键索引里面去回表查找**
 
-![3575048-cb474d18492d03e2](https://gitee.com/abin_z/pic_bed/raw/master/3575048-cb474d18492d03e2.png)
+![3575048-cb474d18492d03e2](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-cb474d18492d03e2.png)
 
 所以在InnoDB存储引擎下, **建议每一张表都建立主键索引,** 如果没有建主键索引, mysql数据库也会自动给没有主键索引的表建立主键索引
 
@@ -656,7 +656,7 @@ MyISAM索引按照B+Tree搜索，如果指定的Key存在，则取出其data域�
 select * from user_info where id = 23
 ```
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/3575048-d268ee7a5a712071.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-d268ee7a5a712071.png)
 
 
 
@@ -666,7 +666,7 @@ select * from user_info where id = 23
 select * from user_info where id >= 18 and id < 22
 ```
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/3575048-8fef94a44ff7f1b0.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-8fef94a44ff7f1b0.png)
 
 
 
@@ -676,7 +676,7 @@ select * from user_info where id >= 18 and id < 22
 select * from user_info where name = 'abc'
 ```
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/3575048-7869c8d86f5f345b.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3575048-7869c8d86f5f345b.png)
 
 
 
@@ -692,7 +692,7 @@ select * from user_info where name = 'abc'
 
 复合索引的结构:
 
-![image-20220309124349595](https://gitee.com/abin_z/pic_bed/raw/master/image-20220309124349595.png)
+![image-20220309124349595](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220309124349595.png)
 
 使用组合索引时需要注意的问题: 
 
@@ -725,7 +725,7 @@ select * from user_info where name = 'abc'
 
 **group by 分组操作示意图**: 
 
-![bda5cd74gy1frhxeblz75j20ud0gg3zp](https://gitee.com/abin_z/pic_bed/raw/master/bda5cd74gy1frhxeblz75j20ud0gg3zp.jpg)
+![bda5cd74gy1frhxeblz75j20ud0gg3zp](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/bda5cd74gy1frhxeblz75j20ud0gg3zp.jpg)
 
 
 
@@ -908,7 +908,7 @@ mysql> EXPLAIN SELECT * FROM one o,two t, three r WHERE o.two_id = t.two_id AND 
 
 **explain 执行计划包含字段信息如下：分别是 `id`、`select_type`、`table`、`partitions`、`type`、`possible_keys`、`key`、`key_len`、`ref`、`rows`、`filtered`、`Extra` 12个字段。**
 
-![image-20220307135105084](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307135105084.png)
+![image-20220307135105084](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307135105084.png)
 
 ## 1. id
 
@@ -935,7 +935,7 @@ mysql> EXPLAIN SELECT * FROM one o,two t, three r WHERE o.two_id = t.two_id AND 
 +----+-------------+-------+------------+--------+---------------+---------+---------+----------------------+------+----------+----------------------------------------------------+
 ```
 
-![image-20220307140007231](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307140007231.png)
+![image-20220307140007231](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307140007231.png)
 
 可以看到三条记录的id都相同, 都是1, 可以理解成这三个表为一组，具有同样的优先级，执行顺序由上而下，具体顺序由优化器决定。
 
@@ -960,7 +960,7 @@ mysql> EXPLAIN select * from one o where o.two_id = (select t.two_id from two t 
 +----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------------+
 ```
 
-![image-20220307140852891](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307140852891.png)
+![image-20220307140852891](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307140852891.png)
 
 如果我们的 `SQL` 中存在子查询，那么 `id`的序号会递增，`id`值越大优先级越高，越先被执行 。当三个表依次嵌套，发现最里层的子查询 `id`最大，最先执行。
 
@@ -985,7 +985,7 @@ mysql>  EXPLAIN select * from one o where o.two_id = (select t.two_id from two t
 
 ```
 
-![image-20220307141231588](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307141231588.png)
+![image-20220307141231588](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307141231588.png)
 
 将上边的 `SQL` 稍微修改一下，增加一个子查询，发现 `id`的以上两种同时存在。相同`id`划分为一组，这样就有三个组，同组的从上往下顺序执行，不同组 `id`值越大，优先级越高，越先执行。
 
@@ -1047,7 +1047,7 @@ mysql> EXPLAIN select t.two_name, ( select one.one_id from one) o from (select t
 
 ```
 
-![image-20220307142255463](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307142255463.png)
+![image-20220307142255463](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307142255463.png)
 
 ## 3.table
 
@@ -1059,7 +1059,7 @@ mysql> EXPLAIN select t.two_name, ( select one.one_id from one) o from (select t
 
 查询时匹配到的分区信息，对于非分区表值为`NULL`，当查询的是分区表时，`partitions`显示分区表命中的分区情况。
 
-![image-20220307142736760](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307142736760.png)
+![image-20220307142736760](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307142736760.png)
 
 ```sql
 +----+-------------+----------------+---------------------------------+-------+---------------+---------+---------+------+------+----------+-------------+
@@ -1095,7 +1095,7 @@ mysql> EXPLAIN select t.two_name, ( select one.one_id from one) o from (select t
 
 `system`： 当表仅有一行记录时(系统表)，数据量很少，往往不需要进行磁盘IO，速度非常快。比如，Mysql系统表proxies_priv在Mysql服务启动时候已经加载在内存中，对这个表进行查询不需要进行磁盘 IO。
 
-![preview](https://gitee.com/abin_z/pic_bed/raw/master/v2-48b919d21ca0271e1bfc61cb40b31c02_r.jpg)
+![preview](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-48b919d21ca0271e1bfc61cb40b31c02_r.jpg)
 
 
 
@@ -1107,7 +1107,7 @@ mysql> EXPLAIN select t.two_name, ( select one.one_id from one) o from (select t
 EXPLAIN SELECT * from three where three_id=1;
 ```
 
-![image-20220307144059666](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144059666.png)
+![image-20220307144059666](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144059666.png)
 
 ```sql
 mysql> EXPLAIN SELECT * from three where three_id=1;
@@ -1130,7 +1130,7 @@ mysql> EXPLAIN SELECT * from three where three_id=1;
 EXPLAIN select o.one_name from one o ,two t where o.one_id = t.two_id ; 
 ```
 
-![image-20220307144034496](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144034496.png)
+![image-20220307144034496](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144034496.png)
 
 ```sql
 mysql> EXPLAIN select o.one_name from one o ,two t where o.one_id = t.two_id ; 
@@ -1151,7 +1151,7 @@ mysql> EXPLAIN select o.one_name from one o ,two t where o.one_id = t.two_id ;
 
 查找条件列**==使用了索引而且不为主键和唯一索引==**。虽然使用了索引，但该索引列的值并不唯一，这样**即使使用索引查找到了第一条数据，仍然不能停止，要在目标值附近进行小范围扫描。**但它的好处是不需要扫全表，因为索引是有序的，即便有重复值，也是在一个非常小的范围内做扫描。
 
-![image-20220307144002845](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144002845.png)
+![image-20220307144002845](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144002845.png)
 
 ```sql
 mysql> select o.one_id from one o where o.one_name = "xin" ; 
@@ -1178,7 +1178,7 @@ mysql> EXPLAIN select o.one_id from one o where o.one_name = "xin" ;
 
 `ref_or_null`：这种连接类型类似于 ref，**区别在于 `MySQL`会额外搜索包含`NULL`值的行。**
 
-![image-20220307143918591](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307143918591.png)
+![image-20220307143918591](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307143918591.png)
 
 ```sql
 mysql> EXPLAIN select o.one_id from one o where o.one_name = "xin" OR o.one_name IS NULL; 
@@ -1198,7 +1198,7 @@ mysql> EXPLAIN select o.one_id from one o where o.one_name = "xin" OR o.one_name
 
 下边示例中同时使用到主键`one_id` 和 字段`one_name`的`idx_name` 索引 。
 
-![image-20220307144239929](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144239929.png)
+![image-20220307144239929](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144239929.png)
 
 ```sql
 mysql> EXPLAIN select * from one o where o.one_id >1 and o.one_name ='xin'; 
@@ -1239,7 +1239,7 @@ value IN (SELECT key_column FROM single_table WHERE some_expr)
 mysql> EXPLAIN SELECT * from three where three_id BETWEEN 2 AND 3;
 ```
 
-![image-20220307144634908](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144634908.png)
+![image-20220307144634908](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144634908.png)
 
 ```sql
 mysql> EXPLAIN SELECT * from three where three_id BETWEEN 2 AND 3;
@@ -1260,7 +1260,7 @@ user_id 字段没有索引， 所以type不是 range ，而是全文检索 ALL
 mysql> EXPLAIN SELECT * from three where user_id BETWEEN 2 AND 3;
 ```
 
-![image-20220307144907440](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307144907440.png)
+![image-20220307144907440](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307144907440.png)
 
 ```sql
 mysql> EXPLAIN SELECT * from three where user_id BETWEEN 2 AND 3;
@@ -1283,7 +1283,7 @@ order by主键。这种情况会按照索引顺序全表扫描数据，拿到的
 
 select索引列。type为index，而且extra字段为using index，也称这种情况为**索引覆盖**。所需要取的数据都在索引列，无需回表查询。
 
-![preview](https://gitee.com/abin_z/pic_bed/raw/master/v2-ac2d258067814b0fe68a819839773ca7_r.jpg)
+![preview](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-ac2d258067814b0fe68a819839773ca7_r.jpg)
 
 
 
@@ -1295,7 +1295,7 @@ select索引列。type为index，而且extra字段为using index，也称这种�
 mysql> EXPLAIN SELECT three_id from three ;
 ```
 
-![image-20220307145656193](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307145656193.png)
+![image-20220307145656193](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307145656193.png)
 
 ```sql
 mysql> EXPLAIN SELECT three_id from three ;
@@ -1316,7 +1316,7 @@ mysql> EXPLAIN SELECT three_id from three ;
 mysql> EXPLAIN SELECT * from two ;
 ```
 
-![image-20220307145810003](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307145810003.png)
+![image-20220307145810003](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307145810003.png)
 
 ```sql
 mysql> EXPLAIN SELECT * from two ;
@@ -1447,7 +1447,7 @@ mysql> EXPLAIN SELECT one_name from one where create_time ='2020-05-18';
 
 `Using temporary`：**表示查询后结果需要使用临时表来存储，一般在排序或者分组查询时用到。**常见于 order by 和 group by 中。典型的，当group by和order by同时存在，且作用于不同的字段时，就会建立临时表，以便计算出最终的结果集。
 
-![image-20220307152822337](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307152822337.png)
+![image-20220307152822337](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307152822337.png)
 
 ```sql
 mysql> EXPLAIN SELECT one_name from one where one_id in (1,2) group by one_name;
@@ -1504,7 +1504,7 @@ mysql> EXPLAIN SELECT one_id from one  ORDER BY one_id;				# 使用到了索引�
 mysql> EXPLAIN SELECT one_name from one o,two t where o.one_name = t.two_name;
 ```
 
-![image-20220307153416368](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307153416368.png)
+![image-20220307153416368](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307153416368.png)
 
 ```sql
 mysql> EXPLAIN SELECT one_name from one o,two t where o.one_name = t.two_name;
@@ -1519,7 +1519,7 @@ mysql> EXPLAIN SELECT one_name from one o,two t where o.one_name = t.two_name;
 
 接下来删掉 连接条件 `one_name` 、`two_name` 的字段索引。发现`Extra` 列变成 `Using join buffer`，`type`均为全表扫描，这也是`SQL`优化中需要注意的地方。
 
-![image-20220307153546201](https://gitee.com/abin_z/pic_bed/raw/master/image-20220307153546201.png)
+![image-20220307153546201](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220307153546201.png)
 
 ```sql
 mysql> EXPLAIN SELECT one_name from one o,two t where o.one_name = t.two_name;

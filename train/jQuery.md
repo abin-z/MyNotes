@@ -20,7 +20,7 @@ jQuery有开发版, 也有压缩后的生产版
 <script src="./js/jquery.min.js"></script>
 ```
 
-![image-20210929104558089](F:\Images\image-20210929104558089.png)
+![image-20210929104558089](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210929104558089.png)
 
 在企业级开发中, 开发推荐使用网络镜像加载
 
@@ -127,7 +127,7 @@ $(document).ready(function()            //加载DOM树
 });
 ```
 
-![image-20210929114703757](F:\Images\image-20210929114703757.png)
+![image-20210929114703757](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210929114703757.png)
 
 
 
@@ -301,7 +301,7 @@ Ajax 允许通过与场景后面的 Web 服务器交换数据来异步更新网�
 
 ### AJAX如何工作
 
-![image-20210930094747883](F:\Images\image-20210930094747883.png)
+![image-20210930094747883](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210930094747883.png)
 
 1. **网页中发生一个事件（页面加载、按钮点击）**
 2. **由 JavaScript 创建 XMLHttpRequest 对象**

@@ -6,17 +6,17 @@
 
 ## 1. 在maven的pom.xml 加载MySQL驱动
 
-![image-20210916144227354](F:\Images\image-20210916144227354.png)
+![image-20210916144227354](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916144227354.png)
 
 ## 2. 单独使用MyBatis: 添加相应的GAV坐标
 
-![image-20210916144617443](F:\Images\image-20210916144617443.png)
+![image-20210916144617443](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916144617443.png)
 
 提示: 如果使用的是MyBatis-plus依赖, 就不用添加MyBatis和MyBatis-spring, 防止冲突
 
 本次实训就直接使用的是MyBatis-Plus依赖:
 
-![image-20210920233400669](F:\Images\image-20210920233400669.png)
+![image-20210920233400669](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920233400669.png)
 
 
 
@@ -27,15 +27,15 @@
 * 可以直接连接MySQL数据库(可以参考其他相关的权威资料)
   1. 使用SpringBoot默认的数据源
 
-![image-20210920233614153](F:\Images\image-20210920233614153.png)
+![image-20210920233614153](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920233614153.png)
 
 		2. 推荐使用阿里的Druid数据源(可以参考其他相关的权威资料)
 
-![image-20210920233925819](F:\Images\image-20210920233925819.png)
+![image-20210920233925819](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920233925819.png)
 
 * 可以通过数据库中间件MyCat连接数据库(可以参考其他相关的权威资料)
 
-![image-20210920234238397](F:\Images\image-20210920234238397.png)
+![image-20210920234238397](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920234238397.png)
 
 **数据源:**
 
@@ -61,11 +61,11 @@
 
 #### 需要在核心配置文件application.yml或者application.properties中添加映射文件位置
 
-![image-20210916151140822](F:\Images\image-20210916151140822.png)
+![image-20210916151140822](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210916151140822.png)
 
 开发、测试过程中添加SQL语句的调试属性(该属性在正式上线前要关闭)
 
-![image-20210920234933045](F:\Images\image-20210920234933045.png)
+![image-20210920234933045](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920234933045.png)
 
 
 
@@ -81,7 +81,7 @@
 <!DOCTYPE 根元素 [元素声明]>
 ```
 
-![image-20210920235947594](F:\Images\image-20210920235947594.png)
+![image-20210920235947594](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210920235947594.png)
 
 
 
@@ -95,15 +95,15 @@
 
 **id:** 与Mapper接口内的方法名保持一致
 
-![image-20210921000631424](F:\Images\image-20210921000631424.png)
+![image-20210921000631424](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921000631424.png)
 
 
 
 **parameterType:**参数类型	(可以写全路径,也可以定义别名,定义别名后则可以直接写: **小写的类名**)
 
-![image-20210921001132860](F:\Images\image-20210921001132860.png)
+![image-20210921001132860](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921001132860.png)
 
-![image-20210921001157664](F:\Images\image-20210921001157664.png)
+![image-20210921001157664](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921001157664.png)
 
 insert----update----delete  默认返回的是受影响的行数
 
@@ -124,15 +124,15 @@ https://mybatis.org/mybatis-3/zh/dynamic-sql.html
 
 
 
-![image-20210921002531595](F:\Images\image-20210921002531595.png)
+![image-20210921002531595](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921002531595.png)
 
 循环迭代删除, 理解每个参数的含义
 
-![image-20210921002703878](F:\Images\image-20210921002703878.png)
+![image-20210921002703878](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921002703878.png)
 
 使用转义字符: ` <![CDATA[    SQL语句    ]]>`
 
-![image-20210921002946601](F:\Images\image-20210921002946601.png)
+![image-20210921002946601](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921002946601.png)
 
 参考权威资料: https://mybatis.org/mybatis-3/zh/dynamic-sql.html
 
@@ -150,7 +150,7 @@ https://mybatis.org/mybatis-3/zh/dynamic-sql.html
 
 了解当前框架的注解种类:
 
-![image-20210921003255359](F:\Images\image-20210921003255359.png)
+![image-20210921003255359](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20210921003255359.png)
 
 
 

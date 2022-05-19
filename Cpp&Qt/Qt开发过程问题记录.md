@@ -8,7 +8,7 @@
 
 ### 1. VS报错如下:
 
-![](F:\截图\头文件相互包含时VS报错.png)
+![](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/头文件相互包含时VS报错.png)
 
 
 

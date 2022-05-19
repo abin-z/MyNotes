@@ -157,10 +157,6 @@ class Shape{
 
 
 
-![123456](E:\图片\鬼刀\19_Ceremonial3_8k.jpg)
-
-
-
 ![在线图片](https://scpic.chinaz.net/Files/pic/pic9/202107/hpic4212_s.jpg)
 
 

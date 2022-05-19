@@ -4,7 +4,7 @@
 
 ### 第一步: 创建一个maven项目
 
-![image-20211119100009747](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191000827.png)
+![image-20211119100009747](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191000827.png)
 
 ### 第二部: 添加springboot的相关依赖
 
@@ -75,15 +75,15 @@ public class HelloController {
 
 * 直接启动main方法
 
-![image-20211119101428706](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191014777.png)
+![image-20211119101428706](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191014777.png)
 
 * 在浏览器中进行验证
 
-  ![image-20211119101552562](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191015607.png)
+  ![image-20211119101552562](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191015607.png)
 
 * 注意: 其中的目录层级
 
-  ![image-20211119101740826](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191017870.png)
+  ![image-20211119101740826](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191017870.png)
 
 
 
@@ -113,7 +113,7 @@ public class HelloController {
 java -jar SpringBoot-mvn-study-1.0-SNAPSHOT.jar
 ```
 
-![image-20211119104247723](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191042765.png)
+![image-20211119104247723](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191042765.png)
 
 * 然后在浏览器就可以直接访问`http://localhost:8080/hello`
 
@@ -121,7 +121,7 @@ java -jar SpringBoot-mvn-study-1.0-SNAPSHOT.jar
 
 ## 二. 使用idea的提供的模板进行快速开发
 
-![image-20211119133716481](https://gitee.com/abin_z/pic_bed/raw/master/img/202111191337673.png)
+![image-20211119133716481](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111191337673.png)
 
 ### 然后勾选要用到的相应的模块
 

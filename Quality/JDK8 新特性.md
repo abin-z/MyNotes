@@ -32,7 +32,7 @@ Lambda 允许把函数作为一个方法的参数（函数作为参数传递进�
 
 Runnable接口就是一个函数式接口
 
-![image-20220119155918160](https://gitee.com/abin_z/pic_bed/raw/master/image-20220119155918160.png)
+![image-20220119155918160](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220119155918160.png)
 
 **总结:**
 
@@ -154,7 +154,7 @@ Lambda表达式方式:
 maskList.sort((Mask o1, Mask o2) -> o1.getBrand().compareTo(o2.getBrand()));
 ```
 
-![image-20220119175547389](https://gitee.com/abin_z/pic_bed/raw/master/image-20220119175547389.png)
+![image-20220119175547389](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220119175547389.png)
 
 
 
@@ -315,7 +315,7 @@ public class LambdaDemo04 {
 
 **匿名内部类的本质是在==编译的时候==产生一个.class的文件**   XXXX$1.class 文件
 
-![image-20220119201000251](https://gitee.com/abin_z/pic_bed/raw/master/image-20220119201000251.png)
+![image-20220119201000251](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220119201000251.png)
 
 可以使用反编译工具XJad查看编译时**匿名内部类生成**的代码:
 
@@ -421,7 +421,7 @@ public class com.abin.lambda.LambdaDemo01 {
 
 在Debug模式下查看lambda表达式的执行:
 
-![image-20220119224025199](https://gitee.com/abin_z/pic_bed/raw/master/image-20220119224025199.png)
+![image-20220119224025199](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220119224025199.png)
 
 可以直观的看到方法体中的Lambda代码是在`lambda$functionLambda$0`方法中执行的
 
@@ -659,7 +659,7 @@ class BBB implements III{
 }
 ```
 
-![image-20220120111009823](https://gitee.com/abin_z/pic_bed/raw/master/image-20220120111009823.png)
+![image-20220120111009823](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220120111009823.png)
 
 ### 2.3 接口中默认方法的使用
 
@@ -1333,7 +1333,7 @@ Java8 Stream:     https://blog.csdn.net/mu_wind/article/details/109516995
 
 深入理解Java函数式编程: https://www.cnblogs.com/CarpenterLee/category/965121.html
 
-![stream](https://gitee.com/abin_z/pic_bed/raw/master/73063862340e4cfcbb31fb53b3f5db0d.jpg)
+![stream](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/73063862340e4cfcbb31fb53b3f5db0d.jpg)
 
 ## 1. 集合处理数据的弊端
 
@@ -1393,9 +1393,9 @@ public class StreamTest01 {
 - **Stream流不是一种数据结构,不保存数据,而是对数据进行加工处理.**
 - Stream可以看作是流水线上的一个工序。在流水线上,通过多个工序让一个原材料加工成一个商品.
 
-![image-20220124174248859](https://gitee.com/abin_z/pic_bed/raw/master/image-20220124174248859.png)
+![image-20220124174248859](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220124174248859.png)
 
-![image-20220124174633807](https://gitee.com/abin_z/pic_bed/raw/master/image-20220124174633807.png)
+![image-20220124174633807](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220124174633807.png)
 
 stream API 能让我们快速完成许多复杂的操作, 如筛选, 切片, 映射, 查找, 去重, 统计, 匹配和归约等操作
 
@@ -1471,7 +1471,7 @@ public class StreamTest03 {
 }
 ```
 
-![image-20220124182816731](https://gitee.com/abin_z/pic_bed/raw/master/image-20220124182816731.png)
+![image-20220124182816731](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220124182816731.png)
 
 虽然大部分情况下*stream*是容器调用`Collection.stream()`方法得到的，但*stream*和*collections*有以下不同：
 
@@ -1567,7 +1567,7 @@ filter 方法的作用是用来过滤数据的, 返回符合条件的数据流 (
 Stream<T> filter(Predicate<? super T> predicate);  //在使用filter的时候使用的需要接受一个 Predicate 函数式接口参数
 ```
 
-![image-20220126101032485](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126101032485.png)
+![image-20220126101032485](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126101032485.png)
 
 ```Java
   public static void main(String[] args) {
@@ -1593,7 +1593,7 @@ limit方法可以对流进行截取,只取前n个数据, (中间操作),返回�
     Stream<T> limit(long maxSize);
 ```
 
-![image-20220126104217940](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126104217940.png)
+![image-20220126104217940](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126104217940.png)
 
 ```Java
   public static void main(String[] args) {
@@ -1620,7 +1620,7 @@ skip方法的作用是跳过前面的n个元素(中间操作), 返回的是一�
     Stream<T> skip(long n);
 ```
 
-![image-20220126104514020](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126104514020.png)
+![image-20220126104514020](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126104514020.png)
 
 ```Java
   public static void main(String[] args) {
@@ -1646,7 +1646,7 @@ l5
     <R> Stream<R> map(Function<? super T, ? extends R> mapper);
 ```
 
-![image-20220126110546121](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126110546121.png)
+![image-20220126110546121](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126110546121.png)
 
 ```Java
   public static void main(String[] args) {
@@ -1705,7 +1705,7 @@ distinct方法的作用是去掉重复数据, 但是需要注意的是什么情�
     Stream<T> distinct();
 ```
 
-![image-20220126112619285](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126112619285.png)
+![image-20220126112619285](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126112619285.png)
 
 ```java 
   public static void main(String[] args) {
@@ -1857,7 +1857,7 @@ https://blog.csdn.net/weixin_39132705/article/details/107338638
     Optional<T> findAny(); //返回Stream中的任何元素, 很可能返回Stream中的第一个元素，但不保证这一点
 ```
 
-![image-20220126160247845](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126160247845.png)
+![image-20220126160247845](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126160247845.png)
 
 ```java 
   public static void main(String[] args) {
@@ -1882,7 +1882,7 @@ max 和 min 返回流中元素最大值和最小值的Optional 【终结操作�
     Optional<T> min(Comparator<? super T> comparator);       //获取最小值
 ```
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/20201109145217354.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/20201109145217354.png)
 
 ```Java
   public static void main(String[] args) {
@@ -1921,7 +1921,7 @@ min.get() = 2
 
 
 
-![image-20220126202537978](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126202537978.png)
+![image-20220126202537978](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126202537978.png)
 
 ```Java
   public static void main(String[] args) {
@@ -2013,7 +2013,7 @@ LongStream mapToLong(ToLongFunction<? super T> mapper); 	//转换为基本数据
 DoubleStream mapToDouble(ToDoubleFunction<? super T> mapper);//转换为基本数据类型double
 ```
 
-![image-20220126213717913](https://gitee.com/abin_z/pic_bed/raw/master/image-20220126213717913.png)
+![image-20220126213717913](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220126213717913.png)
 
 ```Java
   public static void main(String[] args) {
@@ -2447,7 +2447,7 @@ K=成绩不合格 v=[Student(name=marry, age=17, score=59), Student(name=zhangsa
 
 Collectors. partitioningBy会根据值是否为true把集合中的数据分割为两个列表,一个true列表,一个fase列表
 
-![image-20220214172140666](https://gitee.com/abin_z/pic_bed/raw/master/image-20220214172140666.png)
+![image-20220214172140666](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220214172140666.png)
 
 ```Java
   public static void main(String[] args) {
@@ -2752,7 +2752,7 @@ ForkJoin框架的目的是以递归的方式将可以并行的任务拆分成更
 
 它是 ExecutorService 接口的一个实现,他把子任务分配给线程池(ForkJoinPool)中的线程.
 
-![image-20220215164410082](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215164410082.png)
+![image-20220215164410082](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220215164410082.png)
 
 如果你了解著名的分治算法,会发现这不过是分支算法的并行版本而已
 
@@ -2770,7 +2770,7 @@ ForkJoinPool主要用来使用分治法(Divide-and-Conquer Algorithm)来解决�
 
 所以当使用ThreadPoolExecutor时，使用分治法会存在问题，因为ThreadPoolExecutor中的线程无法像任务队列中再添加一个任务并且在等待该任务完成之后再继续执行。而使用ForkJoinPool时，就能够让其中的线程创建新的任务，并挂起当前的任务，此时线程就能够从队列中选择子任务执行。
 
-![image-20220215164535651](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215164535651.png)
+![image-20220215164535651](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220215164535651.png)
 
 
 
@@ -2778,7 +2778,7 @@ ForkJoinPool主要用来使用分治法(Divide-and-Conquer Algorithm)来解决�
 
 ​		forkjoin最核心的地方就是利用了现代硬件设备多核,在一个操作时候会有空闲的cpu,那么如何利用好这个空闲的cpu就成了提高性能的关键,而这里我们要提到的工作窃取（work-stealing）算法就是整个forkjion框架的核心理念,工作窃取（work-stealing）算法是指某个线程从其他队列里窃取任务来执行。
 
-![image-20220215175238907](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215175238907.png)
+![image-20220215175238907](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220215175238907.png)
 
 **那么为什么需要使用工作窃取算法呢？**
 		假如我们需要做一个比较大的任务，我们可以把这个任务分割为若干互不依赖的子任务，为了减少线程间的竞争，于是把这些子任务分别放到不同的队列里，并为每个队列创建一个单独的线程来执行队列里的任务，线程和队列一一对应，比如A线程负责处理A队列里的任务。  但是有的线程会先把自己队列里的任务干完，而其他线程对应的队列里还有任务等待处理。干完活的线程与其等着，不如去帮其他线程干活，于是它就去其他线程的队列里窃取一个任务来执行。而在这时它们会访问同一个队列，所以为了减少窃取任务线程和被窃取任务线程之间的竞争，通常会使用双端队列，**被窃取任务线程永远从双端队列的头部拿任务执行，而窃取任务的线程永远从双端队列的尾部拿任务执行。**
@@ -2793,7 +2793,7 @@ ForkJoinPool主要用来使用分治法(Divide-and-Conquer Algorithm)来解决�
 
 使用 Fork/Join计算1-10000的和,当一个任务的计算数量大于3000的时候拆分任务。数量小于3000的时候就计算
 
-![image-20220215230750456](https://gitee.com/abin_z/pic_bed/raw/master/image-20220215230750456.png)
+![image-20220215230750456](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220215230750456.png)
 
 案例实现
 
@@ -2959,7 +2959,7 @@ Optional 是个容器：它可以保存类型T的值，或者仅仅保存null。
 
 Optional 类的引入很好的解决空指针异常。
 
-![image-20220216123524434](https://gitee.com/abin_z/pic_bed/raw/master/image-20220216123524434.png)
+![image-20220216123524434](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220216123524434.png)
 
 本质上，这是一个包含有可选值的包装类，这意味着 Optional 类既可以含有对象也可以为空。
 
