@@ -41,7 +41,7 @@ Spring 自诞生以来备受青睐，一直被广大开发人员作为 Java 企�
 
 ## 1. Spring框架架构
 
-![Spring体系结构图](https://gitee.com/abin_z/pic_bed/raw/master/163550G63-0.png)
+![Spring体系结构图](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/163550G63-0.png)
 
 
 上图中包含了 Spring 框架的所有模块，这些模块可以满足一切企业级应用开发的需求，在开发过程中可以根据需求有选择性地使用所需要的模块。下面分别对这些模块的作用进行简单介绍。
@@ -485,9 +485,9 @@ Spring IoC 容器完全由实际编写的配置元数据的格式解耦。有下
 | destroy-method  | 容器删除 Bean 时调用该方法，类似于 Servlet 中的 destroy() 方法。该方法只在 scope=singleton 时有效 |
 | lazy-init       | 懒加载，值为 true，容器在首次请求时才会创建 Bean 实例；值为 false，容器在启动时创建 Bean 实例。该方法只在 scope=singleton 时有效 |
 
-![img](https://gitee.com/abin_z/pic_bed/raw/master/c8e2277ef063f7249b5f71167dedf8d7.png)
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/c8e2277ef063f7249b5f71167dedf8d7.png)
 
-![image-20220331162358827](https://gitee.com/abin_z/pic_bed/raw/master/image-20220331162358827.png)
+![image-20220331162358827](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220331162358827.png)
 
 
 
@@ -507,7 +507,7 @@ Spring 框架支持以下五个作用域，分别为 singleton、prototype、req
 | session        | 同一个HTTP Session共享一个Bean，不同Session使用不同的Bean，仅适用于WebApplicationContext环境 |
 | global-session | 一般用于Portlet应用环境，该作用域仅适用于WebApplicationContext环境 |
 
-![image-20220329175726462](https://gitee.com/abin_z/pic_bed/raw/master/image-20220329175726462.png)
+![image-20220329175726462](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220329175726462.png)
 
 #### singleton 作用域
 
@@ -852,7 +852,7 @@ public class UserDaoImpl implements UserDao {
 
 上述代码实际上存在如下的问题:  UserService和UserDao都在容器中,但是我们是手动注入的.
 
-![image-20220331170620554](https://gitee.com/abin_z/pic_bed/raw/master/image-20220331170620554.png)
+![image-20220331170620554](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220331170620554.png)
 
 因为UserService和UserDao都在Spring容器中，而最终程序直接使用的是UserService，所以可以在Spring容器中，将UserDao设置到UserService内部。
 
@@ -890,7 +890,7 @@ public class UserServiceImpl implements UserService {
 </beans>
 ```
 
-![image-20220331171258075](https://gitee.com/abin_z/pic_bed/raw/master/image-20220331171258075.png)
+![image-20220331171258075](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220331171258075.png)
 
 在编写程序时，通过控制反转，把对象的创建交给了Spring，但是代码中不可能出现没有依赖的情况。IOC 解耦只是降低他们的依赖关系，但不会消除。例如：业务层仍会调用持久层的方法。
 那这种业务层和持久层的依赖关系，在使用Spring之后，就让Spring来维护了。简单的说，就是坐等框架把持久层对象传入业务层，而不用我们自己去获取。
@@ -1193,10 +1193,10 @@ Spring 从 2.5 版本开始提供了对注解技术的全面支持，我们可�
 
 Spring 通过注解实现自动装配的步骤如下：
 
-1. 引入依赖
-2. 开启组件扫描
-3. 使用注解定义 Bean
-4. 依赖注入
+1. **引入依赖**
+2. **开启组件扫描**
+3. **使用注解定义 Bean**
+4. **依赖注入**
 
 ### 5.1 需要开启组件扫描
 
