@@ -1267,3 +1267,61 @@ Spring 提供了以下多个注解，这些注解可以直接标注在 Java 类�
 | **@Import**         | 用于==导入其他配置类==                                       |
 | **@Bean**           | 用于方法上, ==Spring会将当前方法的**返回值**存到Spring容器中== ( 适用于第三方,比如数据源配置, 因为无法直接修改第三方代码 ) |
 
+
+
+## 6.XML配置和注解配置
+
+| 功能           | XML配置                                                      | 注解                                                         |
+| -------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 定义Bean       | **bean标签**<br />id属性<br />class属性                      | **@Component**<br />@Controller<br />@Service<br />@Repository<br />**@ComponentScan** |
+| 设置依赖注入   | setter注入(set方法注入)<br />构造器注入(构造方法)<br />自动装配 | **@Resource**<br />**@Autowired**<br />@Qualifier<br />**@Value** |
+| 配置第三方bean | bean标签, 静态工厂, 实例工厂, FactoryBean                    | **@Bean**                                                    |
+| 作用范围       | bean标签的**scope属性 **                                     | **@Scope**                                                   |
+| 生命周期       | 标准接口<br />**init-method**<br />**destroy-method**        | **@PostConstruct**<br />**@PreDestory**                      |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

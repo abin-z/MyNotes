@@ -67,12 +67,6 @@ TCL  :   事务控制语言： 	commit / rollback
 
 
 
-# 二. MySQL基础
-
-
-
-
-
 **第二范式(2NF):	非主键字段完全依赖主键**
 
 ​		第二范式在第一范式的基础上，要求数据库中所有非主键字段完全依赖主键（严格意义上说，尽量不要使用联合主键）
@@ -82,6 +76,8 @@ TCL  :   事务控制语言： 	commit / rollback
 **第三范式(3NF):  建立在第二范式基础上，要求非主键字段不能产生传递依赖与主键字段**
 
 
+
+# 二. MySQL基础
 
 ### 1. **导入数据库脚本：**
 
@@ -215,6 +211,8 @@ Rand()				#生成随机数
 		
 ifnull				#可以把null转换成一个具体值
 		select sum(ifnull(comm,0)) as sumcomm from emp;
+concat(str1,str2...)	#拼接字符串
+		SELECT * FROM `emp` WHERE ENAME LIKE CONCAT('%','M','%')
 ```
 
 
@@ -425,7 +423,7 @@ order by
 limit m,n;	#分页
 
 # 1. from 将硬盘上的表文件加载到内存
-# 2. where 将符合条件的数据行摘取出来，生成一张临时表
+# 2. where 将符合条件的数据行摘取出来，生成一张临时表(如果有使用联表join ... on ... [on后面的筛选条件优先于where])
 # 3. group by 根据列中的数据种类，将当前临时表划分成若干个新的临时表
 # 4. having 可以过滤掉group by生成的不符合条件的临时表
 # 5. select 对当前表进行整列读取
@@ -433,17 +431,48 @@ limit m,n;	#分页
 # 7. limit 对最终生成的临时表的数据行进行截取
 ```
 
+**逻辑上一个query的执行顺序（不是实际）**
 
+> https://www.iteye.com/blog/zoroeye-2231332
+
+WHERE子句中使用的连接语句，在数据库语言中，被称为隐性连接。INNER JOIN……ON子句产生的连接称为显性连接。（其他JOIN参数也是显性连接）WHERE和INNER JOIN产生的连接关系，没有本质区别，结果也一样。但是！隐性连接随着数据库语言的规范和发展，已经逐渐被淘汰，比较新的数据库语言基本上已经抛弃了隐性连接，全部采用显性连接了。
+
+```sql
+1. FROM
+2. ON
+3. JOIN
+4. WHERE
+5. GROUP BY
+6. WITH CUBE or WITH ROLLUP
+7. HAVING
+8. SELECT
+9. DISTINCT
+10. ORDER BY
+11. TOP/limit
+#说是“逻辑上” 顺序，因为实际执行时还要看索引，数据分布等，看最终优化器如何处理，最真实的顺序肯定是执行计划展示的顺序。
+```
+
+SQL语句中join连表时on和where后都可以跟条件，那么对查询结果集，执行顺序，效率是如何呢？**==join中相比where优先推荐on==**
+**区别：**
+on是对==中间结果==进行筛选，where是对==最终结果==筛选。 
+
+**执行顺序：**
+先进行on的过滤, 而后才进行join。
+
+**效率：**
+==如果是inner join, 放on和放where产生的结果一样, 但没说哪个效率速度更高? 如果有outer join (left or right), 就有区别了, 因为on生效在先, 已经提前过滤了一部分数据, 而where生效在后.==
+
+如果是inner join, 放on和放where产生的结果一样, 执行计划也是一样，**但推荐使用on**。但如果有outer join (left or right), 就有区别了, 因为on生效在先, 已经提前过滤了一部分数据, 而where生效在后，而且on对于outer join有不生效的情况,需要看and条件是作用在左表还是右表: http://www.cnblogs.com/hgwy/articles/1691689.html
 
 
 
 ## 2. 跨表查询,联表查询
 
-查询次数:	跨表查询的查询次数, 如果没有加条件限制为多张表的笛卡尔积(乘积)	建议:**==联表查询最多不能超过三张表==**
+查询次数:	跨表查询的查询次数, 如果没有加条件限制为多张表的笛卡尔积(乘积)	建议:**==联表查询最多不超过三张表==**
 
 **Mysql多表连接查询的执行细节**: https://blog.csdn.net/qq_27529917/article/details/87904179
 
-按照年代分类
+WHERE子句中使用的连接语句，在数据库语言中，被称为隐性连接。INNER JOIN……ON子句产生的连接称为显性连接。（其他JOIN参数也是显性连接）WHERE和INNER JOIN产生的连接关系，没有本质区别，结果也一样。但是！隐性连接随着数据库语言的规范和发展，已经逐渐被淘汰，比较新的数据库语言基本上已经抛弃了隐性连接，全部采用显性连接了。
 
 ```sql 
 # SQL92:
@@ -621,7 +650,7 @@ where ...(select) ...
 
 ```SQL
 #找出薪水比公司平均薪水高的员工,要求显示员工名和薪水
-select ename, sal from emp where sal > avg(sal);#错误:分组函数不能直接使用在where后面
+select ename, sal from emp where sal > avg(sal);	#错误:分组函数不能直接使用在where后面
 #ERROR 1111 (HY000): Invalid use of group function
 
 #正确语句
@@ -1330,7 +1359,7 @@ CREATE TABLE table_name (
 
 ### 1. 视图原理
 
-视图在数据库管理系统中也是一个对象，以文件形式存在.  视图底也是表
+视图在数据库管理系统中也是一个对象，以文件形式存在.  视图底层是表
 
 视图也对应了一个查询结果，只是从不同的角度查看数据
 
@@ -1361,7 +1390,7 @@ drop view myview;		#删除视图
 * **隐藏表的实现细节**
 
 ```sql
-create view myview as select empno as a, enameas b from emp;
+create view myview as select empno as a, ename as b from emp;
 select * from myview;
 #DBA管理员可以给相应的权限使普通用户不能执行以下语句
 show show create view myview;		#查看视图的创建语句, 将不会看到相应的表的具体信息
