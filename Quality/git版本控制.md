@@ -451,6 +451,17 @@ git restore --staged <file> 将指定文件移除跟踪
 
 取消对文件或文件夹的跟踪之后，.gitignore文件中的忽略规则将会对取消了跟踪状态的文件或文件夹生效
 
+运行如下类似的命令:
+
+```bash
+git rm -r --cached .    # 取消文件跟踪
+git add .				# 添加跟踪(新增的.gitignore文件会生效)	
+git commit -m "add gitignore"	# 提交代码
+git push origin master			# 推送代码至远程仓库
+```
+
+
+
 
 
 # 五. Git 分支管理
