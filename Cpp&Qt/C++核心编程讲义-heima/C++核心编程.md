@@ -4253,105 +4253,203 @@ int main()
 
 * 静态多态: 函数重载 和 运算符重载属于静态多态，复用函数名
 * 动态多态: 派生类和虚函数实现运行时多态
+  * 可以用父类的引用或者指针 指向子类对象`Dog dog; Animal &animal = dog;`
+
 
 
 
 静态多态和动态多态区别：
 
-* 静态多态的函数地址早绑定  -  编译阶段确定函数地址
-* 动态多态的函数地址晚绑定  -  运行阶段确定函数地址
+* **静态多态的函数地址早绑定  -  编译阶段确定函数地址**
+* **动态多态的函数地址晚绑定  -  运行阶段确定函数地址**
 
 
 
 下面通过案例进行讲解多态
 
+C++多态(polymorphism)是通过虚函数来实现的，虚函数允许子类重新定义成员函数，而子类重新定义父类的做法称为覆盖(override)，或者称为重写。
 
+案例1:  正常的继承, 使用了同名函数 `void speak()` , 函数地址早绑定(编译时期就绑定了)
 
 ```C++
-class Animal
-{
+#include <iostream>				// 多态
+using namespace std;
+
+class Animal {
 public:
-	//Speak函数就是虚函数
-	//函数前面加上virtual关键字，变成虚函数，那么编译器在编译的时候就不能确定函数调用了。
-	virtual void speak()
-	{
-		cout << "动物在说话" << endl;
+	void speak() {		// 常规函数
+		cout << "动物在说话!" << endl;
 	}
 };
 
-class Cat :public Animal
-{
+class Dog : public Animal {
 public:
-	void speak()
-	{
-		cout << "小猫在说话" << endl;
-	}
-};
-
-class Dog :public Animal
-{
-public:
-
-	void speak()
-	{
+	void speak() {
 		cout << "小狗在说话" << endl;
 	}
+};
 
+class Cat : public Animal {
+public:
+	void speak() {
+		cout << "小猫在说话" << endl;
+	}
 };
 //我们希望传入什么对象，那么就调用什么对象的函数
 //如果函数地址在编译阶段就能确定，那么静态联编
 //如果函数地址在运行阶段才能确定，就是动态联编
-
-void DoSpeak(Animal & animal)
-{
-	animal.speak();
+void doSpeak(Animal &animal) {	
+	animal.speak();			// 在没有使用动态多态的时候, 函数地址早绑定
 }
-//
+
+void func() {
+	Dog dog;			// Animal &animal = dog
+	doSpeak(dog);		// 输出: 动物在说话
+
+	Cat cat;			// Animal &animal cat
+	doSpeak(cat);		// 输出: 动物在说话
+}
+
+int main()
+{
+	func();
+	cout << "sizeof(Animal) = " << sizeof(Animal) << endl;	// sizeof(Animal) = 1
+	cout << "sizeof(Dog) = " << sizeof(Dog) << endl;		// sizeof(Dog) = 1
+	cout << "sizeof(Cat) = " << sizeof(Cat) << endl;		// sizeof(Cat) = 1
+
+    std::cout << "Hello World!\n";
+}
+```
+
+![image-20220909155546309](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220909155546309.png)
+
+可以看到`doSpeak(Animal &animal)`函数执行的任然是Animal类中的函数, 并且类对象都只占1个字节. 通过vs工具查看此时的Dog类布局: 
+
+![image-20220909164900166](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220909164900166.png)
+
+
+
+案例2: 使用 **virtual** 关键字实现动态多态, 函数地址晚绑定(运行时绑定)
+
+```C++
+#include <iostream>				// 多态
+using namespace std;
 //多态满足条件： 
 //1、有继承关系
 //2、子类重写父类中的虚函数
 //多态使用：
 //父类指针或引用指向子类对象
 
-void test01()
-{
-	Cat cat;
-	DoSpeak(cat);
+class Animal {
+public:
+    //speak函数就是虚函数
+	//函数前面加上virtual关键字，变成虚函数，那么编译器在编译的时候就不能确定函数调用了。
+	virtual void speak() {		// 虚函数 仅仅添加一个 virtual 关键字
+		cout << "动物在说话!" << endl;
+	}
+};
 
+class Dog : public Animal {
+public:
+	void speak() override {		// 重写父类中的虚函数建议添加 override 关键字
+		cout << "小狗在说话" << endl;
+	}
+};
 
-	Dog dog;
-	DoSpeak(dog);
+class Cat : public Animal {
+public:
+	virtual void speak() override {		// 子类中重写的函数 virtual 关键字可加可不加
+		cout << "小猫在说话" << endl;
+	}
+};
+//我们希望传入什么对象，那么就调用什么对象的函数
+//如果函数地址在编译阶段就能确定，那么静态联编
+//如果函数地址在运行阶段才能确定，就是动态联编
+void doSpeak(Animal &animal) {
+	animal.speak();			// 在没有使用动态多态的时候, 函数地址早绑定
 }
 
+void func() {
+	Dog dog;
+	doSpeak(dog);		// 输出: 小狗在说话
 
-int main() {
+	Cat cat;
+	doSpeak(cat);		// 输出: 小猫在说话
 
-	test01();
+	Animal animal;
+	doSpeak(animal);	// 输出: 动物在说话
+}
 
-	system("pause");
+int main()
+{
+	func();
+	cout << "sizeof(Animal) = " << sizeof(Animal) << endl;	// sizeof(Animal) = 4
+	cout << "sizeof(Dog) = " << sizeof(Dog) << endl;		// sizeof(Dog) = 4
+	cout << "sizeof(Cat) = " << sizeof(Cat) << endl;		// sizeof(Cat) = 4
 
-	return 0;
+    std::cout << "Hello World!\n";
 }
 ```
 
-总结：
+![image-20220909160833070](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220909160833070.png)
+
+当在基类Animal中的 `virtual void speak(){}` 添加virtual关键字后就变为虚函数, 此时的`animal.speak();` 函数就是晚绑定(运行时确定函数地址),  ==并且此时的类对象模型的sizeof为4==, 不再是之前的1了. (多了虚函数表指针), 通过vs开发者工具查看Dog类布局:
+
+![image-20220909165058984](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220909165058984.png)
+
+**总结：**
 
 多态满足条件
 
-* 有继承关系
-* 子类重写父类中的虚函数
+* 有==继承==关系
+* 父类中的函数需要是==virtual虚函数==
+* ==子类重写父类中的虚函数== / 重写父类中的虚函数建议添加 **override** 关键字, 重写的函数virtual关键字可加可不加
 
 多态使用条件
 
-* 父类指针或引用指向子类对象
+* ==父类指针或引用指向子类对象==
 
-重写：函数返回值类型  函数名 参数列表 完全一致称为重写
-
-
+**重写：**函数返回值类型  函数名 参数列表 **完全一致**称为重写
 
 
 
+- ### 虚函数的底层实现机制
 
+**实现原理：虚函数表+虚表指针**
+
+编译器处理虚函数的方法是：为每个类对象添加一个隐藏成员，隐藏成员中保存了一个指向函数地址数组的指针，称为虚函数表指针（vfptr），这种数组成为虚函数表（virtual function table, vftbl），即，**每个类使用一个虚函数表，每个类对象用一个虚表指针。**
+
+举个例子：基类对象包含一个虚表指针，指向基类中所有虚函数的地址表。派生类对象也将包含一个虚表指针，指向派生类虚函数表。看下面两种情况：
+
+- 如果派生类重写了基类的虚方法，**该派生类虚函数表将保存重写(覆盖)的虚函数的地址，而不是基类的虚函数地址。**
+
+- 如果基类中的虚方法没有在派生类中重写，那么派生类将继承基类中的虚方法，而且派生类中虚函数表将保存基类中未被重写的虚函数的地址。注意，如果派生类中定义了新的虚方法，则该虚函数的地址也将被添加到派生类虚函数表中。
+
+
+
+**编译器处理虚函数的方法是：**
+给每个对象添加一个指针，存放了指向虚函数表的地址，虚函数表存储了为类对象进行声明的虚函数地址。比如基类对象包含一个指针，该指针指向基类所有虚函数的地址表，派生类对象将包含一个指向独立地址表的指针，如果派生类提供了虚函数的新定义，该虚函数表将保存新函数的地址，如果派生类没有重新定义虚函数，该虚函数表将保存函数原始版本的地址。如果派生类定义了新的虚函数，则该函数的地址将被添加到虚函数表中，注意虚函数无论多少个都只需要在对象中添加一个虚函数表的地址。
+
+调用虚函数时，程序将查看存储在对象中的虚函数表地址，转向相应的虚函数表，使用类声明中定义的第几个虚函数，程序就使用数组的第几个函数地址，并执行该函数。
+
+**使用虚函数后的变化：**
+（1） 对象将增加一个存储地址的空间（32位系统为4字节，64位为8字节）。
+（2） 每个类编译器都创建一个虚函数地址表
+（3） 对每个函数调用都需要增加在表中查找地址的操作。
+
+**虚函数的注意事项**
+
+总结前面的内容
+（1） 基类方法中声明了方法为虚后，该方法在基类派生类中是虚的。
+（2） 若使用指向对象的引用或指针调用虚方法，程序将根据对象类型来调用方法，而不是指针的类型。
+（3）如果定义的类被用作基类，则应将那些要在派生类中重新定义的类方法声明为虚。
+构造函数不能为虚函数。
+基类的析构函数应该为虚函数。
+友元函数不能为虚，因为友元函数不是类成员，只有类成员才能是虚函数。
+如果派生类没有重定义函数，则会使用基类版本。
+重新定义继承的方法若和基类的方法不同（协变除外），会将基类方法隐藏；如果基类声明方法被重载，则派生类也需要对重载的方法重新定义，否则调用的还是基类的方法。
+
+![image-20220909173625784](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220909173625784.png)
 
 
 
@@ -4373,7 +4471,7 @@ int main() {
 
 
 
-**示例：**
+**普通实现示例：**
 
 ```C++
 //普通实现
@@ -4409,9 +4507,11 @@ void test01()
 
 	cout << c.m_Num1 << " * " << c.m_Num2 << " = " << c.getResult("*") << endl;
 }
+```
 
+**多态实现示例:**
 
-
+```C++
 //多态实现
 //抽象计算器类
 //多态优点：代码组织结构清晰，可读性强，利于前期和后期的扩展以及维护
@@ -4458,7 +4558,6 @@ public:
 	}
 };
 
-
 void test02()
 {
 	//创建加法计算器
@@ -4484,18 +4583,16 @@ void test02()
 }
 
 int main() {
-
 	//test01();
-
 	test02();
-
 	system("pause");
-
 	return 0;
 }
 ```
 
 > 总结：C++开发提倡利用多态设计程序架构，因为多态优点很多
+>
+> 多态优点：代码组织结构清晰，可读性强，利于前期和后期的扩展以及维护.......
 
 
 
@@ -4519,15 +4616,9 @@ int main() {
 
 在多态中，通常父类中虚函数的实现是毫无意义的，主要都是调用子类重写的内容
 
-
-
 因此可以将虚函数改为**纯虚函数**
 
-
-
-纯虚函数语法：`virtual 返回值类型 函数名 （参数列表）= 0 ;`
-
-
+纯虚函数语法：`virtual 返回值类型 函数名 （参数列表）= 0 ;`, 不能省略virtual关键字.
 
 当类中有了纯虚函数，这个类也称为==抽象类==
 
@@ -4537,8 +4628,6 @@ int main() {
 
  * 无法实例化对象
  * 子类必须重写抽象类中的纯虚函数，否则也属于抽象类
-
-
 
 
 
@@ -4552,13 +4641,13 @@ public:
 	//类中只要有一个纯虚函数就称为抽象类
 	//抽象类无法实例化对象
 	//子类必须重写父类中的纯虚函数，否则也属于抽象类
-	virtual void func() = 0;
+	virtual void func() = 0;   // 纯虚函数
 };
 
 class Son :public Base
 {
 public:
-	virtual void func() 
+	virtual void func() override
 	{
 		cout << "func调用" << endl;
 	};
@@ -4583,17 +4672,42 @@ int main() {
 }
 ```
 
+```C++
+#include <iostream>
+using namespace std;
 
+class Animal {	// 抽象类: 只要类中有纯虚函数, 该类就是一个抽象类
+public:
+	virtual void speak() = 0;		// 纯虚函数, 子类必须实现该纯虚函数, 否则子类依然是抽象类
+};
 
+class Cat :public Animal {
+	virtual void speak() override // 重写父类的函数最好加上 override 关键字
+	{		
+		cout << "猫在说话!!!" << endl;
+	}
+};
 
+class Dog :public Animal {
+	//virtual void speak() override {		// 重写父类的函数最好加上 override 关键字
+	//	cout << "狗在说话!!!" << endl;
+	//}
+};
 
+void func() {
+	//Animal animal;  //		抽象类无法实例化对象
+	//Dog dog;	// Dog类没有重写 speak() 纯虚函数, 所以也是抽象类, 无法实例化对象
+	Animal * animal = new Cat();
+	animal->speak();
+	delete animal;
+}
 
-
-
-
-
-
-
+int main()
+{
+	func();
+	std::cout << "Hello World!\n";
+}
+```
 
 
 
@@ -4603,19 +4717,18 @@ int main() {
 
 制作饮品的大致流程为：煮水 -  冲泡 - 倒入杯中 - 加入辅料
 
-
-
 利用多态技术实现本案例，提供抽象制作饮品基类，提供子类制作咖啡和茶叶
 
-
-
 ![1545985945198](assets/1545985945198.png)
-
-
 
 **示例：**
 
 ```C++
+// 45多态案例2-制作饮品.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+using namespace std;
+
 //抽象制作饮品
 class AbstractDrinking {
 public:
@@ -4628,7 +4741,7 @@ public:
 	//加入辅料
 	virtual void PutSomething() = 0;
 	//规定流程
-	void MakeDrink() {
+	void makeDrink() {
 		Boil();
 		Brew();
 		PourInCup();
@@ -4636,86 +4749,61 @@ public:
 	}
 };
 
-//制作咖啡
-class Coffee : public AbstractDrinking {
-public:
+class Coffee : public AbstractDrinking
+{
+private:
 	//烧水
-	virtual void Boil() {
-		cout << "煮农夫山泉!" << endl;
+	virtual void Boil() override {		
+		cout << "煮农夫山泉水" << endl;
 	}
 	//冲泡
-	virtual void Brew() {
-		cout << "冲泡咖啡!" << endl;
+	virtual void Brew() override {
+		cout << "冲泡咖啡" << endl;
 	}
 	//倒入杯中
-	virtual void PourInCup() {
-		cout << "将咖啡倒入杯中!" << endl;
+	virtual void PourInCup() override {
+		cout << "倒入咖啡杯中" << endl;
 	}
 	//加入辅料
-	virtual void PutSomething() {
-		cout << "加入牛奶!" << endl;
+	virtual void PutSomething() override {
+		cout << "添加猫屎" << endl;
 	}
 };
 
-//制作茶水
-class Tea : public AbstractDrinking {
-public:
+class Tea :public AbstractDrinking
+{
+private:
 	//烧水
-	virtual void Boil() {
-		cout << "煮自来水!" << endl;
+	virtual void Boil() override {	// 默认为私有
+		cout << "煮开水" << endl;
 	}
 	//冲泡
-	virtual void Brew() {
-		cout << "冲泡茶叶!" << endl;
+	virtual void Brew() override {
+		cout << "冲泡茶叶" << endl;
 	}
 	//倒入杯中
-	virtual void PourInCup() {
-		cout << "将茶水倒入杯中!" << endl;
+	virtual void PourInCup() override {
+		cout << "倒入保温杯中" << endl;
 	}
 	//加入辅料
-	virtual void PutSomething() {
-		cout << "加入枸杞!" << endl;
+	virtual void PutSomething() override {
+		cout << "添加枸杞" << endl;
 	}
 };
 
-//业务函数
-void DoWork(AbstractDrinking* drink) {
-	drink->MakeDrink();
+void doWork(AbstractDrinking * drink) {
+	drink->makeDrink();
 	delete drink;
 }
 
-void test01() {
-	DoWork(new Coffee);
-	cout << "--------------" << endl;
-	DoWork(new Tea);
-}
-
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main()
+{
+	doWork(new Tea);
+	cout << "======================" << endl;
+	doWork(new Coffee);
+	std::cout << "Hello World!\n";
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4723,13 +4811,9 @@ int main() {
 
 
 
-多态使用时，如果子类中有属性开辟到堆区，那么父类指针在释放时无法调用到子类的析构代码
-
-
+==**多态使用时，如果子类中有属性开辟到堆区，那么父类指针在释放时无法调用到子类的析构代码**==
 
 解决方式：将父类中的析构函数改为**虚析构**或者**纯虚析构**
-
-
 
 虚析构和纯虚析构共性：
 
@@ -4751,6 +4835,157 @@ int main() {
 ` virtual ~类名() = 0;`
 
 `类名::~类名(){}`
+
+
+
+**案例1: 存在内存泄漏问题, 也还有double free问题:**
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Animal {
+public:
+	Animal()
+	{
+		cout << "Animal 父类构造函数调用" << endl;
+	}
+
+	~Animal() {
+		cout << "Animal 父类析构函数调用" << endl;
+	}
+
+	// 纯虚函数
+	virtual void speak() = 0;
+};
+
+class Cat :public Animal {
+public:
+	Cat(string name) : m_name(new string(name))	// 初始化列表
+	{
+		cout << "Cat 子类构造函数调用" << endl;
+	}
+
+	~Cat() {
+		if (m_name != nullptr) {
+			delete m_name;	//释放资源
+			m_name = nullptr;
+		}
+		cout << "Cat 子类析构函数调用" << endl;
+	}
+
+	virtual void speak() override
+	{
+		cout << *m_name << "猫在说话!" << endl;
+	}
+
+private:
+	string *m_name;
+};
+
+void doWork(Animal * animal) {
+	animal->speak();
+	delete animal;		// 存在内存泄漏, 无法释放子类对象
+}
+
+void func() {
+	doWork(new Cat("TOM"));	// 父类指针指向子类对象
+}
+
+int main()
+{
+	func();
+}
+```
+
+![image-20220910220333804](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220910220333804.png)
+
+
+
+**案例2: 使用虚析构函数或纯虚析构, 能正确释放资源.**
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Animal {
+public:
+	Animal()
+	{
+		cout << "Animal 父类构造函数调用" << endl;
+	}
+
+	//virtual ~Animal() {	// 虚析构函数
+	//	cout << "Animal 父类析构函数调用" << endl;
+	//}
+
+	virtual ~Animal() = 0; // 纯虚函数, 当有纯虚函数时, 该类为抽象类, 无法实例化对象
+
+	// 纯虚函数
+	virtual void speak() = 0;
+};
+
+Animal::~Animal() {
+	cout << "Animal 父类析构函数调用" << endl;
+}
+
+
+class Cat :public Animal {
+public:
+	Cat(string name) : m_name(new string(name))	// 初始化列表
+	{
+		cout << "Cat 子类构造函数调用" << endl;
+	}
+
+	~Cat() {	// 析构函数中释放资源, 此时需要注意 拷贝构造函数 和 赋值运算符重载 问题
+		if (m_name != nullptr) {
+			delete m_name;	//释放资源
+			m_name = nullptr;
+		}
+		cout << "Cat 子类析构函数调用" << endl;
+	}
+
+	// 重写拷贝构造函数
+	Cat(const Cat &cat) {
+		this->m_name = new string(*(cat.m_name));	// 深拷贝;
+	}
+
+	// 重写赋值运算符重载
+	Cat& operator=(const Cat &cat) {		// 必须返回引用
+		if (this->m_name != nullptr) {
+			delete this->m_name;
+		}
+		this->m_name = new string(*(cat.m_name));	// 使用深拷贝
+		return *this;	// 返回自身的引用
+	}
+
+	virtual void speak() override
+	{
+		cout << *m_name << "猫在说话!" << endl;
+	}
+
+private:
+	string *m_name;
+};
+
+void doWork(Animal * animal) {
+	animal->speak();
+	delete animal;
+}
+
+void func() {
+	doWork(new Cat("TOM"));	// 父类指针指向子类对象
+}
+
+int main()
+{
+	func();
+}
+```
+
+![image-20220911094705591](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220911094705591.png)
 
 
 
@@ -4828,8 +5063,6 @@ int main() {
 }
 ```
 
-
-
 总结：
 
 ​	1. 虚析构或纯虚析构就是用来解决通过父类指针释放子类对象
@@ -4842,23 +5075,9 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
-
 #### 4.7.6 多态案例三-电脑组装
 
-
-
 **案例描述：**
-
-
 
 电脑主要组成部件为 CPU（用于计算），显卡（用于显示），内存条（用于存储）
 
@@ -4867,8 +5086,6 @@ int main() {
 创建电脑类提供让电脑工作的函数，并且调用每个零件工作的接口
 
 测试时组装三台不同的电脑进行工作
-
-
 
 
 
@@ -5045,15 +5262,149 @@ void test01()
 }
 ```
 
+**案例2:**
+
+```C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+// 处理器抽象类
+class CPU {
+public:
+	virtual void calculate() = 0; // 纯虚函数
+	virtual ~CPU() {}		// 虚析构函数
+};
+
+// 显卡抽象类
+class DisplayCard {
+public:
+	virtual void display() = 0; // 纯虚函数
+	virtual ~DisplayCard() {}		// 虚析构函数
+
+};
+
+// 内存抽象类
+class Memory {
+public:
+	virtual void storage() = 0; // 纯虚函数
+	virtual ~Memory() {		// 虚析构函数
+		cout << "Memory 析构函数调用" << endl;
+	}
+};
+
+// 联想电脑
+class LenovoComputer {
+public:
+	LenovoComputer(CPU *cpu, DisplayCard *dispayCard, Memory *memory) : // 构造函数
+		m_cpu(cpu),
+		m_display(dispayCard),
+		m_memory(memory)
+	{
+
+	}
+
+	~LenovoComputer() {	// 析构函数, 释放资源
+		if (m_cpu != nullptr) {
+			delete m_cpu;
+			m_cpu = nullptr;
+		}
+		if (m_display != nullptr) {
+			delete m_display;
+			m_display = nullptr;
+		}
+		if (m_memory != nullptr) {
+			delete m_memory;
+			m_memory = nullptr;
+		}
+		cout << "LenovoComputer 析构函数调用" << endl;
+	}
+
+	void doWork() {
+		m_cpu->calculate();	// 计算
+		m_display->display(); // 显示	
+		m_memory->storage(); // 存储
+	}
+
+private:
+	CPU *m_cpu;
+	DisplayCard *m_display;
+	Memory *m_memory;
+};
 
 
+// Intel的CPU
+class IntelCPU : public CPU {
+	virtual void calculate() override
+	{
+		cout << "Intel CPU 正在计算" << endl;
+	}
+};
 
+// AMD的CPU
+class AMDCPU : public CPU {
+	virtual void calculate() override
+	{
+		cout << "AMD CPU 正在计算" << endl;
+	}
+};
 
+// NVIDIA的显卡
+class NvidiaDisplayCard :public DisplayCard {
+	virtual void display() override
+	{
+		cout << "NVIDIA 显卡正在计算" << endl;
+	}
+};
 
+// AMD的显卡
+class AMDDisplayCard :public DisplayCard {
+	virtual void display() override
+	{
+		cout << "AMD 显卡正在计算" << endl;
+	}
+};
 
+// Samsung的内存条
+class SamsungMemory :public Memory {
+	virtual void storage() override
+	{
+		cout << "samsung 的内存条正在存储" << endl;
+	}
+	~SamsungMemory() {
+		cout << "SamsungMemory 析构函数调用" << endl;
+	}
+};
 
+void func() {
+	cout << "-------------------------第一台电脑工作:" << endl;
+	// 创建Lenovo电脑
+	LenovoComputer lenovo(new IntelCPU(), new NvidiaDisplayCard(), new SamsungMemory);
+	lenovo.doWork();		// 栈变量, 函数结束会自动释放
 
+	cout << "-------------------------第二台电脑工作:" << endl;
+	LenovoComputer * computer = new LenovoComputer(new AMDCPU, new AMDDisplayCard, new SamsungMemory);
+	computer->doWork();
+	delete computer;	// 手动释放: 如果不释放则造成内存泄漏
 
+	cout << "-------------------------第三台电脑工作:" << endl;
+	CPU *cpu = new IntelCPU();
+	DisplayCard *display = new AMDDisplayCard();
+	Memory * memory = new SamsungMemory;
+	LenovoComputer *computer2 = new LenovoComputer(cpu, display, memory);
+	computer2->doWork();
+	delete computer2;	// 手动释放: 如果不释放则造成内存泄漏
+
+	cout << "--------------函数结束-----------------" << endl;
+}
+
+int main()
+{
+	func();
+}
+```
+
+![image-20220911112852146](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220911112852146.png)
 
 
 
@@ -5114,20 +5465,18 @@ C++中对文件操作需要包含头文件 ==&lt; fstream &gt;==
 
 文件打开方式：
 
-| 打开方式    | 解释                       |
-| ----------- | -------------------------- |
-| ios::in     | 为读文件而打开文件         |
-| ios::out    | 为写文件而打开文件         |
-| ios::ate    | 初始位置：文件尾           |
-| ios::app    | 追加方式写文件             |
-| ios::trunc  | 如果文件存在先删除，再创建 |
-| ios::binary | 二进制方式                 |
+| 打开方式        | 解释                       |
+| --------------- | -------------------------- |
+| **ios::in**     | 为读文件而打开文件         |
+| **ios::out**    | 为写文件而打开文件         |
+| **ios::ate**    | 初始位置：文件尾           |
+| **ios::app**    | 追加方式写文件             |
+| **ios::trunc**  | 如果文件存在先删除，再创建 |
+| **ios::binary** | 二进制方式                 |
 
 **注意：** 文件打开方式可以配合使用，利用|操作符
 
 **例如：**用二进制方式写文件 `ios::binary |  ios:: out`
-
-
 
 
 
@@ -5138,57 +5487,37 @@ C++中对文件操作需要包含头文件 ==&lt; fstream &gt;==
 
 void test01()
 {
-	ofstream ofs;
-	ofs.open("test.txt", ios::out);
+	ofstream ofs;	// 创建输出流对象
+	ofs.open("test.txt", ios::out);	// 打开文件
 
+    // 写内容
 	ofs << "姓名：张三" << endl;
 	ofs << "性别：男" << endl;
 	ofs << "年龄：18" << endl;
 
-	ofs.close();
+	ofs.close();	// 关闭流
 }
 
 int main() {
-
 	test01();
-
 	system("pause");
-
 	return 0;
 }
 ```
 
 总结：
 
-* 文件操作必须包含头文件 fstream
-* 读文件可以利用 ofstream  ，或者fstream类
-* 打开文件时候需要指定操作文件的路径，以及打开方式
-* 利用<<可以向文件中写数据
-* 操作完毕，要关闭文件
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* 文件操作必须包含头文件` #include <fstream>`
+* 读文件可以利用 `ofstream ` ，或者`fstream`类
+* 打开文件`open()`时候需要指定操作文件的路径path，以及打开方式
+* 利用 << 可以向文件中写数据
+* 操作完毕，要关闭文件`close()`
 
 
 
 #### 5.1.2读文件
 
-
-
 读文件与写文件步骤相似，但是读取方式相对于比较多
-
-
 
 读文件步骤如下：
 
@@ -5336,7 +5665,7 @@ void test01()
 
 	Person p = {"张三"  , 18};
 
-	//4、写文件
+	//4、写文件， 需要强制转换为 const char *
 	ofs.write((const char *)&p, sizeof(p));
 
 	//5、关闭文件
@@ -5356,14 +5685,6 @@ int main() {
 总结：
 
 * 文件输出流对象 可以通过write函数，以二进制方式写数据
-
-
-
-
-
-
-
-
 
 
 
@@ -5412,7 +5733,80 @@ int main() {
 }
 ```
 
-
-
 - 文件输入流对象 可以通过read函数，以二进制方式读数据
 
+```C++
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Birthday {
+public:
+	Birthday(int y, int m, int d) :year(y), mouth(m), day(d) {}
+	int year;
+	int mouth;
+	int day;
+};
+
+class Person {
+	friend ostream& operator<<(ostream &out, const Person &person); // 友元
+public:
+	char m_name[64];
+	//string m_name;		// 二进制读写不能使用string, 会读取文件时导致程序崩溃
+	int m_age;
+	Birthday *birthday;		// 指正变量也能正常转换
+};
+
+ostream& operator<<(ostream &out, const Person &person) {
+	out << "{" << person.m_name << ","
+		<< person.m_age << ",{"
+		<< person.birthday->year
+		<< "," << person.birthday->mouth
+		<< "," << person.birthday->day << "}}";
+	return out;
+}
+
+void writeFile() {
+	ofstream ofs;
+	ofs.open("Person.dat", ios::out | ios::binary);
+	Person person = {
+		"张三丰【】",
+		50,
+		nullptr
+	};
+	person.birthday = new Birthday(1999, 10, 23);
+	// 注意: 需要将对应的地址强转换为 const char *
+	ofs.write((const char *)&person, sizeof(Person));	// 二进制的方式写文件
+	ofs.close();
+}
+
+void test() {
+	ifstream ifs;
+	ifs.open("Person.dat", ios::in | ios::binary);
+	if (!ifs.is_open()) {
+		cout << "文件打开失败" << endl;
+		return;
+	}
+
+	// 读取数据
+	Person person;
+	// 注意: 需要将对应的地址强转换为 char *
+	ifs.read((char *)&person, sizeof(Person));
+	cout << person.m_name << endl;
+	cout << person.m_age << endl;
+	cout << person.birthday->year << endl;
+	cout << person.birthday->mouth << endl;
+	cout << person.birthday->day << endl;
+	cout << person << endl;
+}
+
+int main()
+{
+	writeFile();
+	test();
+	std::cout << "Hello World!\n";
+}
+```
+
+![image-20220911193557400](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220911193557400.png)
