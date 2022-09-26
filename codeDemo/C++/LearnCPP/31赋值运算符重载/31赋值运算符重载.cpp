@@ -29,6 +29,11 @@ public:
 
 	// 赋值运算符重载 需要返回自身引用
 	Person& operator=(const Person &p) {
+		// 自我赋值检测, 必须要有这个自我赋值检测, 为了保证正确性, 而不是单纯为了效率
+		if (this == &p) {	
+			return *this;
+		}
+		// 释放原有得资源
 		if (this->m_Age != nullptr){
 			delete this->m_Age;
 		}
@@ -54,6 +59,7 @@ private:
 
 void func() {
 	Person p1(20);
+	p1 = p1;			// 如果重写赋值运算符时没有 自己赋值检测,会出问题!
 	Person p2(30);
 	Person p5;
 	p5 = p2 = p1;		// 这是赋值操作, 调用的是赋值运算符重载函数

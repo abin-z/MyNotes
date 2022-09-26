@@ -10,9 +10,9 @@ void func4();
 int main()
 {
 	//func1();
-	//func2();
+	func2();
 	//func3();
-	func4();
+	//func4();
 	std::cout << "Hello World!\n";
 
 	// system()C 库函数 int system(const char *command) 
@@ -58,11 +58,12 @@ void func2() {
 	int c = 0;			// 百位
 	while (num < 1000)
 	{
-		a = num % 10;
-		b = num / 10 % 10;
-		c = num / 100;
+		a = num % 10;		// 取出个位数
+		b = num / 10 % 10;	// 取出十位数
+		c = num / 100;		// 取出百位数
 		if ((a * a*a + b * b*b + c * c*c) == num) {
-			std::cout << num << std::endl;
+			//std::cout << num << std::endl;
+			printf("%d\n", num);
 		}
 		num++;
 	}
