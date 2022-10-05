@@ -44,7 +44,7 @@ void setGroup(const vector<Worker> &vtr, multimap<int, Worker> &mMap) {
 
 
 void showWorkerByDeptNo(const multimap<int, Worker> &mMap) {
-	cout << "策划部门:" << endl;
+	cout << "======策划部门:" << endl;
 	// 查找策划部门
 	multimap<int, Worker>::const_iterator cit = mMap.find(CEHUA);
 	int count = mMap.count(CEHUA);
@@ -52,7 +52,7 @@ void showWorkerByDeptNo(const multimap<int, Worker> &mMap) {
 		cout << "    部门编号: " << cit->first << " 姓名: " << cit->second.m_name << " 工资: " << cit->second.m_salary << endl;
 	}
 
-	cout << "美术部门:" << endl;
+	cout << "======美术部门:" << endl;
 	// 查找美术部门
 	cit = mMap.find(MEISHU);
 	count = mMap.count(MEISHU);
@@ -60,7 +60,7 @@ void showWorkerByDeptNo(const multimap<int, Worker> &mMap) {
 		cout << "    部门编号: " << cit->first << " 姓名: " << cit->second.m_name << " 工资: " << cit->second.m_salary << endl;
 	}
 
-	cout << "研发部门:" << endl;
+	cout << "======研发部门:" << endl;
 	// 查找研发部门
 	cit = mMap.find(YANFA);
 	count = mMap.count(YANFA);
