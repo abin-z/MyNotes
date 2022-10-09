@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{AF69F5DA-B13C-42C9-B4ED-DCB4E9A56676}</ProjectGuid>
+    <ProjectGuid>{5E400575-B41B-4EA1-A705-8E5DC6162998}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>My01vector</RootNamespace>
+    <RootNamespace>My52algorithmbinarysearch</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
-    <ProjectName>01vector容器</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -152,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="01_vector.cpp" />
+    <ClCompile Include="52algorithm-binary_search.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

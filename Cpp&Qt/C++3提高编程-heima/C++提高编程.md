@@ -5420,8 +5420,6 @@ int main()
 
 
 
-
-
 ### 3.10 案例-员工分组
 
 #### 3.10.1 案例描述
@@ -5434,16 +5432,12 @@ int main()
 
 
 
-
-
 #### 3.10.2 实现步骤
 
 1. 创建10名员工，放到vector中
 2. 遍历vector容器，取出每个员工，进行随机分组
 3. 分组后，将员工部门编号作为key，具体员工作为value，放入到multimap容器中
 4. 分部门显示员工信息
-
-
 
 
 
@@ -5574,8 +5568,6 @@ int main() {
 
 
 
-
-
 ## 4 STL- 函数对象
 
 ### 4.1 函数对象
@@ -5584,7 +5576,7 @@ int main() {
 
 **概念：**
 
-* 重载**函数调用操作符**的类，其对象常称为**函数对象**
+* 重载**函数调用操作符()**的类，其对象常称为**函数对象**
 * **函数对象**使用重载的()时，行为类似函数调用，也叫**仿函数**
 
 
@@ -5602,8 +5594,6 @@ int main() {
 * 函数对象在使用时，可以像普通函数那样调用, 可以有参数，可以有返回值
 * 函数对象超出普通函数的概念，函数对象可以有自己的状态
 * 函数对象可以作为参数传递
-
-
 
 
 
@@ -5746,14 +5736,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
 #### 4.2.3 二元谓词
 
 **示例：**
@@ -5812,20 +5794,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 4.3 内建函数对象
 
 #### 4.3.1 内建函数对象意义
@@ -5848,10 +5816,6 @@ int main() {
 
 * 这些仿函数所产生的对象，用法和一般函数完全相同
 * 使用内建函数对象，需要引入头文件 `#include<functional>`
-
-
-
-
 
 
 
@@ -5905,12 +5869,6 @@ int main() {
 ```
 
 总结：使用内建函数对象时，需要引入头文件 `#include <functional>`
-
-
-
-
-
-
 
 
 
@@ -5988,14 +5946,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
 #### 4.3.4 逻辑仿函数
 
 **功能描述：**
@@ -6009,8 +5959,6 @@ int main() {
 * `template<class T> bool logical_and<T>`              //逻辑与
 * `template<class T> bool logical_or<T>`                //逻辑或
 * `template<class T> bool logical_not<T>`              //逻辑非
-
-
 
 **示例：**
 
@@ -6057,10 +6005,6 @@ int main() {
 
 
 
-
-
-
-
 ## 5 STL- 常用算法
 
 
@@ -6077,8 +6021,6 @@ int main() {
 
 
 
-
-
 ### 5.1 常用遍历算法
 
 **学习目标：**
@@ -6091,8 +6033,6 @@ int main() {
 
 * `for_each`     //遍历容器
 * `transform`   //搬运容器到另一个容器中
-
-
 
 
 
@@ -6147,10 +6087,10 @@ void test01() {
 	}
 
 	//遍历算法
-	for_each(v.begin(), v.end(), print01);
+	for_each(v.begin(), v.end(), print01);		// 传入函数地址
 	cout << endl;
 
-	for_each(v.begin(), v.end(), print02());
+	for_each(v.begin(), v.end(), print02());	// 传递的匿名函数对象(仿函数)
 	cout << endl;
 }
 
@@ -6165,12 +6105,6 @@ int main() {
 ```
 
 **总结：**for_each在实际开发中是最常用遍历算法，需要熟练掌握
-
-
-
-
-
-
 
 
 
@@ -6252,19 +6186,11 @@ int main() {
 
 
 
-
-
-
-
 ### 5.2 常用查找算法
 
 学习目标：
 
 - 掌握常用的查找算法
-
-
-
-
 
 **算法简介：**
 
@@ -6297,10 +6223,6 @@ int main() {
   // end 结束迭代器
 
   // value 查找的元素
-
-
-
-
 
 **示例：**
 
@@ -6376,16 +6298,6 @@ void test02() {
 ```
 
 总结： 利用find可以在容器中找指定的元素，返回值是**迭代器**
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -6503,19 +6415,88 @@ int main() {
 }
 ```
 
-总结：find_if按条件查找使查找更加灵活，提供的仿函数可以改变不同的策略
+```C++ 
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <iostream>
+using namespace std;
 
+/*
+- `find_if(iterator beg, iterator end, _Pred);  `
+  // 按值查找元素，找到返回指定位置迭代器，找不到返回结束迭代器位置
+  // beg 开始迭代器
+  // end 结束迭代器
+  // _Pred 函数或者谓词（返回bool类型的仿函数）
+*/
 
+// 前置声明
+class Person;
 
+class GreaterFive {
+public:
+	bool operator()(const Person &p);   //这里不能直接写实现
+};
 
+class Person {
+	// 友元函数
+	friend ostream& operator<<(ostream &out, const Person &p);
+	friend bool GreaterFive::operator()(const Person &p);
+public:
+	Person(string name, int age) :
+		m_name(name),
+		m_age(age)
+	{	}
 
+private:
+	string m_name;
+	int m_age;
+};
 
+// 成员函数类外实现
+bool GreaterFive::operator()(const Person &p) {
+	return p.m_age > 5;
+}
 
+// 全局函数 << 运算符重载
+ostream& operator<<(ostream &out, const Person &p) {
+	out << "{" << p.m_name << "," << p.m_age << "}";
+	return out;
+}
 
+// 全局函数
+void showPerson(const Person &p) {
+	cout << p << endl;
+}
 
+void test() {
+	vector<Person> vtr;
+	vtr.push_back(Person("AAA", 1));
+	vtr.push_back(Person("BBB", 3));
+	vtr.push_back(Person("CCC", 5));
+	vtr.push_back(Person("DDD", 8));
 
+	for_each(vtr.cbegin(), vtr.cend(), showPerson);
+	vector<Person>::const_iterator pos =
+		find_if(vtr.cbegin(), vtr.cend(), GreaterFive());
+	if (pos == vtr.cend())
+	{
+		cout << "未找到!" << endl;
+	}
+	else
+	{
+		cout << "找到了: " << *pos << endl;
+	}
+}
 
+int main()
+{
+	test();
+	std::cout << "Hello World!\n";
+}
+```
 
+总结：find_if按条查找使查找更加灵活，提供的仿函数可以改变不同的策略
 
 
 
@@ -6573,12 +6554,6 @@ void test01()
 
 
 
-
-
-
-
-
-
 #### 5.2.4 binary_search
 
 **功能描述：**
@@ -6593,7 +6568,7 @@ void test01()
 
   // 查找指定的元素，查到 返回true  否则false
 
-  // 注意: 在**无序序列中不可用**
+  // 注意: 在**无序序列中不可用**(==必须是升序序列才有效==)降序序列也无效
 
   // beg 开始迭代器
 
@@ -6603,41 +6578,51 @@ void test01()
 
 
 
-
-
 **示例：**
 
 ```C++
+#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <functional>
+using namespace std;
 
-void test01()
-{
-	vector<int>v;
+/*
+`bool binary_search(iterator beg, iterator end, value);  `
+// 查找指定的元素，查到 返回true  否则false
+// 注意: 在**无序序列中不可用**
+// beg 开始迭代器
+// end 结束迭代器
+// value 查找的元素
+*/
 
-	for (int i = 0; i < 10; i++)
-	{
-		v.push_back(i);
+void test() {
+	vector<int> vtr;
+
+	for (int i = 0; i < 10; ++i) {
+		vtr.push_back(i);
 	}
-	//二分查找
-	bool ret = binary_search(v.begin(), v.end(),2);
-	if (ret)
-	{
+	vtr.push_back(2);
+	
+	//sort(vtr.begin(), vtr.end(), greater<int>());// 不能为降序序列
+	sort(vtr.begin(), vtr.end());
+
+	// 二分查找一定要是有序序列(只能是升序序列)，否则结果不正确
+	// 建议在使用binary_search之前要进行排序sort
+	bool res = binary_search(vtr.begin(), vtr.end(), 9);
+	if (res) {
 		cout << "找到了" << endl;
 	}
-	else
-	{
+	else {
 		cout << "未找到" << endl;
 	}
+
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main()
+{
+	test();
+	std::cout << "Hello World!\n";
 }
 ```
 
@@ -6759,20 +6744,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 5.2.6 count_if
 
 **功能描述：**
@@ -6881,16 +6852,6 @@ int main() {
 ```
 
 **总结：**按值统计用count，按条件统计用count_if
-
-
-
-
-
-
-
-
-
-
 
 
 
