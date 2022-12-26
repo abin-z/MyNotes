@@ -784,6 +784,10 @@ git remote add [远端仓库名] [ssh远程仓库地址]		#一般远端仓库名
 ```
 
 ```sh
+git remote add [远端仓库名] [https远程仓库地址]    #一般远端仓库名都为 origin
+```
+
+```sh
 git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端仓库名, 还没有远端分支名
 ```
 
@@ -792,9 +796,11 @@ git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端�
 ### 2.查看远程仓库
 
 ```sh
-git remote 				#查看远程仓库
-git remote -v			#查看远程仓库
+git remote 				#查看当前所有的远程仓库的名称
+git remote -v			#查看远程仓库的名称和远程仓库的网址
 ```
+
+![image-20221226233205747](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20221226233205747.png)
 
 ### 3.推送到远程仓库
 
@@ -1038,7 +1044,173 @@ git branch --track <本地分支名> <远程主机名>/<远程分支名>
 
 ![image-20211223000106431](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112230001575.png)
 
+## 8.一个git项目多个远程仓库
+
+在我们的git项目中，操作远程仓库信息的命令为
+
+```bash
+$ git remote  # 查看当前所有的远程仓库的名称
+$ git remote -v # 查看远程仓库的名称和远程仓库的网址
+```
+
+一般情况下，当我们从远程仓库中克隆下一个项目来之后。默认的远程仓库名是 `origin`
+
+```bash
+$ git clone https://github.com/onmpw/JYGO.git
+$ cd JYGO
+$ git remote
+origin
+
+$ git remote -v
+origin https://github.com/onmpw/JYGO.git (fetch)
+origin https://github.com/onmpw/JYGO.git (push)
+```
+
+当`pull` 或者 `push` 的时候默认使用的都是`origin`远程仓库
+
+```bash
+$ git pull origin master # 或者 git pull
+
+$ git push origin master # 或者 git push
+```
+
+怎么给这个项目再添加一个远程仓库呢？使用`git remote add` 命令。
+
+### 方法一、 git remote add
+
+------
+
+```bash
+$ git remote add local git@localhost:workspace/repo/JYGO2.git
+```
+
+上面的`local` 和 `origin`一样，也是远程仓库的名称
+
+```bash
+$ git remote -v
+origin https://github.com/onmpw/JYGO.git (fetch)
+origin https://github.com/onmpw/JYGO.git
+local git@localhost:workspace/repo/JYGO2.git (fetch)
+local git@localhost:workspace/repo/JYGO2.git (push)
+```
+
+添加成功之后，以后再使用`git push`的时候，就可以根据需要推送到需要的远程仓库中。如果需要推送到两个仓库中，则执行两边 `git push`
+
+```bash
+$ git push origin master # 默认的origin远程仓库
+$ git push local master  # 新添加的 local 远程仓库
+To git@localhost:workspace/repo/JYGO2.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@localhost:workspace/repo/JYGO2.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+`puah`没有成功！怎么会出现这种情况呢。原来在使用`git remote add` 添加完远程仓库之后，其实是不能直接推送到远程仓库的。也就是说开始的时候，上面第二条命令是执行不成功的。因为这时候你本地的版本和`local`远程仓库的版本是不一致的，需要从`local`上获取最新的代码。也就是说在执行 `push` 之前需要先从`local`上拉取最新的内容。
+
+```bash
+$ git pull local master
+Unpacking objects: 100% (3/3), done.
+From git@localhost:workspace/repo/JYGO2.git
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> github/master
+fatal: refusing to merge unrelated histories
+```
+
+是的，仅仅使用上面的命令也是不会成功的。需要使用下面的命令
+
+```bash
+$ git pull --allow-unrelated-histories local master
+```
+
+顺利执行成功。然后再使用 `push` 就可以推送到远程仓库了。
+
+```bash
+$ git push local master
+```
+
+成功了。 很好。不过问题也随之而来了。如果有多个远程仓库都需要提交，那我们要每个远程仓库都执行一次 `git push`。有没有一种方法一次`push`就提交到多个远程仓库呢？答案当然是：这个真有！
+
+### 方法二、 git remote set-url --add 命令
+
+------
+
+```bash
+$ git remote set-url --add origin git@localhost:workspace/repo/JYGO2.git
+```
+
+上面命令就是给远程仓库`origin` 再新增一个远程仓库的地址。网上有很多文章写到这就认为，添加完成之后就可以直接使用 `git push` 命令一次性提交到多个远程仓库了。其实不然，最初始的那个远程仓库`push`成功是没问题的。但是到了新增的这个地址的时候就会出现推送失败的情况。
+
+```bash
+$ git push --all # 或者 git push origin master 或者直接使用 git push， 都可以。
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (6/6), 931 bytes | 931.00 KiB/s, done.
+Total 6 (delta 0), reused 0 (delta 0)
+To https://github.com/onmpw/JYGO.git
+   c1857d1..ff94cf0  master -> master
+To git@localhost:workspace/repo/JYGO2.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@localhost:workspace/repo/JYGO2.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+很明显，还是因为本地和远程版本不同步的问题。也就是说在`push` 之前需要先 `pull` 内容。
+
+```bash
+$ git pull 
+Already up to date.
+```
+
+很奇怪，已经是最新的内容了。但是新添加的远程仓库并没有获取过。 其实问题的原因是在同一仓库名称下如果有多个远程仓库地址的话，`pull` 的时候只会去第一个仓库地址中拉取内容。所以说，我们新添加的远程仓库的内容是不会被获取到的。也就是不能`push`的。 那这个问题要怎么解决呢？很简单，换成第一种方法，使用 `git remote add` 来添加远程仓库，从而进行管理。但是，`push`的时候是比较麻烦。 有没有其他的方法呢？答案还是：这个真有。
+
+#### 1. 修改配置文件 .git/config
+
+首先，我们知道不管是 `git remote add` 还是 `git remote set-url --add` 其实都是来操作项目中的`.git/config`配置文件(有兴趣可以去看一下该配置文件的内容)。对于 `git remote set-url --add` 来说，config配置文件的主要部分内容如下
+
+```ini
+[remote "origin"]
+        url = https://github.com/onmpw/JYGO.git
+        fetch = +refs/heads/*:refs/remotes/github/*
+        url = git@localhost:workspace/repo/JYGO2.git
+```
+
+看到内容了吗，很简单明了。既然`pull`只是获取第一个远程仓库的内容，那还不好说吗，直接交换二者的位置，改动如下
+
+```ini
+[remote "origin"]
+        url = git@localhost:workspace/repo/JYGO2.git
+        fetch = +refs/heads/*:refs/remotes/github/*
+        url = https://github.com/onmpw/JYGO.git
+```
+
+然后再使用`git pull`
+
+> 这里需要注意的是，使用`git pull`的时候，和第一种方法是一样的，也要加上 `--allow-unrelated-histories` 参数
+
+```bash
+$ git pull
+$ git push --all
+```
+
+很开心，终于成功了。
+
+#### 2. 空仓库方法
+
+这种方法很简单。既然内容版本不同步，那就不要有内容。我们新添加的远程仓库要是一个空仓库，不要有任何的文件内容。 网上有人说是因为`README.md` 文件的问题。其实只是说对了一半。因为在github或者gitlab等平台上，新建仓库的时候可能有些会默认初始化一个`README.md`文件。像github在新建仓库的时候是会让你选择是否初始化`README.md`文件的，我们只要不初始化这个文件就行了。当然除了这个默认文件。在我们将这个远程仓库加到我们项目中之前，该仓库中就不要有任何的文件了。只有这样，当我们将远程仓库加到项目中之后才不需要`pull`就可以直接推送本地内容到该远程仓库了。
+
 
 
 更多更详细教程参考易百教程： https://www.yiibai.com/git
+
+迹忆客Git教程: https://www.jiyik.com/w/git
 
