@@ -793,6 +793,7 @@ git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端�
 
 ```sh
 git remote 				#查看远程仓库
+git remote -v			#查看远程仓库
 ```
 
 ### 3.推送到远程仓库
