@@ -257,6 +257,7 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git reset`  | 回退版本。                               |
 | `git rm`     | 删除工作区文件。                         |
 | `git mv`     | 移动或重命名工作区文件。                 |
+| `git tag`    | 对版本库做标记, 它是指向某个commit的指针 |
 
 ### 3. 查看提交日志
 
@@ -279,18 +280,268 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 - 作用: 不同提交版本之间的切换
 
 ```sh
-git reset --hard [commitID]    # --hard 表示强制回退
+git reset --hard <commitID>    # --hard 表示强制回退
 ```
 
 - commitID 可以使用 `git log` 或者是`git-log` 查看
 
 - 如何查看已经所有已提交的记录?
 
+
+```sh
+git reflog			#这个指令可以看到已经删除的提交记录
+```
+
+
+
+### 6. tag标签 
+
+- git仓库的tag是给仓库历史中的某一个提交打上标签，以示重要, 它指向某个commit id标记的快照记录指针.
+- tag主要用于发布版本的管理，一个版本发布之后，我们可以为git打上 v.1.0.1 v.1.0.2 …这样的标签。
+- tag 对应某次commit, 是一个点，是不可移动的。
+- 创建 tag 是基于本地分支的 commit，而且与分支的推送是两回事，就是说分支已经推送到远程了，但是你的 tag 并没有，如果想把 tag 推送到远程分支上，需要另外执行 tag 的推送命令。
+
+**tag 常用命令:**
+
+1. #### **创建tag标签**
+
+   Git 支持两种标签：==轻量标签（lightweight)==与==附注标签（annotated)==。
+
+   轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。
+
+   而附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。 通常会建议创建附注标签，这样你可以拥有以上所有信息。但是如果你只是想用一个临时的标签， 或者因为某些原因不想要保存这些信息，那么也可以用轻量标签。
+
+   - #### 附注标签
+
+     在 Git 中创建附注标签十分简单。 最简单的方式是当你在运行 `tag` 命令时指定 `-a` 选项：
+
+   ```sh
+   git tag -a <tagname> -m <comment>	# 创建本地附注tag, -a 指定标签名, -m 指定说明信息
+   ```
+
+   `-m` 选项指定了一条将会存储在标签中的信息。 如果没有为附注标签指定一条信息，Git 会启动编辑器要求你输入信息。
+
+   ```sh
+   git show <tagname>	 	# show命令可以看到标签信息和与之对应的提交信息
+   ```
+
+   通过使用 `git show <tagname>` 会输出显示了打标签者的信息、打标签的日期时间、附注信息，然后显示具体的提交信息:
+
+   ```sh
+   Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+   $ git tag -l
+   v0.11
+   v1.12
+   
+   Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+   $ git show v1.12
+   tag v1.12
+   Tagger: abin <abin_z@163.com>
+   Date:   Thu Aug 10 22:43:19 2023 +0800
+   
+   标注tag说明, 版本号v1.12, 测试tag指令
+   
+   commit 1e1f9aecb47dd0671a64bd84138172b96869e45a (HEAD -> master, tag: v1.12)
+   Author: abin <abin_z@163.com>
+   Date:   Thu Aug 10 22:42:36 2023 +0800
+   
+       修改testFile.txt文件
+   ```
+
+   - #### 轻量标签
+
+     另一种给提交打标签的方式是使用轻量标签。 轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。 创建轻量标签，不需要使用 `-a`、`-s` 或 `-m` 选项，只需要提供标签名字：
+
+     ```sh
+     git tag <tagname>			# 创建轻量级标签，不用-a，-m等参数
+     ```
+
+     这时，如果在标签上运行 `git show <tagname>` ，你不会看到额外的标签信息。 命令只会显示出提交信息：
+
+     ```sh
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git tag v1.13_lw
+     
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git tag
+     v0.11
+     v1.12
+     v1.13_lw
+     
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git show v1.13_lw
+     commit ced5c08e34686bf2ddc6b9c7711b79bacf8fce8d (HEAD -> master, tag: v1.13_lw)
+     Author: abin <abin_z@163.com>
+     Date:   Thu Aug 10 22:57:14 2023 +0800
+     
+         修改testFile.txt文件
+     ```
+
+   - #### 给指定的commit打Tag
+
+     你也可以对过去的提交打标签。打Tag不必要在head之上，**也可在之前的版本上打**，这需要你知道某个提交对象的校验和（通过git log获取）。
+
+     ```sh
+     git tag -a <tagname> <commitID>		# 给指定的commitID打tag
+     ```
+
+     ```sh
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git tag -a v0.1 766f0ae
+     
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git tag
+     v0.1
+     v0.11
+     v1.12
+     v1.13_lw
+     
+     Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+     $ git show v0.1
+     tag v0.1
+     Tagger: abin <abin_z@163.com>
+     Date:   Thu Aug 10 23:15:47 2023 +0800
+     
+     测试在指定commitID上添加tag标签
+     
+     commit 766f0ae17925916f572745c13136234cee7e3298 (tag: v0.1)
+     Author: zhangbin <abin_z@163.com>
+     Date:   Wed Dec 22 16:29:26 2021 +0800
+     
+         abc.txt
+     ```
+
+ 2. ### 列出标签
+
+- 在 Git 中列出已有的标签非常简单，只需要输入 `git tag` （可带上可选的 `-l` 选项 `--list`）：
+
   ```sh
-  git reflog			#这个指令可以看到已经删除的提交记录
+  git tag 			# 查看本地所有tag列表
+  git tag --list 		# 查看本地所有tag列表
+  git tag -l 			# 同理查看本地所有tag列表
+  ```
+
+  这个命令以字母顺序列出标签，但是它们显示的顺序并不重要。
+
+  你也可以按照特定的模式查找标签。 例如，Git 自身的源代码仓库包含标签的数量超过 500 个。 如果只对 1.8.5 系列感兴趣，可以运行：
+
+  ```sh
+  $ git tag -l "v1.8.5*"			# 只查看v1.8.5开头的tag标签, *号为通配符
+  v1.8.5
+  v1.8.5-rc0
+  v1.8.5-rc1
+  v1.8.5-rc2
+  v1.8.5-rc3
+  v1.8.5.1
+  v1.8.5.2
+  v1.8.5.3
+  v1.8.5.4
+  v1.8.5.5
   ```
 
   
+
+3. ### 共享标签
+
+- 默认情况下，`git push` 命令**并不会**传送标签到远程仓库服务器上。 在创建完标签后你**必须显式地推送标签到共享服务器上**。 这个过程就像共享远程分支一样——你可以运行 `git push origin <tagname>`。
+
+  ```sh
+  git push origin <tagname>			# 推送一个本地标签到远程仓库origin
+  ```
+
+  ```sh
+  Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+  $ git tag -l "v1*"
+  v1.12
+  v1.13_lw
+  
+  Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+  $ git push origin v1.12
+  Enumerating objects: 6, done.
+  Counting objects: 100% (6/6), done.
+  Delta compression using up to 6 threads
+  Compressing objects: 100% (3/3), done.
+  Writing objects: 100% (4/4), 470 bytes | 156.00 KiB/s, done.
+  Total 4 (delta 1), reused 0 (delta 0), pack-reused 0
+  remote: Powered by GITEE.COM [GNK-6.4]
+  To gitee.com:abin_z/git-demo.git
+   * [new tag]         v1.12 -> v1.12
+  
+  #效果如下图:
+  ```
+
+  ![image-20230810233137483](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20230810233137483.png)
+
+- 如果想要一次性推送很多标签，也可以使用带有 `--tags` 选项的 `git push` 命令。 这将会把所有不在远程仓库服务器上的标签全部传送到那里。
+
+  ```sh
+  git push <remote> --tags			# 推送全部未推送过的本地标签(包括轻量标签),到远程仓库
+  ```
+
+  ```sh
+  Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+  $ git push origin --tags
+  Enumerating objects: 7, done.
+  Counting objects: 100% (7/7), done.
+  Delta compression using up to 6 threads
+  Compressing objects: 100% (4/4), done.
+  Writing objects: 100% (5/5), 607 bytes | 202.00 KiB/s, done.
+  Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+  remote: Powered by GITEE.COM [GNK-6.4]
+  To gitee.com:abin_z/git-demo.git
+   * [new tag]         v0.1 -> v0.1
+   * [new tag]         v0.11 -> v0.11
+   * [new tag]         v1.13_lw -> v1.13_lw
+  
+  # 效果如下图:
+  ```
+
+  ![image-20230810233911858](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20230810233911858.png)
+
+4. ### 删除标签
+
+   要删除掉你本地仓库上的标签，可以使用命令 `git tag -d <tagname>`。
+
+   ```sh
+   git tag -d <tagname>				# 删除本地仓库上的标签, 此命令不会删除远程仓库中已存在的标签
+   ```
+
+    例如，可以使用以下命令删除一个轻量标签：
+
+   ```sh
+   Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+   $ git tag -d v1.13_lw
+   Deleted tag 'v1.13_lw' (was ced5c08)
+   
+   Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+   $ git tag
+   v0.1
+   v0.11
+   v1.12
+   ```
+
+   ![image-20230810234606577](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20230810234606577.png)
+
+   - 注意: **上述命令并不会从任何远程仓库中移除这个标签**，你必须用 `git push <remote> :refs/tags/<tagname>` 来更新你的远程仓库：
+
+   ```sh
+   git push <remote> :refs/tags/<tagname>
+   ```
+
+   ```sh
+   Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
+   $ git push origin :refs/tags/v1.13_lw
+   
+   remote: Powered by GITEE.COM [GNK-6.4]
+   To gitee.com:abin_z/git-demo.git
+    - [deleted]         v1.13_lw
+   ```
+
+   ![image-20230810234935768](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20230810234935768.png)
+
+
+
+
 
 ### 6. git基础操作指令
 
@@ -299,7 +550,7 @@ Git工作目录下对于文件的修改(增加、删除、更新)会存在几个
 
 ![image-20211130230947835](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202111302309959.png)
 
-## 7. 基础指令练习
+##  git基础指令练习
 
 - 首先准备一个空文件夹
 
@@ -418,6 +669,16 @@ git reflog
 ```
 
 ![image-20211203213746416](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112032137507.png)
+
+- 演示tag指令,  tag是git版本库的一个标记，指向某个commit的指针。
+
+```sh
+git tag 			# 查看本地所有 tag
+```
+
+
+
+
 
 # 四. 添加忽略列表(.gitignore文件) 
 
