@@ -179,7 +179,7 @@ alias git-log='git log --pretty=online --all --graph --abbrev-commit'
 alias ll='ls -al'
 ```
 
-### 6. 解决gitbash中文乱码的问题
+### 6. 解决gitbash中文乱码问题
 
 1. 打开gitbash执行以下的命令:
 
@@ -194,7 +194,18 @@ alias ll='ls -al'
    export LC_ALL="zh_CN.UTF-8"
    ```
 
+
+### 7. 解决gitk中文乱码问题
+
+1. 打开gitbash执行一下的命令
+
+   ```sh
+   git config --global gui.encoding utf-8
+   ```
+
    
+
+
 
 # 三. Git 工作流程图
 
