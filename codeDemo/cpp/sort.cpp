@@ -62,7 +62,7 @@ int partition(vector<int> &nums, int left, int right)
     int i = left;
     for (int j = left; j < right; ++j)
     {
-        if (nums[j] <= nums[right])
+        if (nums[j] <= nums[right]) // 和选择的pivot值进行比较
         {
             swap(nums[i], nums[j]);
             ++i;
