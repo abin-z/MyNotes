@@ -16,9 +16,9 @@ Lambda 允许把函数作为一个方法的参数（函数作为参数传递进�
 
 ### 函数式接口
 
-- ==**只有函数式接口，才可以转换为lambda表达式**==
+- **只有函数式接口，才可以转换为lambda表达式**
 
-- ==**有且只有一个抽象方法的接口被称为函数式接口！**==
+- **有且只有一个抽象方法的接口被称为函数式接口！**
 
 - **函数式接口可以显式的被@FunctionalInterface所表示，当被标识的接口不满足规定时，编译器会提示报错**
 
@@ -42,7 +42,7 @@ Runnable接口就是一个函数式接口
 
 ### 使用Lambda表达式的前提
 
-**对应接口==有且只有一个抽象方法==！！！**(函数式接口)
+**对应接口有且只有一个抽象方法！！！**(函数式接口)
 
 
 
@@ -313,7 +313,7 @@ public class LambdaDemo04 {
 
 ### 匿名内部类的原理
 
-**匿名内部类的本质是在==编译的时候==产生一个.class的文件**   XXXX$1.class 文件
+**匿名内部类的本质是在编译的时候产生一个.class的文件**   XXXX$1.class 文件
 
 ![image-20220119201000251](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20220119201000251.png)
 
@@ -417,7 +417,7 @@ public class com.abin.lambda.LambdaDemo01 {
 }
 ```
 
-**可以看到反编译的源码中看到生成了一个静态方法**` private static void lambda$functionLambda$0();`
+**可以看到反编译的源码中看到生成了一个静态方法** ` private static void lambda$functionLambda$0();`
 
 在Debug模式下查看lambda表达式的执行:
 
@@ -487,7 +487,7 @@ final class LambdaDemo01$$Lambda$1
 
 ---
 
-总结 : 由此可以知道Lambda表达式，**编译器在类中生成一个静态函数，运行时==以内部类形式==调用该静态函数**。
+总结 : 由此可以知道Lambda表达式，**编译器在类中生成一个静态函数，运行时以内部类形式调用该静态函数**。
 
 本质上可以理解为如下代码:
 
@@ -523,13 +523,13 @@ public class LambdaDemo01 {
 
 1. 所需类型不一样
   - 匿名内部类的类型可以是 类，抽象类，接口
-  - Lambda表达式需要的类型==必须是接口==
+  - Lambda表达式需要的类型**必须是接口**
 2. 抽象方法的数量不一样
   - 匿名内部类所需的接口中的抽象方法的数量是随意的
-  - Lambda表达式所需的接口中==只能有一个抽象方法==
+  - Lambda表达式所需的接口中**只能有一个抽象方法**
 3. 实现原理不一样
   - 匿名内部类是在编译后形成一个class
-  - Lambda表达式是在==程序运行的时候==动态生成class
+  - Lambda表达式是在**程序运行的时候**动态生成class
 
 
 
@@ -597,7 +597,7 @@ class BBB implements III{
 }
 ```
 
-问题: 这个接口中可以有多个抽象方法的, **当我们想去拓展接口增加抽象方法的时候, ==所有的实现类都需要去重写==这个新增的抽象方法** (这是一个很繁琐的事情, 例如JDK8中的Map接口中新增了一个forEach方法, 如果按原来的模式就必须在Map接口的164个实现类中都要重写这个forEach方法...)
+问题: 这个接口中可以有多个抽象方法的, **当我们想去拓展接口增加抽象方法的时候, 所有的实现类都需要去重写这个新增的抽象方法** (这是一个很繁琐的事情, 例如JDK8中的Map接口中新增了一个forEach方法, 如果按原来的模式就必须在Map接口的164个实现类中都要重写这个forEach方法...)
 
 ### 2.2 JDK8之后接口的默认方法
 
@@ -665,8 +665,8 @@ class BBB implements III{
 
 接口中的默认方法有两种使用方式:
 
-1. **实现类中可以==直接调用==接口中的默认方法**
-2. **实现类中可以==重写==接口中的默认方法**
+1. **实现类中可以直接调用接口中的默认方法**
+2. **实现类中可以重写接口中的默认方法**
 
 
 
@@ -1186,7 +1186,7 @@ public class FunctionRefTest02 {
 
 - **当要传递给Lambda体的操作，已经有了实现方法，可以使用方法引用。**
 
-- ==**方法引用是用来直接访问类或者实例的已经存在的方法或者构造方法**。==
+- **方法引用是用来直接访问类或者实例的已经存在的方法或者构造方法**。
 
 - 方法引用提供了一种引用而不执行方法的方式，它需要由兼容的函数式接口构成的目标类型上下文。计算时，方法引用会创建函数式接口的一个实例。
 
@@ -1257,7 +1257,7 @@ public class FunctionRefTest04 {
 
 ### 2.3 类名::普通方法名
 
-Java面向对象中, 类名只能调用静态方法, 类名引用示例方法是有前提的, ==实际上`类名::普通方法名`是拿第一个参数作为方法的调用者;==
+Java面向对象中, 类名只能调用静态方法, 类名引用示例方法是有前提的, 实际上`类名::普通方法名`是拿第一个参数作为方法的调用者;
 
 ```Java
 public class FunctionRefTest05 {
@@ -1446,7 +1446,7 @@ public class StreamTest03 {
 
 ### 3.2通过Stream的of方法
 
-在实际开发过程中, 不可避免的使用数组, 由于数组对象不可能添加默认方法, **所以在Stream接口中提供了一个static静态方法of()方法, 可以获取数组对象的Stream流,** 但是需要注意: ==使用数组对象的时候不能使用基本类型的数组==
+在实际开发过程中, 不可避免的使用数组, 由于数组对象不可能添加默认方法, **所以在Stream接口中提供了一个static静态方法of()方法, 可以获取数组对象的Stream流,** 但是需要注意: 使用数组对象的时候不能使用基本类型的数组
 
 ```Java
   public static void main(String[] args) {
@@ -1486,15 +1486,15 @@ public class StreamTest03 {
 
 `Stream`可以由数组或集合创建，对流的操作分为两种：
 
-- 中间操作，==每次返回一个**新的Stream**，支持链式调用==。
+- 中间操作，每次返回一个**新的Stream**，支持链式调用。
 
-- 终端操作，==每个流只能进行一次终端操作，终端操作结束后流无法再次使用。==,也不支持链式调用, 终端操作会产生一个新的集合或值。
+- 终端操作，**每个流只能进行一次终端操作，终端操作结束后流无法再次使用**。也不支持链式调用, 终端操作会产生一个新的集合或值。
 
 另外，`Stream`有几个特性：
 
-1. ==stream不存储数据==，而是按照特定的规则对数据进行计算，一般会输出结果。
-2. ==stream不会改变数据源==，通常情况下会产生一个新的集合或一个值。
-3. ==stream具有延迟执行特性==，只有调用终端操作时，中间操作才会执行。
+1. **stream不存储数据**，而是按照特定的规则对数据进行计算，一般会输出结果。
+2. **stream不会改变数据源**，通常情况下会产生一个新的集合或一个值。
+3. **stream具有延迟执行特性**，只有调用终端操作时，中间操作才会执行。
 
 
 
@@ -1546,7 +1546,7 @@ public class StreamTest05ForEach {
 count 方法用来统计Stream流中元素的个数**【结束操作】**
 
 ```Java
-    long count();
+long count();
 ```
 
 ```Java
@@ -1729,7 +1729,7 @@ distinct方法的作用是去掉重复数据, 但是需要注意的是什么情�
 101	
 ```
 
-注意: **==distinct方法对自定义的数据类型去重, 一定要重写 equals 方法和 hashcode 方法==**,  否则去重结果可能不符合预想结果
+注意: **distinct方法对自定义的数据类型去重, 一定要重写 equals 方法和 hashcode 方法**,  否则去重结果可能不符合预想结果
 
 ```Java
   public static void main(String[] args) {
@@ -1796,7 +1796,7 @@ Person{name='李四', age=19, height=null}
 Person{name='小明', age=23, height=null}
 ```
 
-**== 和 equals 和 hashcode 详解**:  https://www.cnblogs.com/kexianting/p/8508207.html#:~:text=Java%E5%AF%B9%E4%BA%8Eeqauls%E6%96%B9%E6%B3%95%E5%92%8ChashCode%E6%96%B9%E6%B3%95%E6%98%AF%E8%BF%99%E6%A0%B7%E8%A7%84%E5%AE%9A%E7%9A%84%EF%BC%9A%20%281%29%E5%90%8C%E4%B8%80%E5%AF%B9%E8%B1%A1%E4%B8%8A%E5%A4%9A%E6%AC%A1%E8%B0%83%E7%94%A8hashCode%28%29%E6%96%B9%E6%B3%95%EF%BC%8C%E6%80%BB%E6%98%AF%E8%BF%94%E5%9B%9E%E7%9B%B8%E5%90%8C%E7%9A%84%E6%95%B4%E5%9E%8B%E5%80%BC%E3%80%82,%282%29%E5%A6%82%E6%9E%9Ca.equals%28b%29%EF%BC%8C%E5%88%99%E4%B8%80%E5%AE%9A%E6%9C%89a.hashCode%28%29%20%E4%B8%80%E5%AE%9A%E7%AD%89%E4%BA%8E%20b.hashCode%28%29%E3%80%82
+** 和 equals 和 hashcode 详解**:  https://www.cnblogs.com/kexianting/p/8508207.html#:~:text=Java%E5%AF%B9%E4%BA%8Eeqauls%E6%96%B9%E6%B3%95%E5%92%8ChashCode%E6%96%B9%E6%B3%95%E6%98%AF%E8%BF%99%E6%A0%B7%E8%A7%84%E5%AE%9A%E7%9A%84%EF%BC%9A%20%281%29%E5%90%8C%E4%B8%80%E5%AF%B9%E8%B1%A1%E4%B8%8A%E5%A4%9A%E6%AC%A1%E8%B0%83%E7%94%A8hashCode%28%29%E6%96%B9%E6%B3%95%EF%BC%8C%E6%80%BB%E6%98%AF%E8%BF%94%E5%9B%9E%E7%9B%B8%E5%90%8C%E7%9A%84%E6%95%B4%E5%9E%8B%E5%80%BC%E3%80%82,%282%29%E5%A6%82%E6%9E%9Ca.equals%28b%29%EF%BC%8C%E5%88%99%E4%B8%80%E5%AE%9A%E6%9C%89a.hashCode%28%29%20%E4%B8%80%E5%AE%9A%E7%AD%89%E4%BA%8E%20b.hashCode%28%29%E3%80%82
 
 ### 4.9 match
 
@@ -3023,9 +3023,9 @@ public final class Optional<T> {			//final class 没有子类
 | **static <T> Optional<T> empty()**                           | 返回空的 Optional 实例。                                     |
 | **static <T> Optional<T> of(T value)**                       | 返回一个指定**非null值**的Optional。                         |
 | **static <T> Optional<T> ofNullable(T value) **              | 如果为非空，返回 Optional 描述的指定值，否则返回空的 Optional。 |
-| **T get()**                                                  | 如果在这个Optional中包含这个值，返回值，==否则抛出异常：NoSuchElementException== |
+| **T get()**                                                  | 如果在这个Optional中包含这个值，返回值，否则抛出异常：NoSuchElementException |
 | **boolean isPresent()**                                      | 如果值存在则方法会返回true，否则返回 false。                 |
-| **void ifPresent(Consumer<? super T> consumer)**             | 如果值存在则使用该值调用 consumer , ==否则不做任何事情==。没有返回值 |
+| **void ifPresent(Consumer<? super T> consumer)**             | 如果值存在则使用该值调用 consumer , 否则不做任何事情。没有返回值 |
 | **T orElse(T other)**                                        | 如果Optional中包含值，返回值， 否则返回 other 默认值。       |
 | **T orElseGet(Supplier<? extends T> other)**                 | 如果Optional中包含值，返回值， 否则触发 other，并返回 other 调用的结果。 |
 | **<U>Optional<U> map(Function<? super T,? extends U> mapper)** | **如果有值，则对其执行调用映射函数得到返回值。如果返回值不为 null，则创建包含映射返回值的Optional作为map方法返回值，否则返回空Optional。** |

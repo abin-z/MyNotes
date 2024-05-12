@@ -5,7 +5,7 @@
 template <typename T>
 void printDatas(T &datas)
 {
-    // 检查数据量,超过100个元素则不答应数据
+    // 检查数据量,超过100个元素则不打印数据
     if (datas.size() > 100)
     {
         std::cout << "data size > 100, no print";

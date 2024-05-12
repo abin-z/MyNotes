@@ -53,6 +53,7 @@ void merge(vector<int> &nums, int left, int mid, int right)
     // 拷贝左右子序列
     vector<int> leftNums(nums.cbegin() + left, nums.cbegin() + mid);
     vector<int> rightNums(nums.cbegin() + mid, nums.cbegin() + right);
+    // 在子序列后面添加哨兵
     leftNums.push_back(numeric_limits<int>::max());
     rightNums.push_back(numeric_limits<int>::max());
     int i = 0, j = 0, k = left;
