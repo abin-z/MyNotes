@@ -97,6 +97,10 @@ Git 自带一个 `git config` 的工具来帮助设置控制 Git 外观和行为
 ```shell
 $ git config --global user.name "abin"
 $ git config --global user.email abin_z@163.com
+
+# 不使用 --global 参数就是设置当前项目的git配置
+$ git config user.name "abin"
+$ git config user.email abin_z@163.com
 ```
 
 再次强调，如果使用了 `--global` 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用这些信息。 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行不使用 `--global` 选项的命令来配置。
@@ -264,11 +268,88 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git add`    | 添加文件到仓库                           |
 | `git status` | 查看仓库当前的状态，显示有变更的文件。   |
 | `git diff`   | 比较文件的不同，即暂存区和工作区的差异。 |
+| `git show`   | 显示各种类型的对象, 常用于查看提交差异   |
 | `git commit` | 提交暂存区到本地仓库。                   |
 | `git reset`  | 回退版本。                               |
 | `git rm`     | 删除工作区文件。                         |
 | `git mv`     | 移动或重命名工作区文件。                 |
 | `git tag`    | 对版本库做标记, 它是指向某个commit的指针 |
+
+#### git log   #日志
+
+git log 命令是 Git 中用于查看提交历史的命令
+
+```sh
+git log		#可以按键盘空格/字母b键将信息向下/向上翻页，也可以按键盘向上/向下箭头向上/向下按行滚动
+
+git log –p	#输出每一个commit之间的差异信息
+
+git log --stat	#输出每一个commit之间的差异统计信息
+
+git log--oneline	#输出历史commit的简短信息
+
+git log：显示当前分支（HEAD）的全部提交记录，按照时间倒序排列。
+git log <commit>：从指定的提交记录开始显示，按照时间倒序排列。
+git log --follow <file>：显示指定文件的提交历史，并显示该文件的移动或重命名记录。
+git log --pretty=<format>：使用指定的格式输出提交信息。常用的格式有 %H（提交哈希值）、%h（简短的提交哈希值）、%an（作者名）、%ae（作者邮箱）、%cn（提交者名）、%ce（提交者邮箱）、%s（提交说明）等。
+git log --grep=<pattern>：仅显示包含指定模式的提交记录，模式可以是正则表达式。
+git log --author=<name>：仅显示指定作者的提交记录。
+git log --oneline：将每个提交记录压缩为一行，只显示提交哈希值和提交说明。
+git log --graph：在提交记录前面绘制 ASCII 图形表示提交记录之间的关系。
+git log --since=<date>：仅显示指定日期之后的提交记录，日期的格式可以是 “YYYY-MM-DD” 或 “<n> days ago” 等。
+```
+
+![image-20240523221717862](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523221717862.png)
+
+![image-20240523221807259](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523221807259.png)
+
+
+
+#### git diff  #差异
+
+- 当合并分支时, 如果出现了冲突, 也可以使用`git diff`查看是那些地方出现了冲突
+- 查看当前分支修改了那些内容`git diff`
+
+```sh
+git diff			#显示工作区与暂存区的差异
+
+git diff --cached	#显示暂存区与历史版本库的差异
+
+git diff HEAD~2		#显示工作区与最新提交第二父提交的差异
+
+git diff HEAD~2 --a.txt		#显示工作区与最新提交第二父提交中a.txt文件差异
+
+git diff –cachedHEAD~1		#显示暂存区与历史版本库最新提交第一父提交的差异
+
+git diff HEAD HEAD~2		#显示HEAD指向的历史提交和其第二父提交之间的差异
+
+git diff HEAD HEAD~2-- a.txt	#显示HEAD指向的历史提交和其第二父提交中a.txt之间的差异
+```
+
+![image-20240523212427403](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523212427403.png)
+
+#### git show #显示
+
+显示一个或多个对象（blob、树、标签和提交）。
+
+- 对于提交，它显示日志消息和文本差异。它还以 git diff-tree --cc 生成的特殊格式呈现合并提交。
+- 对于标签，它显示标签消息和引用的对象。
+- 对于树，它显示名称（相当于带有 --name-only 的 git ls-tree）。
+- 对于纯 blob，它显示纯内容。
+
+```sh
+git show [commit_id]   	#查看某次历史提交信息的完整信息
+
+git show HEAD			#查看HEAD标签当前指向的提交的完整信息
+
+git show master 		#查看master分支最新一次提交的完整信息
+
+git show master^或git show master~  #查看master分支最新一次提交的父提交的完整信息
+
+git show master^2		#查看master分支最新一次提交的第二个父提交（也就是父提交的父提交）的完整信息
+```
+
+![image-20240523220652903](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523220652903.png)
 
 ### 3. 查看提交日志
 
@@ -276,6 +357,8 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | :----------------- | :----------------------------------- |
 | `git log`          | 查看历史提交记录                     |
 | `git blame <file>` | 以列表形式查看指定文件的历史修改记录 |
+
+![image-20240523222812592](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523222812592.png)
 
 ### 4. 远程操作
 
@@ -286,21 +369,69 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git pull`   | 下载远程代码并合并 |
 | `git push`   | 上传远程代码并合并 |
 
-### 5. 版本回退
+### 5. reset版本回退
 
-- 作用: 不同提交版本之间的切换
+git reset 命令用于`回退版本`，可以指定退回某一次提交的版本。
+
+要想用好reset命令，必须深入理解它的三个参数:  `--soft`，`--mixed（默认）`，`--hard`
+
+#### git reset --soft
+
+如下图，soft参数是指将本地仓回滚到Y版本，但是暂存区和工作区保持不变。此时本地仓回滚到Y版本号commit完成的那一刻。
+
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-e5d1963d5c4e164f433178ff79bc5c2a_r.jpg)
+
+#### git reset --mixed 
+
+```text
+git reset --mixed  或者  git reset
+```
+
+这是默认参数。如下图 --mixed 表示本地仓和暂存区，都回滚到Y版本号。工作区代码不受影响。
+
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-813f0be2f7143336fd194cd7d6244e11_r.jpg)
+
+#### git reset --hard
+
+本地仓库、暂存区、工作区，三区都回滚。
+
+![img](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/v2-e9e0f4dd96f095a4290daa3f83a2abf1_r.jpg)
+
+作用: 不同提交版本之间的切换
 
 ```sh
-git reset --hard <commitID>    # --hard 表示强制回退
+git reset [--soft | --mixed | --hard] [HEAD]
+# --soft 回退到某个版本 。是指将本地仓回滚到指定版本，但是暂存区和工作区保持不变
+git reset --soft <commitID> 
+
+# --mixed 为默认，可以不用带该参数，用于重置暂存区的文件与上一次的提交(commit)保持一致，工作区文件内容保持不变。
+git reset --mixed <commitID> 	
+
+# --hard 参数撤销工作区中所有未提交的修改内容，将暂存区与工作区都回到上一次版本，并删除之前的所有信息提交：
+git reset --hard <commitID>    	
+```
+
+```sh
+# 回退所有内容到上一个版本
+git reset HEAD^
+
+# 回退test.txt这个文件的版本到上一个版本
+git reset HEAD^ test.txt
+
+# 向前回退到第3个版本
+git reset  HEAD~3
+
+# 回退到某个版本51363e6
+git reset 51363e6
 ```
 
 - commitID 可以使用 `git log` 或者是`git-log` 查看
 
-- 如何查看已经所有已提交的记录?
+- 如何查看已经所有已提交的记录?  
 
 
 ```sh
-git reflog			#这个指令可以看到已经删除的提交记录
+git reflog			#这个指令可以看到已经删除的提交记录, 包括 git reset --hard
 ```
 
 
@@ -915,6 +1046,267 @@ git status 	#查看那些文件存在冲突
 
 
 
+### 8. git revert (还原)
+
+git revert 撤销某次操作，**此次操作之前和之后的commit和history都会保留，并且把这次撤销作为一次最新的提交**
+
+git revert命令可以被认为是“撤消”命令。但是它不是传统的撤消操作。不是从项目历史中删除提交，而是计算出如何反转要撤销的提交所引入的更改，并附加一个新的提交及生成的反向内容。这种方式可以防止 Git 丢失历史记录，这对于我们的修订历史记录的完整性和可靠的协作非常重要。
+
+当想要应用项目历史中提交的逆向时，应该使用 revert。如果我们正在跟踪错误并发现它是由单个提交引入的。此时我们无需手动进入、修复并提交新快照，而是可以使用git revert自动为我们完成所有这些工作。
+
+
+
+revert分为 revert 普通commit 和 revert merge commit
+
+- **对于普通的commit**，使用 `git revert <commit id>` 即可，git 会生成一个新的 commit，将指定的 commit 内容从当前分支上撤除
+
+- **对于merge commit，需要添加 `-m` 选项以代表这次 revert 的是一个 merge commit**,  但如果直接使用 `git revert <commit id>`，git 也不知道到底要撤除哪一条分支上的内容，这时需要指定一个 parent number 标识出"主线"，主线的内容将会保留，而另一条分支的内容将被 revert。 如上面的例子中，从 git show 命令的结果中可以看到，merge commit 的 parent 分别为 `d98dc` 和 `ca82c`，其中 `d98dc` 代表 master 分支（从图中可以看出），`ca82c` 代表 will-be-revert 分支。需要注意的是 -m 选项接收的参数是一个数字，数字取值为 1 和 2，也就是 Merge 行里面列出来的第一个还是第二个，其含义用来保留某个分支。
+
+- git revert的注意事项:  [关于git revert的一点坑](https://juejin.cn/post/7145677983578062861)
+
+  ![image-20240523230820541](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523230820541.png)
+
+```sh
+git revert <commit id> #还原某些现有提交
+```
+
+![image-20240523224654700](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523224654700.png)
+
+```sh
+# 执行撤销 5f09a20 的提交
+git revert 5f09a20
+```
+
+![image-20240523225033020](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523225033020.png)
+
+再次查看`git-log`
+
+![image-20240523225601724](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523225601724.png)
+
+
+
+### 9. git cherry-pick 
+
+通过 `cherry-pick` 命令，Git 可以将其他任何分支中的选定提交合并到**当前的 Git HEAD 分支**中。
+
+```sh
+git cherry-pick <commit sha>	# 将其他分支的commitID的提交合并到当前分支
+```
+
+在执行 `git merge` 或 `git rebase` 时，一个分支的所有提交都会被合并。而 `cherry-pick` 命令则允许你选择单个提交进行整合。
+
+区别图示如下:
+
+```sh
+使用 merge 的情况: 在执行 merge 或 rebase 时，一个分支的所有提交都会被整合。
+```
+
+![使用 merge 或 rebase 的情况](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3034537-20230812113520489-1069727001.png)
+
+```sh
+使用 cherry-pick 的情况: 允许你选择个别提交进行整合。在本例中，只有 C2 被整合到主分支，而不是 C4。
+```
+
+![使用 cherry-pick 的情况](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/3034537-20230812113520658-544623595.png)
+
+案例:
+
+当前在master分支上
+
+![image-20240523232821561](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523232821561.png)
+
+```sh
+# 执行 git cherry-pick 0ee5634, 从develop分支上合并0ee5634这一次提交
+git cherry-pick 0ee5634
+# 合并后的结果如下图
+```
+
+![image-20240523233508301](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240523233508301.png)
+
+**什么时候用 Cherry-pick?**
+
+简而言之就是：**尽量少用**。之所以要尽量少用 cherry-pick，是因为它很容易产生 "重复"提交：当你使用 cherry-pick 将一个提交整合到 HEAD 分支时，Git 必须创建一个内容完全相同的新提交。不过，这是一个全新的提交对象，有自己的 SHA 标识符。同时也会失去跟踪提交历史的能力。
+
+如果你不按顺序提交了很多提交，这些提交就会被记录在你的分支中，这可能会导致你的 Git 分支出现不理想的结果。
+
+只要能用传统的合并或重置来整合，就应该这么做。Cherry-pick 应保留给不可能这样做的情况，例如必须创建 Hotfix 或只想从一个废弃的分支中保存一个或几个提交。
+
+
+
+### 10. git stash (暂存) 
+
+git stash：将本地没提交的内容进行缓存并从当前分支移除。缓存的数据结构为堆栈，先进后出。
+
+> **注意**：git commit的内容不会被缓存， 但git add的内容会被缓存。**stash 只会操作被git追踪的文件**，也就是说，如果有新增的文件，需要进行git add [文件名]让git追踪该文件，再进行stash就可以了。
+
+| 命令名                          | 作用                                                        |
+| ------------------------------- | ----------------------------------------------------------- |
+| git stash                       | 隐藏当前的工作现场, 此时, git status的结果是 clean          |
+| git stash list                  | 查看所有隐藏, 每一行的冒号前面的字符串就是标识此隐藏的id    |
+| git stash pop                   | 恢复最新的stash进度到工作区, 并删除栈中的stash              |
+| git stash pop stash@{stash_id}  | 恢复指定的stash进度到工作区, 并删除栈中的stash              |
+| git stash apply                 | 恢复最新的进度到工作区, 不会删除栈中的stash                 |
+| git stash drop stash@{stash_id} | 从暂存列表中删除一个特定的暂存。                            |
+| git stash clear                 | 清空暂存区的所有stash, **谨慎使用(不当使用会导致更改丢失)** |
+
+[git stash 命令实用指南](https://linux.cn/article-13293-1.html)
+
+- 我们经常会遇到这样的情况：
+
+> 正在dev分支开发新功能，做到一半时有人过来反馈一个bug，让马上解决，但是新功能做到了一半你又不想提交，这时就可以使用git stash命令先把当前进度保存起来，然后切换到另一个分支去修改bug，修改完提交后，再切回dev分支，使用git stash pop来恢复之前的进度继续开发新功能。
+
+分支有改变时不提交又不能切换分支，如下：
+
+![image-20240524220548423](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240524220548423.png)
+
+使用 `git stash` 保存当前工作进度，会把暂存区和工作区的改动保存起来。执行完这个命令后，在运行git status命令，就会发现当前是一个干净的工作区，没有任何改动。使用`git stash save 'message...'`可以添加一些注释
+
+![image-20240524221947716](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240524221947716.png)
+
+它会保存当前工作进度，会把暂存区和工作区的改动保存到一个未完结变更的堆栈中；执行完这个命令后，在运行 `git status` 命令，就会发现当前是一个干净的工作区，没有任何改动。
+
+> 1. `git stash` 是本地的，不会上传到服务器上；
+> 2. 可以通过使用`git stash save 'message...'`可以添加一些注释。
+
+下面是使用 `git stash` 时要遵循的顺序：
+
+1. 将修改保存到分支 A。
+2. 运行 `git stash`。
+3. 签出分支 B。
+4. 修正 B 分支的错误。
+5. 提交并（可选）推送到远程。
+6. 回到分支 A
+7. 运行 `git stash pop` 来取回你的暂存的改动。
+
+![image-20240524225511153](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240524225511153.png)
+
+
+
+### 11. git rebase (谨慎使用) 
+
+#### 理解rebase命令
+
+`git rebase` 命令的文档描述是 `Reapply commits on top of another base tip`，从字面上理解是「在另一个基端之上重新应用提交」，这个定义听起来有点抽象，换个角度可以理解为「将分支的基础从一个提交改成另一个提交，使其看起来就像是从另一个提交中创建了分支一样」，如下图：
+
+![git-rebase-visual](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/git-rebase-visual.png)
+
+假设我们从 `Master` 的提交 A 创建了 `Feature` 分支进行新的功能开发，这时 A 就是 `Feature` 的基端。接着 `Matser` 新增了两个提交 B 和 C， `Feature` 新增了两个提交 D 和 E。现在我们出于某种原因，比如新功能的开发依赖 B、C 提交，需要将 `Master` 的两个新提交整合到 `Feature` 分支，为了保持提交历史的整洁，我们可以切换到 `Feature` 分支执行 `rebase` 操作：
+
+```sh
+git rebase master		# 在Feature分支上执行 git rebase master 操作
+```
+
+`rebase` 的执行过程是首先找到这两个分支（即当前分支 `Feature`、 `rebase` 操作的目标基底分支 `Master`） 的最近共同祖先提交 A，然后对比当前分支相对于该祖先提交的历次提交（D 和 E），提取相应的修改并存为临时文件，然后将当前分支指向目标基底 `Master` 所指向的提交 C, 最后以此作为新的基端将之前另存为临时文件的修改依序应用。
+
+我们也可以按上文理解成将 `Feature` 分支的基础从提交 A 改成了提交 C，看起来就像是从提交 C 创建了该分支，并提交了 D 和 E。但实际上这只是「看起来」，在内部 Git 复制了提交 D 和 E 的内容，创建新的提交 D' 和 E' 并将其应用到特定基础上（A→B→C）。尽管新的 `Feature` 分支和之前看起来是一样的，但它是由全新的提交组成的。
+
+**`rebase` 操作的实质是丢弃一些现有的提交，然后相应地新建一些内容一样但实际上不同的提交(commitID不同)。**
+
+![image-20240524234743698](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240524234743698.png)
+
+```sh
+# 在develop分支上执行rebase操作
+git rebase master
+```
+
+![image-20240524234755267](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20240524234755267.png)
+
+
+
+#### rebase主要用途
+
+`rebase` 通常用于重写提交历史。下面的使用场景在大多数 Git 工作流中是十分常见的：
+
+- 我们从 `master` 分支拉取了一条 `feature` 分支在本地进行功能开发
+- 远程的 `master` 分支在之后又合并了一些新的提交
+- 我们想在 `feature` 分支集成 `master` 的最新更改
+
+
+
+#### rebase 和 merge 的区别
+
+以上场景同样可以使用 `merge` 来达成目的，但使用 `rebase` 可以使我们保持一个线性且更加整洁的提交历史。假设我们有如下分支：
+
+```sh
+  D---E feature
+ /
+A---B---C master
+```
+
+现在我们将分别使用 `merge` 和 `rebase`，把 `master` 分支的 B、C 提交集成到 `feature` 分支，并在 `feature` 分支新增一个提交 F，然后再将 `feature` 分支合入 `master` ，最后对比两种方法所形成的提交历史的区别。
+
+- **使用 `merge`**
+
+  1. 切换到 `feature` 分支： `git checkout feature`。
+  2. 合并 `master` 分支的更新： `git merge master`。
+  3. 新增一个提交 F： `git add . && git commit -m "commit F"` 。
+  4. 切回 `master` 分支并执行快进合并： `git chekcout master && git merge feature`。
+
+  执行过程如下图所示：
+
+![Dec-30-2020-merge-example](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/Dec-30-2020-merge-example.gif)
+
+我们将得到如下提交历史：
+
+```sh
+* 6fa5484 (HEAD -> master, feature) commit F
+*   875906b Merge branch 'master' into feature
+|\  
+| | 5b05585 commit E
+| | f5b0fc0 commit D
+* * d017dff commit C
+* * 9df916f commit B
+|/  
+* cb932a6 commit A
+```
+
+- **使用 `rebase`**
+
+步骤与使用 `merge` 基本相同，唯一的区别是第 2 步的命令替换成： `git rebase master`。
+
+执行过程如下图所示：
+
+![Dec-30-2020-rebase-example](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/Dec-30-2020-rebase-example.gif)
+
+我们将得到如下提交历史：
+
+```sh
+* 74199ce (HEAD -> master, feature) commit F
+* e7c7111 commit E
+* d9623b0 commit D
+* 73deeed commit C
+* c50221f commit B
+* ef13725 commit A
+```
+
+可以看到，使用 `rebase` 方法形成的提交历史是完全线性的，同时相比 `merge` 方法少了一次 `merge` 提交，看上去更加整洁。
+
+
+
+#### rebase上潜在弊端和反对意见
+
+从以上场景来看 `rebase` 功能非常强大，但我们也需要意识到它不是万能的，甚至对新手来说有些危险，稍有不慎就会发现 `git log` 里的提交不见了，或者卡在 `rebase` 的某个步骤不知道如何恢复。
+
+我们上面已经提到了 `rebase` 有保持整洁的线性提交历史的优点，但也需要意识到它有以下潜在的弊端：
+
+- 如果涉及到已经推送过的提交，需要**强制推送**才能将本地 `rebase` 后的提交推送到远程。**因此绝对不要在一个公共分支（也就是说还有其他人基于这个分支进行开发）执行 `rebase`**，否则其他人之后执行 `git pull` 会合并出一条令人困惑的本地提交历史，进一步推送回远程分支后又会将远程的提交历史打乱，较严重的情况下可能会对你的人身安全带来风险。
+- 对新手不友好，新手很有可能在交互模式中误操作「丢失」某些提交（但其实是能够找回的）。
+- 假如你频繁的使用 `rebase` 来集成主分支的更新，一个潜在的后果是你会遇到越来越多需要合并的冲突。尽管你可以在 `rebase` 过程中处理这些冲突，但这并非长久之计，更推荐的做法是频繁的合入主分支然后创建新的功能分支，而不是使用一个长时间存在的功能分支。
+
+另外有一些观点是我们应该尽量避免重写提交历史：
+
+> 有一种观点认为，仓库的提交历史即是 记录实际发生过什么。 它是针对历史的文档，本身就有价值，不能乱改。 从这个角度看来，改变提交历史是一种亵渎，你使用 谎言 掩盖了实际发生过的事情。 如果由合并产生的提交历史是一团糟怎么办？ 既然事实就是如此，那么这些痕迹就应该被保留下来，让后人能够查阅。
+
+以及频繁的使用 `rebase` 可能会使从历史提交中定位 bug 变得更加困难，详见 [Why you should stop using Git rebase](https://medium.com/@fredrikmorken/why-you-should-stop-using-git-rebase-5552bee4fed1)。
+
+[git rebase 用法详解与工作原理](https://waynerv.com/posts/git-rebase-intro/)
+
+[git rebase 变基](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%8F%98%E5%9F%BA)
+
+
+
+
+
 # 六. 开发中分支使用原则与流程
 
 几乎所有的版本控制系统都以某种形式支持分支。
@@ -985,7 +1377,7 @@ git pull 			#重新拉取并合并
 git**本地强制覆盖远程** 说明分支情况
 
 ```sh
-git push origin [分支名称] --force		#强制推送到分支
+git push origin [分支名称] --force		#强制推送到分支，谨慎使用
 ```
 
 
@@ -994,12 +1386,9 @@ git push origin [分支名称] --force		#强制推送到分支
 
 ## 常见的代码托管服务
 
-**GitHub**（ 地址：https://github.com/ ）是一个面向开源及私有软件项目的托管平台，因为只支持Git 作为唯一
-的版本库格式进行托管，故名GitHub
-**Gitee**（地址： https://gitee.com/ ）是国内的一个代码托管平台，由于服务器在国内，所以相比于GitHub，码云
-速度会更快
-**GitLab** （地址： https://about.gitlab.com/ ）是一个用于仓库管理系统的开源项目，使用Git作为代码管理工
-具，并在此基础上搭建起来的web服务，一般用于在企业、学校等内部网络搭建git私服。
+**GitHub**（ 地址：https://github.com/ ）是一个面向开源及私有软件项目的托管平台，因为只支持Git 作为唯一的版本库格式进行托管，故名GitHub
+**Gitee**（地址： https://gitee.com/ ）是国内的一个代码托管平台，由于服务器在国内，所以相比于GitHub，码云速度会更快
+**GitLab** （地址： https://about.gitlab.com/ ）是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务，一般用于在企业、学校等内部网络搭建git私服。
 
 
 
@@ -1064,6 +1453,16 @@ git remote add origin git@gitee.com:abin_z/git-demo.git		#origin仅仅是远端�
 ```
 
 ![image-20211205224848724](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052248800.png)
+
+
+
+- **取消本地目录下关联的远程库**
+
+  ```sh
+  git remote remove [远程仓库名]    # 案例: git remote remove origin, 会取消本地仓库与远程仓库的关联
+  ```
+
+
 
 ### 2.查看远程仓库
 
