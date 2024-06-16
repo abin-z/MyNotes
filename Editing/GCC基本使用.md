@@ -114,7 +114,7 @@ gcc命令是GCC编译器里的一个前端程序，用来控制整个编译过�
 - -E ：只做预处理，不编译                               生成 `filename.i` 文件
   - 可以通过`gcc -E hello.cc -o hello.i`查看中间结果
 - -S ：只编译，将C程序编译为汇编文件         生成 `filename.s` 文件
-- -c ：只汇编，不链接                                       生成 `filename.o` 文件         
+- -c ：只汇编，不链接                                       生成 `filename.o` 文件
 - -o ：指定输出的文件名                                   生成指定名称的可执行文件, 不指定linux下默认为 `a.out` 文件
 
 ```sh
@@ -388,6 +388,10 @@ main.cpp:11:5: warning: ‘n2’ is used uninitialized [-Wuninitialized]
 
   静态库在链接时就和可执行文件在一块了，而动态库在加载或者运行时才链接，因此，对于同样的程序，静态链接的要比动态链接加载更快。
 
+![构建过程](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B.png)
+
+
+
 
 
 ### 静态链接库
@@ -398,7 +402,7 @@ main.cpp:11:5: warning: ‘n2’ is used uninitialized [-Wuninitialized]
 
 #### 生成静态链接库
 
-创建一个静态链接库，需要先将源文件编译为目标文件，然后再使用ar命令将目标文件打包成静态链接库。
+创建一个静态链接库，需要先将源文件编译为目标文件`.o`，然后再使用ar命令将目标文件打包成静态链接库`.a`。
 
 ##### ar 归档打包指令
 
@@ -428,8 +432,8 @@ $ gcc main.c -L libraryDIR -ltest -o test.out
 示例：将源文件test1.c，test2.c，test3.c编译并打包成静态库。
 
 ```sh
-$ gcc -c test1.c test2.c test3.c
-$ ar rcs libtest.a test1.o test2.o test3.o
+$ gcc -c test1.c test2.c test3.c		# 1. 先生成.o目标文件
+$ ar rcs libtest.a test1.o test2.o test3.o	# 2. ar 打包为.a文件
 ```
 
 先将需要归档到库的源文件编译成.o文件，再用下列命令归档
@@ -460,7 +464,7 @@ gcc main.o hello.o ../lib/libfun1.a ../lib/libfun2.a ../lib/libfun3.a
 
 #### 生成动态链接库
 
-使用`-shared`选项 和`-fPIC`选项，可直接使用源文件、汇编文件或者目标文件创建一个动态库。其中`-fPIC `选项作用于编译阶段，在生成目标文件时就需要使用该选项，以生成位置无关的代码。
+使用`-shared`选项 和`-fPIC`选项，可直接使用源文件、汇编文件或者目标文件创建一个动态库。**其中`-fPIC `选项作用于编译阶段**，在生成目标文件时就需要使用该选项，以生成位置无关的代码。
 
 ```shell
 # 分步进行
@@ -487,3 +491,35 @@ gcc main.o hello.o -L../lib -lfun1 -lfun2 -lfun3
 # 或者
 gcc main.o hello.o ../lib/libfun1.dll ../lib/libfun2.dll ../lib/libfun3.dll
 ```
+
+
+
+`-Wl,-rpath,<dir>` 是一个编译器选项，用于设置可执行文件运行时查找共享库的位置。这个选项将指定的目录 `<dir>` 添加到可执行文件的运行时库搜索路径中。
+
+- `-Wl`：告诉编译器将后续选项传递给链接器（`ld`）。
+- `-rpath,<dir>`：链接器选项，设置运行时库搜索路径为 `<dir>`。
+
+例如，如果你在编译一个程序时希望它在运行时查找共享库的目录是 `src`，你可以使用以下命令：
+
+```sh
+g++ -o my_program my_program.cpp -Wl,-rpath,src -Lsrc -lmy_library
+```
+
+这个命令做了以下几件事：
+
+1. `-o my_program`：指定输出可执行文件名为 `my_program`。
+2. `my_program.cpp`：源文件。
+3. `-Wl,-rpath,src`：告诉链接器在运行时将 `src` 目录添加到库搜索路径。
+4. `-Lsrc`：告诉编译器在编译时从 `src` 目录中查找库。
+5. `-lmy_library`：链接名为 `my_library` 的库（编译器将会查找名为 `libmy_library.so` 或 `libmy_library.a` 的文件）。
+
+##### 为什么使用 `-rpath`
+
+使用 `-rpath` 可以使得可执行文件在运行时自动查找并加载指定目录中的共享库，而不需要用户手动设置 `LD_LIBRARY_PATH` 环境变量。这对于确保程序能够找到其依赖的共享库尤其有用，特别是在共享库不在标准系统库路径中的情况下。
+
+
+
+
+
+[C与CPP常见编译工具链与构建系统简介 ](https://www.cnblogs.com/w4ngzhen/p/17695080.html)
+
