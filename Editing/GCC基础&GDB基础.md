@@ -1,6 +1,6 @@
-# GCC入门
+# GCC基础&GDB基础
 
-## GCC简介
+# GCC简介
 
 [GCC](https://gcc.gnu.org/)（GNU C Compiler，GNU C编译器，简称GCC）GNU编译器集合，是GNU推出的功能强大、性能优越的多平台编译器。GCC编译器能将C/C++、Objective-C、Fortran、Ada源程序、汇编程序和目标程序编译、链接成可执行文件。
 
@@ -523,3 +523,84 @@ g++ -o my_program my_program.cpp -Wl,-rpath,src -Lsrc -lmy_library
 
 [C与CPP常见编译工具链与构建系统简介 ](https://www.cnblogs.com/w4ngzhen/p/17695080.html)
 
+
+
+# GDB简介
+
+### 前言
+
+GDB是Linux下非常好用且强大的调试工具。GDB可以调试C、C++、Go、java、 objective-c、PHP等语言。对于一名Linux下工作的c/c++程序员，GDB是必不可少的工具，本篇以C语言来调试。
+
+### 1. GDB简介
+
+UNIX及UNIX-like下的调试工具。虽然它是命令行模式的调试工具，但是它的功能强大到你无法想象，能够让用户在程序运行时观察程序的内部结构和内存的使用情况。
+
+一般来说，GDB主要帮助你完成下面四个方面的功能：
+
+- 1、按照自定义的方式启动运行需要调试的程序。
+- 2、可以使用指定位置和条件表达式的方式来设置断点。
+- 3、程序暂停时的值的监视。
+- 4、动态改变程序的执行环境。
+
+
+
+### 2. 编译带调试信息的程序
+
+为了使用GDB调试程序，你需要在编译程序时加入调试信息。通常通过`-g`选项来完成。例如：
+
+```
+bash
+Copy code
+gcc -g -o myprogram myprogram.c
+```
+
+### 3. 启动GDB
+
+在终端中输入以下命令启动GDB并加载你的程序：
+
+```
+bash
+Copy code
+gdb myprogram
+```
+
+### 4. 基本命令的操作
+
+GDB中的命令很多，但我们只需掌握其中十个左右的命令，就大致可以完成日常的基本的程序调试工作。
+
+| 命令               | 简写  | 说明                                                      |
+| ------------------ | ----- | --------------------------------------------------------- |
+| `run`              | `r`   | 重新开始运行程序                                          |
+| `start`            |       | 开始程序执行，并在`main`函数的第一行处暂停                |
+| `break`            | `b`   | 设置断点, 例如：`break main`或`break filename:line`       |
+| `info breakpoints` | `i b` | 查看所有断点                                              |
+| `step`             | `s`   | 单步执行, 进入函数内部                                    |
+| `next`             | `n`   | 单步执行, 不进入函数内部                                  |
+| `continue`         | `c`   | 继续执行程序，直到遇到下一个断点或程序结束                |
+| `print`            | `p`   | 打印变量值, 例如：`print variable_name`或`print *pointer` |
+| `backtrace`        | `bt`  | 查看调用栈                                                |
+| `quit`             | `q`   | 退出GDB                                                   |
+| `list`             | `l`   | 查看源代码                                                |
+| `frame`            | `f`   | 选择调用栈中的一个帧，例如：`frame 2`                     |
+| `info`             | `i`   | 用于显示各种类型的调试信息, 有很多子命令                  |
+| `set variable`     |       | 修改程序中变量的值，例如：`set variable a=10`             |
+| `set args`         |       | 设置程序运行时的命令行参数，例如：`set args arg1 arg2`    |
+| `help`             |       | 获取帮助信息                                              |
+
+#### 常用 `info` 子命令
+
+| 命令                 | 说明                                     |
+| -------------------- | ---------------------------------------- |
+| `info breakpoints`   | 显示所有断点的信息                       |
+| `info frame`         | 显示当前堆栈帧的信息                     |
+| `info registers`     | 显示当前寄存器的内容                     |
+| `info threads`       | 显示所有线程的信息                       |
+| `info locals`        | 显示当前堆栈帧的局部变量                 |
+| `info args`          | 显示当前堆栈帧的函数参数                 |
+| `info functions`     | 显示程序中定义的所有函数                 |
+| `info variables`     | 显示程序中定义的全局和静态变量           |
+| `info source`        | 显示当前源文件的信息                     |
+| `info line`          | 显示当前行的源代码及其地址               |
+| `info sharedlibrary` | 显示加载的共享库信息                     |
+| `info signals`       | 显示信号处理的信息                       |
+| `info files`         | 显示加载的可执行文件和调试符号文件的信息 |
