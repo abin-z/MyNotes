@@ -143,7 +143,7 @@ make --file=mkfile # make --file=<filename>
 
 **隐式规则**(*implicit rules*)：根据文件自动推导如何从依赖生成或更新目标文件。
 
-**变量定义**(*variable definitions*)：定议变量并指定值，值都是字符串，类似C语言中的宏定义(#define)，在使用时将值展开到引用位置
+**变量定义**(*variable definitions*)：定义变量并指定值，值都是字符串，类似C语言中的宏定义(#define)，在使用时将值展开到引用位置
 
 **指令**(*directives*)：在make读取Makefile的过程中做一些特别的操作，包括：
 
@@ -336,7 +336,7 @@ target … (目标): prerequisites …(依赖)
 
 #### 关于执行终端
 
-更新方法实际上是一些Shell指令，通常以Tab开头，或直接放在目标-依赖列表后面，用分号隔开。这些指令都需要交给Shell执行，所以需要符合Shell语法。默认使用的Shell是sh，在Windows上如果没有安装sh.exe的话会自动查找使用cmd.exe之类的终端。这时有的指令写法，例如循环语句，与Linux不同，需要注意。
+更新方法实际上是一些Shell指令，**通常以Tab开头(不能是空格)**，或直接放在目标-依赖列表后面，用分号隔开。这些指令都需要交给Shell执行，所以需要符合Shell语法。默认使用的Shell是sh，在Windows上如果没有安装sh.exe的话会自动查找使用cmd.exe之类的终端。这时有的指令写法，例如循环语句，与Linux不同，需要注意。
 
 可以通过SHELL变量手动指定Shell
 
