@@ -1390,6 +1390,8 @@ git push origin [分支名称] --force		#强制推送到分支，谨慎使用
 **Gitee**（地址： https://gitee.com/ ）是国内的一个代码托管平台，由于服务器在国内，所以相比于GitHub，码云速度会更快
 **GitLab** （地址： https://about.gitlab.com/ ）是一个用于仓库管理系统的开源项目，使用Git作为代码管理工具，并在此基础上搭建起来的web服务，一般用于在企业、学校等内部网络搭建git私服。
 
+**Gitea** (地址: https://about.gitea.com/)是一个轻量级的DevOps平台软件，它支持Git托管、代码审查、团队协作、软件包注册和CI/CD等功能。与GitHub和GitLab相比，Gitea的一个显著特点是它提供了自托管的能力，这意味着用户可以完全控制自己的仓库和基础设施，而不需要依赖外部服务提供商。此外，Gitea的设计目标是易于安装和使用，它的性能出色，能够快速响应各种请求，保证用户体验
+
 
 
 企业中开发一般使用的是GitLab, 可以使用自己的机房来搭建,自己的代码自己来托管
@@ -1399,6 +1401,9 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 
 ## Git远程仓库的SSH配置
+
+[GitHub 配置 SSH Key 的步骤及原理解释](https://www.cnblogs.com/Higurashi-kagome/p/18417665)
+**ssh key 的配置是针对每台主机的！**比如我在某台主机上操作 git 和我的远程仓库，想要 push 时不输入账号密码，走 ssh 协议，就需要配置 ssh key，放上去的 key 是**当前主机的 ssh 公钥**。那么如果我换了一台其他主机，想要实现无密登录，也就需要重新配置。
 
 ### 1.创建远程仓库![image-20211205220452846](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052204953.png)
 
@@ -1424,7 +1429,7 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 
 
-点击确定后输入密码后就配置号了公钥,  可以在gitbash中测试是否配置成功
+点击确定后输入密码后就配置好了公钥,  可以在gitbash中测试是否配置成功
 
 ```sh
 ssh -T git@gitee.com			#需要输入 yes
@@ -1589,7 +1594,238 @@ git pull 				#抓取并自动合并
 
 ![image-20211205235018313](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052350400.png)
 
-----
+### 8.配置git代理(访问github)
+
+#### 1. 配置 HTTP/HTTPS 代理
+
+**配置步骤**
+
+1. 打开终端（Command Prompt、PowerShell 或 Git Bash）。
+
+2. 配置 HTTP 和 HTTPS 代理：
+
+   ```bash
+   git config --global http.proxy http://127.0.0.1:10809
+   git config --global https.proxy http://127.0.0.1:10809
+   ```
+
+   - `127.0.0.1:10809` 为代理服务器的地址和端口。
+
+3. 验证配置：
+
+   ```bash
+   git config --global --get http.proxy
+   git config --global --get https.proxy
+   ```
+
+   - 应返回 `http://127.0.0.1:10809`。
+
+4. 测试代理是否生效：
+
+   ```bash
+   git clone https://github.com/git/git.git
+   ```
+
+   - 如果可以正常克隆，说明代理配置成功。
+
+**取消代理配置**
+
+- 如果需要取消代理配置，执行以下命令：
+
+  ```sh
+  git config --global --unset http.proxy
+  git config --global --unset https.proxy
+  ```
+
+- 或者清除所有代理配置：
+
+  ```sh
+  git config --global --remove-section http
+  git config --global --remove-section https
+  ```
+
+
+
+#### 2. 仅对 GitHub 使用代理
+
+**配置步骤**
+
+1. 配置 GitHub 专用代理：
+
+   ```sh
+   git config --global http.https://github.com.proxy http://127.0.0.1:10809
+   ```
+
+   - 此配置仅对 `https://github.com` 的请求启用代理。
+
+2. 验证配置：
+
+   ```sh
+   git config --global --get http.https://github.com.proxy
+   ```
+
+   - 应返回 `http://127.0.0.1:10809`。
+
+3. 测试：
+
+   - 克隆 GitHub 仓库：
+
+     ```sh
+     git clone https://github.com/git/git.git
+     ```
+
+   - 克隆其他仓库（如 GitLab）测试是否不使用代理：
+
+     ```sh
+     git clone https://gitlab.com/gitlab-org/git.git
+     ```
+
+4. 取消 GitHub 专用代理：
+
+   ```sh
+   git config --global --unset http.https://github.com.proxy
+   ```
+
+   
+
+#### 3. 配置 SSH 协议通过代理
+
+**SSH 默认行为**
+
+- Git 使用 SSH 协议（如 `git@github.com:username/repository.git`）时，不会走 HTTP/HTTPS 代理。
+- 需配置 SSH 客户端单独使用代理。
+
+**配置步骤**
+
+1. **检查代理类型**
+
+   - 确认你的代理服务支持的协议（HTTP 或 SOCKS5）。
+   - 如果是 SOCKS5 代理，配置可能会有所不同。
+
+2. **编辑 SSH 配置文件**
+
+   - 打开或创建 SSH 配置文件：
+
+     ```sh
+     vim ~/.ssh/config
+     ```
+
+   - 添加以下内容：
+
+     ```sh
+     Host github.com
+         Hostname github.com
+         User git
+         ProxyCommand nc -X connect -x 127.0.0.1:10808 %h %p
+     ```
+
+     - `ProxyCommand` 表示通过代理连接目标主机。
+     - `-X connect` 指定使用 HTTP CONNECT 模式。
+     - `-x 127.0.0.1:10809` 是代理服务器的地址和端口。
+     - `%h` 和 `%p` 分别代表目标主机和端口。
+
+   - 如果使用的是 SOCKS5 代理，改为：
+
+     ```sh
+     ProxyCommand nc -X 5 -x 127.0.0.1:10808 %h %p
+     ```
+
+     - `-X 5` 指定使用 SOCKS5 协议。
+
+3. **安装 netcat 工具（如需要）**
+
+   - 某些系统可能需要安装 `netcat` 工具（如 `nc`）。
+
+   - 在 Debian/Ubuntu 系统上安装：
+
+     ```sh
+     sudo apt-get install netcat
+     ```
+
+   - 在 CentOS/RHEL 系统上安装：
+
+     ```sh
+     sudo yum install nc
+     ```
+
+4. **测试 SSH 配置**
+
+   - 测试 SSH 是否通过代理连接：
+
+     ```sh
+     ssh -T git@github.com
+     ```
+
+     - 返回 `Hi username! You've successfully authenticated` 说明配置成功。
+
+5. **代理调试**
+
+   - 如果连接失败：
+     - 确认代理服务是否运行正常。
+     - 检查 SSH 配置文件路径和语法是否正确。
+     - 查看代理日志，排查问题。
+
+**取消 SSH 代理配置**
+
+- 删除或注释掉 `~/.ssh/config` 中的相关配置。
+
+- 示例：
+
+  ```sh
+  # Host github.com
+  #     Hostname github.com
+  #     User git
+  #     ProxyCommand nc -X connect -x 127.0.0.1:10808 %h %p
+  ```
+
+**高级配置（可选）**
+
+1. **为多个主机设置代理**
+
+   - 如果需要为多个主机配置代理，可以使用通配符：
+
+     ```sh
+     Host *.example.com
+         ProxyCommand nc -X connect -x 127.0.0.1:10808 %h %p
+     ```
+
+2. **仅特定网络环境启用代理**
+
+   - 可以使用脚本动态修改 `~/.ssh/config`，根据网络环境启用或禁用代理。
+
+#### 4. 注意事项
+
+1. **SOCKS5 代理**
+
+   - 如果使用 SOCKS5 代理：
+
+     - Git 配置：
+
+       ```sh
+       git config --global http.proxy socks5h://127.0.0.1:10808
+       git config --global https.proxy socks5h://127.0.0.1:10808
+       ```
+
+     - SSH 配置：
+
+       ```sh
+       ProxyCommand nc -X 5 -x 127.0.0.1:10808 %h %p
+       ```
+
+2. **按需配置**
+
+   - 为特定域名设置代理（如 GitHub），其他域名不走代理。
+   - 避免为所有流量配置代理，减少不必要的延迟。
+
+3. **调试代理**
+
+   - 使用 `curl` 测试代理：
+
+     ```sh
+     curl -x http://127.0.0.1:10808 https://www.google.com
+     ```
+
+   - 检查代理服务日志，确保流量通过代理。
 
 
 
