@@ -1402,6 +1402,9 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 ## Git远程仓库的SSH配置
 
+[GitHub 配置 SSH Key 的步骤及原理解释](https://www.cnblogs.com/Higurashi-kagome/p/18417665)
+**ssh key 的配置是针对每台主机的！**比如我在某台主机上操作 git 和我的远程仓库，想要 push 时不输入账号密码，走 ssh 协议，就需要配置 ssh key，放上去的 key 是**当前主机的 ssh 公钥**。那么如果我换了一台其他主机，想要实现无密登录，也就需要重新配置。
+
 ### 1.创建远程仓库![image-20211205220452846](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/202112052204953.png)
 
 ### 2.配置SSH公钥
@@ -1426,7 +1429,7 @@ github一般是很多的开源项目的服务托管平台(国内一般使用的�
 
 
 
-点击确定后输入密码后就配置号了公钥,  可以在gitbash中测试是否配置成功
+点击确定后输入密码后就配置好了公钥,  可以在gitbash中测试是否配置成功
 
 ```sh
 ssh -T git@gitee.com			#需要输入 yes
