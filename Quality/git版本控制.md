@@ -1731,6 +1731,19 @@ git pull 				#抓取并自动合并
      ```
 
      - `-X 5` 指定使用 SOCKS5 协议。
+     
+   - 这是本人使用的config配置(win系统, 安装了nmap, 使用其中的ncat):
+
+     ```sh
+     # SSH 配置 - github.com
+     Host github.com
+       HostName ssh.github.com
+       Port 443
+       User git
+       ProxyCommand ncat --proxy-type socks5 --proxy 127.0.0.1:10808 %h %p
+     ```
+
+     
 
 3. **安装 netcat 工具（如需要）**
 
