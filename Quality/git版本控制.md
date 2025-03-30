@@ -188,7 +188,7 @@ alias ll='ls -al'
 1. 打开gitbash执行以下的命令:
 
    ```sh
-   git config --global core.quotepath false
+   git config --global core.quotepath false  # 让 Git 在显示文件名时不使用引号，并且避免对非 ASCII 字符进行转义。
    ```
 
 2. ${git_home}/etc/bash.bashrc 文件最后添加如下内容:
@@ -724,11 +724,15 @@ git reflog			#这个指令可以看到已经删除的提交记录, 包括 git re
 
    - 注意: **上述命令并不会从任何远程仓库中移除这个标签**，你必须用 `git push <remote> :refs/tags/<tagname>` 来更新你的远程仓库：
 
-   ```sh
-   git push <remote> :refs/tags/<tagname>
-   ```
+     ```bash
+     git push --delete origin <tag_name>	 # 这条指令可以删除远程的tag
+     ```
 
-   ```sh
+     ```bash
+     git push <remote> :refs/tags/<tag_name> # 本地仓库和远程仓库同步
+     ```
+   
+   ```bash
    Abin@DESKTOP-TFU43J6 MINGW64 /f/gitDemo (master)
    $ git push origin :refs/tags/v1.13_lw
    
@@ -736,7 +740,7 @@ git reflog			#这个指令可以看到已经删除的提交记录, 包括 git re
    To gitee.com:abin_z/git-demo.git
     - [deleted]         v1.13_lw
    ```
-
+   
    ![image-20230810234935768](https://my-pic-bed.oss-cn-chengdu.aliyuncs.com/typora_picture/image-20230810234935768.png)
 
 
