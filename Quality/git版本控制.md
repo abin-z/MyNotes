@@ -275,6 +275,39 @@ Git 的工作就是创建和保存你的项目的快照及与之后的快照进�
 | `git mv`     | 移动或重命名工作区文件。                 |
 | `git tag`    | 对版本库做标记, 它是指向某个commit的指针 |
 
+#### Git 提交类型
+
+**Git commit 类型** 是开发者为了让每一次提交（commit）**更有结构、可读性强、便于自动处理**，在提交信息里添加的 **前缀标签（type）**, 这些前缀被称为 **提交类型（commit types）**，并不是 Git 原生要求的，而是来自一套行业规范.
+
+示例 Commit 信息:
+
+```bash
+git commit -m "feat: 添加用户登录功能"
+git commit -m "fix: 修复登录失败时的崩溃问题"
+git commit -m "refactor: 重构登录逻辑以提升可读性"
+git commit -m "docs: 更新使用文档和接口注释"
+
+# 或者 <type>[optional scope]: <description>
+git commit -m "feat(auth): 添加登录功能"
+git commit -m "fix(ui): 修复按钮样式"
+```
+
+最常见规范：**Conventional Commits**
+
+| 类型       | 含义说明                                                     |
+| ---------- | ------------------------------------------------------------ |
+| `feat`     | ✨ 新功能（feature）                                          |
+| `fix`      | 🐛 修复 bug                                                   |
+| `refactor` | 🔨 代码重构（非功能性变更），如优化结构、删除重复代码         |
+| `perf`     | ⚡ 性能优化                                                   |
+| `docs`     | 📝 仅文档修改，如 README、注释等                              |
+| `style`    | 💄 代码格式修改（不影响功能），比如空格、缩进、分号           |
+| `test`     | ✅ 添加或修改测试代码                                         |
+| `build`    | 🏗️ 构建系统相关，如 webpack、CMake、Makefile                  |
+| `ci`       | 🤖 持续集成配置修改，如 GitHub Actions、Travis、GitLab CI     |
+| `chore`    | 🔧 其他杂项，比如修改 `.gitignore`、不影响代码逻辑的配置文件变更 |
+| `revert`   | ⏪ 撤销某次提交（`git revert` 产生）                          |
+
 #### git log   #日志
 
 git log 命令是 Git 中用于查看提交历史的命令
